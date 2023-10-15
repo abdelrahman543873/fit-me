@@ -44,4 +44,33 @@ describe('user register suite case', () => {
     });
     expect(res.body.firstName).toBe(trainer.firstName);
   });
+  it('should forbid entering a non existing trainer', async () => {
+    const randomMongoId = '507f191e810c19729de860ea';
+    const trainer = await buildUserParams({ role: USER_ROLE.CLIENT });
+    const testFiles = process.cwd();
+    const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
+    const res = await testRequest({
+      method: HTTP_METHODS_ENUM.POST,
+      url: REGISTER_USER,
+      variables: { ...trainer, trainerId: randomMongoId },
+      filePath,
+      fileParam: 'profilePicture',
+    });
+    expect(res.body.statusCode).toBe(400);
+  });
+
+  it('should forbid entering trainer id with trainer', async () => {
+    const seededTrainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const trainer = await buildUserParams({ role: USER_ROLE.TRAINER });
+    const testFiles = process.cwd();
+    const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
+    const res = await testRequest({
+      method: HTTP_METHODS_ENUM.POST,
+      url: REGISTER_USER,
+      variables: { ...trainer, trainerId: seededTrainer._id.toString() },
+      filePath,
+      fileParam: 'profilePicture',
+    });
+    expect(res.body.statusCode).toBe(400);
+  });
 });

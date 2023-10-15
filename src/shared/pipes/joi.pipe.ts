@@ -12,7 +12,6 @@ export class JoiValidationPipe implements PipeTransform {
   }
 
   async transform(value: Record<any, any>): Promise<Record<any, any>> {
-    console.log(value);
     const { error } = this.schema.validate(value, {
       allowUnknown: this.allowUnknown,
     });
