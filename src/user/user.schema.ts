@@ -17,7 +17,7 @@ export class User {
   @Prop({ required: true })
   phoneNumber: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, select: false })
   password: string;
 
   @Prop()
@@ -28,6 +28,8 @@ export class User {
 
   @Prop({ required: true, enum: USER_ROLE })
   role: USER_ROLE;
+
+  token?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

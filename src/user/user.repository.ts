@@ -21,7 +21,6 @@ export class UserRepository extends BaseRepository<User> {
     userRegisterDto: UserRegisterDto,
     profilePicture?: Express.Multer.File,
   ) {
-    console.log(profilePicture);
     return this.userSchema.create({
       ...userRegisterDto,
       password: hashPassSync(userRegisterDto.password),
