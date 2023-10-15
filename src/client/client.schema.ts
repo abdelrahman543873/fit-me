@@ -3,11 +3,9 @@ import { HydratedDocument, ObjectId, Types } from 'mongoose';
 
 export type ClientDocument = HydratedDocument<Client>;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({ versionKey: false, timestamps: true, _id: false })
 export class Client {
-  _id?: ObjectId;
-
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true, unique: true })
   userId: ObjectId;
 }
 

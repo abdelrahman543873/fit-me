@@ -8,6 +8,5 @@ import { ConfigurationModule } from './shared/configuration/configuration.module
 @Module({
   imports: [ConfigurationModule, TrainerModule, ClientModule, UserModule],
   controllers: [AppController],
-  providers: [],
 })
 export class AppModule {}
