@@ -7,10 +7,13 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
+  IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
 import { USER_ROLE } from '../user.constants';
+import { ObjectId } from 'mongoose';
+import { IsExistingTrainer } from '../validators/existing-trainer.validator';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -41,4 +44,10 @@ export class UserRegisterDto {
 
   @IsEnum(USER_ROLE)
   role: USER_ROLE;
+
+  @IsOptional()
+  @IsExistingTrainer()
+  @IsUUID()
+  @ApiProperty({ type: 'string' })
+  trainerId?: ObjectId;
 }

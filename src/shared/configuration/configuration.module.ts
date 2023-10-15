@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ENV_VARIABLE_NAMES } from '../constants/env-varaible-names';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { join } from 'path';
       }),
       inject: [ConfigService],
     }),
+    EventEmitterModule.forRoot(),
   ],
-  exports: [ServeStaticModule],
 })
 export class ConfigurationModule {}

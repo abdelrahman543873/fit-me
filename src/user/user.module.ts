@@ -10,6 +10,7 @@ import { UserRepository } from './user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { ENV_VARIABLE_NAMES } from '../shared/constants/env-varaible-names';
+import { ExistingTrainerValidator } from './validators/existing-trainer.validator';
 
 @Module({
   imports: [
@@ -34,6 +35,6 @@ import { ENV_VARIABLE_NAMES } from '../shared/constants/env-varaible-names';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [UserService, UserRepository, ExistingTrainerValidator],
 })
 export class UserModule {}

@@ -14,13 +14,13 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   phoneNumber: string;
 
   @Prop({ required: true, select: false })
   password: string;
 
-  @Prop()
+  @Prop({ sparse: true })
   email?: string;
 
   @Prop()
