@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { USER_ROLE, UserEvents } from './user.constants';
 import { ClientRegisteredEvent } from './events/client-registered.event';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -28,7 +29,9 @@ export class UserService {
     if (user.role === USER_ROLE.CLIENT) {
       const clientRegisteredEvent = new ClientRegisteredEvent();
       clientRegisteredEvent.clientId = user._id;
-      clientRegisteredEvent.trainerId = userRegisterDto.trainerId;
+      clientRegisteredEvent.trainerId = new Types.ObjectId(
+        userRegisterDto.trainerId,
+      );
       this.eventEmitter.emit(
         UserEvents.CLIENT_REGISTRATION,
         clientRegisteredEvent,

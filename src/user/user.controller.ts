@@ -4,14 +4,11 @@ import {
   Post,
   UploadedFile,
   UseInterceptors,
-  UsePipes,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { UserRegisterDto } from './inputs/user-register.dto';
-import { JoiValidationPipe } from '../shared/pipes/joi.pipe';
-import { UserRegisterDependents } from './dependents/user-register.dependents';
 
 @ApiTags('user')
 @Controller('user')
@@ -24,8 +21,8 @@ export class UserController {
   }
 
   @ApiConsumes('multipart/form-data')
+  // @UsePipes(new JoiValidationPipe(UserRegisterDependents, true))
   @UseInterceptors(FileInterceptor('profilePicture'))
-  @UsePipes(new JoiValidationPipe(UserRegisterDependents, true))
   @Post('register')
   async register(
     @Body() userRegisterDto: UserRegisterDto,

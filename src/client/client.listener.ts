@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
-import { UserEvents } from 'src/user/user.constants';
 import { ClientService } from './client.service';
+import { UserEvents } from '../user/user.constants';
 
 @Injectable()
 export class ClientListener {

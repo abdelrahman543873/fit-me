@@ -12,4 +12,4 @@ export class Subscription {
   trainer: ObjectId;
 }
 
-export const ClientSchema = SchemaFactory.createForClass(Subscription);
+export const SubscriptionSchema = SchemaFactory.createForClass(Subscription);

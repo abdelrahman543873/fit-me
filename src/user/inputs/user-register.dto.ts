@@ -3,17 +3,18 @@ import {
   Allow,
   IsEmail,
   IsEnum,
+  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
   IsString,
-  IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
 import { USER_ROLE } from '../user.constants';
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { IsExistingTrainer } from '../validators/existing-trainer.validator';
+import { Transform } from 'class-transformer';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -47,7 +48,6 @@ export class UserRegisterDto {
 
   @IsOptional()
   @IsExistingTrainer()
-  @IsUUID()
-  @ApiProperty({ type: 'string' })
-  trainerId?: ObjectId;
+  @IsMongoId()
+  trainerId?: string;
 }

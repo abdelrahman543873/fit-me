@@ -1,6 +1,6 @@
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 
 export class ClientRegisteredEvent {
   clientId: ObjectId;
-  trainerId: ObjectId;
+  trainerId: Types.ObjectId;
 }
