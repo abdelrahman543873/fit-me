@@ -43,6 +43,13 @@ export abstract class BaseRepository<T> implements Repository<T> {
     return this._model.findOne(filter, projection);
   }
 
+  find(
+    filter: FilterQuery<HydratedDocument<T>>,
+    projection?: any,
+  ): Promise<HydratedDocument<T>[]> {
+    return this._model.find(filter, projection);
+  }
+
   updateOne(
     filter: FilterQuery<T>,
     update: UpdateQuery<HydratedDocument<T>>,

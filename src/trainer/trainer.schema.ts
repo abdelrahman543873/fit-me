@@ -3,10 +3,13 @@ import { HydratedDocument, ObjectId, Types } from 'mongoose';
 
 export type TrainerDocument = HydratedDocument<Trainer>;
 
-@Schema({ versionKey: false, timestamps: true, _id: false })
+@Schema({ versionKey: false, timestamps: true })
 export class Trainer {
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true, unique: true })
-  userId: ObjectId;
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'User',
+  })
+  _id: ObjectId;
 }
 
 export const TrainerSchema = SchemaFactory.createForClass(Trainer);

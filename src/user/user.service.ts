@@ -9,6 +9,7 @@ import { Types } from 'mongoose';
 import { UserLoginDto } from './inputs/user-login.dto';
 import { BaseHttpException } from '../shared/exceptions/base-http-exception';
 import { bcryptCheckPass } from '../shared/utils/bcryptHelper';
+import { TrainerRegisteredEvent } from './events/trainer-registered.event';
 
 @Injectable()
 export class UserService {
@@ -50,6 +51,13 @@ export class UserService {
       this.eventEmitter.emit(
         UserEvents.CLIENT_REGISTRATION,
         clientRegisteredEvent,
+      );
+    } else if (user.role === USER_ROLE.TRAINER) {
+      const trainerRegisteredEvent = new TrainerRegisteredEvent();
+      trainerRegisteredEvent.trainerId = user._id;
+      this.eventEmitter.emit(
+        UserEvents.TRAINER_REGISTRATION,
+        trainerRegisteredEvent,
       );
     }
     const authenticatedUser = user.toJSON();

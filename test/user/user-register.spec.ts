@@ -6,6 +6,7 @@ import { USER_ROLE } from '../../src/user/user.constants';
 import { ClientRepo } from '../client/client.test-repo';
 import { Types } from 'mongoose';
 import { SubscriptionRepo } from '../subscription/subscription.test-repo';
+import { TrainerRepo } from '../trainer/trainer.test-repo';
 
 describe('user register suite case', () => {
   it('should register client successfully', async () => {
@@ -43,6 +44,10 @@ describe('user register suite case', () => {
       fileParam: 'profilePicture',
     });
     expect(res.body.firstName).toBe(trainer.firstName);
+    const createdTrainer = await TrainerRepo().findOne({
+      _id: new Types.ObjectId(res.body._id),
+    });
+    expect(createdTrainer).toBeTruthy();
   });
   it('should forbid entering a non existing trainer', async () => {
     const randomMongoId = '507f191e810c19729de860ea';

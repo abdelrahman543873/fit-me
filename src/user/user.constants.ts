@@ -5,4 +5,5 @@ export enum USER_ROLE {
 
 export enum UserEvents {
   CLIENT_REGISTRATION = 'client.register',
+  TRAINER_REGISTRATION = 'trainer.register',
 }
