@@ -11,6 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { ENV_VARIABLE_NAMES } from '../shared/constants/env-varaible-names';
 import { ExistingTrainerValidator } from './validators/existing-trainer.validator';
+import { ExistingPhoneNumberValidator } from './validators/existing-phone-number.validator';
 
 @Module({
   imports: [
@@ -35,6 +36,11 @@ import { ExistingTrainerValidator } from './validators/existing-trainer.validato
     }),
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository, ExistingTrainerValidator],
+  providers: [
+    UserService,
+    UserRepository,
+    ExistingTrainerValidator,
+    ExistingPhoneNumberValidator,
+  ],
 })
 export class UserModule {}

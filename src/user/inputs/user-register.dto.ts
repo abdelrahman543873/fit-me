@@ -12,9 +12,8 @@ import {
   MinLength,
 } from 'class-validator';
 import { USER_ROLE } from '../user.constants';
-import { ObjectId, Types } from 'mongoose';
 import { IsExistingTrainer } from '../validators/existing-trainer.validator';
-import { Transform } from 'class-transformer';
+import { IsExistingPhoneNumber } from '../validators/existing-phone-number.validator';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -33,6 +32,7 @@ export class UserRegisterDto {
   @IsNotEmpty()
   lastName: string;
 
+  @IsExistingPhoneNumber()
   @IsString()
   @IsNotEmpty()
   @IsPhoneNumber('EG')

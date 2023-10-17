@@ -5,6 +5,7 @@ import compression from 'compression';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { AppModule } from '../../src/app.module';
+import { MongooseExceptionFilter } from '../../src/shared/exception-filters/mongo-exception-filter';
 
 const mongod = new MongoMemoryServer({
   binary: { version: '7.0.2', arch: 'x64' },
@@ -26,6 +27,7 @@ module.exports = async (): Promise<void> => {
   const app = module.createNestApplication();
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.use(compression());
+  app.useGlobalFilters(new MongooseExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

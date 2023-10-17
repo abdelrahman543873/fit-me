@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import compression from 'compression';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
+import { MongooseExceptionFilter } from './shared/exception-filters/mongo-exception-filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.useGlobalFilters(new MongooseExceptionFilter());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);
