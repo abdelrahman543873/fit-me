@@ -6,6 +6,9 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { USER_ROLE, UserEvents } from './user.constants';
 import { ClientRegisteredEvent } from './events/client-registered.event';
 import { Types } from 'mongoose';
+import { UserLoginDto } from './inputs/user-login.dto';
+import { BaseHttpException } from '../shared/exceptions/base-http-exception';
+import { bcryptCheckPass } from '../shared/utils/bcryptHelper';
 
 @Injectable()
 export class UserService {
@@ -14,8 +17,20 @@ export class UserService {
     private readonly jwtService: JwtService,
     private readonly eventEmitter: EventEmitter2,
   ) {}
-  login() {
-    return this.userRepository.login();
+
+  async login(userLoginDto: UserLoginDto) {
+    const user = await this.userRepository.login(userLoginDto);
+    if (!user) throw new BaseHttpException(601);
+    const passwordValidation = await bcryptCheckPass(
+      userLoginDto.password,
+      user.password,
+    );
+    if (!passwordValidation) throw new BaseHttpException(601);
+    const authenticatedUser = user.toJSON();
+    authenticatedUser.token = this.jwtService.sign({
+      _id: user._id,
+    });
+    return authenticatedUser;
   }
 
   async register(

@@ -20,7 +20,7 @@ export class User {
   @Prop({ required: true, select: false })
   password: string;
 
-  @Prop({ sparse: true })
+  @Prop({ sparse: true, lowercase: true })
   email?: string;
 
   @Prop()

@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { UserRegisterDto } from './inputs/user-register.dto';
 import { hashPassSync } from '../shared/utils/bcryptHelper';
+import { UserLoginDto } from './inputs/user-login.dto';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -15,7 +16,11 @@ export class UserRepository extends BaseRepository<User> {
     super(userSchema);
   }
 
-  login() {}
+  login(userLoginDto: UserLoginDto) {
+    return this.userSchema
+      .findOne({ phoneNumber: userLoginDto.phoneNumber })
+      .select('+password');
+  }
 
   register(
     userRegisterDto: UserRegisterDto,

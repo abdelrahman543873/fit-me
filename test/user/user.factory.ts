@@ -3,6 +3,7 @@ import { UserRepo } from './user.test-repo';
 import type { User } from '../../src/user/user.schema';
 import { generateAuthToken } from '../../src/shared/utils/token-utils';
 import { USER_ROLE } from '../../src/user/user.constants';
+import { hashPass } from '../../src/shared/utils/bcryptHelper';
 
 export const buildUserParams = (obj: Partial<User> = {}): Partial<User> => {
   return {
@@ -21,7 +22,10 @@ export const buildUserParams = (obj: Partial<User> = {}): Partial<User> => {
 
 export const userFactory = async (obj: Partial<User> = {}): Promise<User> => {
   const params: Partial<User> = buildUserParams(obj);
-  const user = await UserRepo().add(params);
+  const user = await UserRepo().add({
+    ...params,
+    password: await hashPass(params.password),
+  });
   const authenticatedUser = user.toJSON();
   authenticatedUser.token = generateAuthToken(user._id);
   return authenticatedUser;
