@@ -22,6 +22,7 @@ describe('user register suite case', () => {
       fileParam: 'profilePicture',
     });
     expect(res.body.firstName).toBe(client.firstName);
+    expect(res.body.password).not.toBeTruthy();
     const createdClient = await ClientRepo().findOne({
       _id: new Types.ObjectId(res.body._id),
     });

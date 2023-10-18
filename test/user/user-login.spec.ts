@@ -16,5 +16,6 @@ describe('login suite case', () => {
       },
     });
     expect(res.body.token).toBeTruthy();
+    expect(res.body.password).not.toBeTruthy();
   });
 });

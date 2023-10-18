@@ -31,6 +31,7 @@ export class UserService {
     authenticatedUser.token = this.jwtService.sign({
       _id: user._id,
     });
+    delete authenticatedUser.password;
     return authenticatedUser;
   }
 
@@ -64,6 +65,7 @@ export class UserService {
     authenticatedUser.token = this.jwtService.sign({
       _id: user._id,
     });
+    delete authenticatedUser.password;
     return authenticatedUser;
   }
 }
