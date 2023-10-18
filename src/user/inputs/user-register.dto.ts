@@ -14,9 +14,11 @@ import {
 import { USER_ROLE } from '../user.constants';
 import { IsExistingTrainer } from '../validators/existing-trainer.validator';
 import { IsExistingPhoneNumber } from '../validators/existing-phone-number.validator';
+import { IsExistingEmail } from '../validators/existing-email.validator';
 
 export class UserRegisterDto {
   @IsOptional()
+  @IsExistingEmail()
   @IsEmail()
   email?: string;
 

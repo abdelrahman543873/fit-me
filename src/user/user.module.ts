@@ -12,6 +12,7 @@ import { ConfigService } from '@nestjs/config';
 import { ENV_VARIABLE_NAMES } from '../shared/constants/env-varaible-names';
 import { ExistingTrainerValidator } from './validators/existing-trainer.validator';
 import { ExistingPhoneNumberValidator } from './validators/existing-phone-number.validator';
+import { ExistingEmailValidator } from './validators/existing-email.validator';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ExistingPhoneNumberValidator } from './validators/existing-phone-number
     UserRepository,
     ExistingTrainerValidator,
     ExistingPhoneNumberValidator,
+    ExistingEmailValidator,
   ],
 })
 export class UserModule {}

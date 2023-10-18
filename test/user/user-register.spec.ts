@@ -64,6 +64,22 @@ describe('user register suite case', () => {
     expect(res.body.statusCode).toBe(400);
   });
 
+  it('should forbid entering an existing email', async () => {
+    const userParams = await buildUserParams();
+    await userFactory({ ...userParams, phoneNumber: null });
+    const testFiles = process.cwd();
+    const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
+    const res = await testRequest({
+      method: HTTP_METHODS_ENUM.POST,
+      url: REGISTER_USER,
+      variables: { ...userParams },
+      filePath,
+      fileParam: 'profilePicture',
+    });
+    expect(res.body.message[0]).toBe('this email already exists');
+    expect(res.body.statusCode).toBe(400);
+  });
+
   it('should forbid entering trainer id with trainer', async () => {
     const seededTrainer = await userFactory({ role: USER_ROLE.TRAINER });
     const trainer = await buildUserParams({ role: USER_ROLE.TRAINER });
