@@ -5,7 +5,7 @@ export const UserRegisterDependents = Joi.object({
   role: Joi.string(),
   trainerId: Joi.when('role', {
     is: USER_ROLE.CLIENT,
-    then: Joi.string().required(),
+    then: Joi.object().required(),
     otherwise: Joi.forbidden(),
   }),
 });

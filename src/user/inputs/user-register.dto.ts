@@ -15,6 +15,9 @@ import { USER_ROLE } from '../user.constants';
 import { IsExistingTrainer } from '../validators/existing-trainer.validator';
 import { IsExistingPhoneNumber } from '../validators/existing-phone-number.validator';
 import { IsExistingEmail } from '../validators/existing-email.validator';
+import { ObjectId } from 'mongoose';
+import { Transform } from 'class-transformer';
+import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -50,6 +53,6 @@ export class UserRegisterDto {
 
   @IsOptional()
   @IsExistingTrainer()
-  @IsMongoId()
-  trainerId?: string;
+  @Transform(objectIdTransformer)
+  trainerId?: ObjectId;
 }

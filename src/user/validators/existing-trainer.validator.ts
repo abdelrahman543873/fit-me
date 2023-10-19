@@ -7,15 +7,15 @@ import {
 } from 'class-validator';
 import { UserRepository } from '../user.repository';
 import { USER_ROLE } from '../user.constants';
-import { Types } from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class ExistingTrainerValidator implements ValidatorConstraintInterface {
   constructor(private userRepository: UserRepository) {}
-  async validate(id: string): Promise<boolean> {
+  async validate(id: ObjectId): Promise<boolean> {
     const user = await this.userRepository.findOne({
-      _id: new Types.ObjectId(id),
+      _id: id,
     });
     if (!user) return false;
     if (user.role !== USER_ROLE.TRAINER) return false;
