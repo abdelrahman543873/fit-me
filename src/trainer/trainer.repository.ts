@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { Trainer, TrainerDocument } from './trainer.schema';
 import { TrainerRegisteredEvent } from '../user/events/trainer-registered.event';
+import { VerifyTrainerDto } from './inputs/verify-trainer.dto';
 
 @Injectable()
 export class TrainerRepository extends BaseRepository<Trainer> {
@@ -18,5 +19,11 @@ export class TrainerRepository extends BaseRepository<Trainer> {
     return this.trainerSchema.create({
       _id: trainerRegisteredEvent.trainerId,
     });
+  }
+
+  verifyTrainer(verifyTrainerDto: VerifyTrainerDto) {
+    return this.trainerSchema
+      .findOne({ _id: verifyTrainerDto.id })
+      .populate('_id');
   }
 }
