@@ -18,6 +18,7 @@ import { IsExistingEmail } from '../validators/existing-email.validator';
 import { ObjectId } from 'mongoose';
 import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
+import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -53,6 +54,8 @@ export class UserRegisterDto {
 
   @IsOptional()
   @IsExistingTrainer()
+  @ApiProperty({ type: 'string' })
+  @IsMongoIdObject()
   @Transform(objectIdTransformer)
   trainerId?: ObjectId;
 }

@@ -1,12 +1,14 @@
 import { Transform } from 'class-transformer';
-import { IsOptional } from 'class-validator';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { ObjectId } from 'mongoose';
 import { IsExistingTrainer } from '../../user/validators/existing-trainer.validator';
+import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class VerifyTrainerDto {
-  @IsOptional()
+  @ApiProperty({ type: 'string' })
   @IsExistingTrainer()
+  @IsMongoIdObject()
   @Transform(objectIdTransformer)
-  id?: ObjectId;
+  id: ObjectId;
 }

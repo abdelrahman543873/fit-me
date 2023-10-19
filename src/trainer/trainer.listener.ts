@@ -12,6 +12,6 @@ export class TrainerListener {
   async handleClientRegisteredEvent(
     trainerRegisteredEvent: TrainerRegisteredEvent,
   ) {
-    await this.trainerService.registerTrainer(trainerRegisteredEvent);
+    return await this.trainerService.registerTrainer(trainerRegisteredEvent);
   }
 }
