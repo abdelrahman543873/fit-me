@@ -11,7 +11,9 @@ export class TrainerService {
     return this.trainerRepository.registerTrainer(trainerRegisteredEvent);
   }
 
-  verifyTrainer(verifyTrainerDto: VerifyTrainerDto) {
-    return this.trainerRepository.verifyTrainer(verifyTrainerDto);
+  async verifyTrainer(verifyTrainerDto: VerifyTrainerDto) {
+    const trainer =
+      await this.trainerRepository.verifyTrainer(verifyTrainerDto);
+    return { ...trainer.toJSON()._id };
   }
 }

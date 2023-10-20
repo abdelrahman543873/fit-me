@@ -10,6 +10,6 @@ describe('verify trainer suite case', () => {
       method: HTTP_METHODS_ENUM.GET,
       url: `${VERIFY_TRAINER}/${trainer._id.toString()}`,
     });
-    expect(res.body).toHaveProperty('_id');
+    expect(res.body._id).toBe(trainer._id.toString());
   });
 });
