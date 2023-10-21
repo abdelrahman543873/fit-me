@@ -3,7 +3,6 @@ import {
   Allow,
   IsEmail,
   IsEnum,
-  IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
