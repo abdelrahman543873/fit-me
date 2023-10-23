@@ -1,5 +1,4 @@
 import {
-  IsCurrency,
   IsEnum,
   IsISO4217CurrencyCode,
   IsInt,
