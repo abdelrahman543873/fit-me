@@ -5,6 +5,7 @@ import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddPlanDto } from './inputs/add-plan.dto';
 import { DeletePlanDto } from './inputs/delete-plan.dto';
+import { FilterPlansDto } from './inputs/filter-plans.dto';
 
 @Injectable()
 export class PlanRepository extends BaseRepository<Plan> {
@@ -21,5 +22,9 @@ export class PlanRepository extends BaseRepository<Plan> {
 
   deletePlan(trainerId: ObjectId, deletePlanDto: DeletePlanDto) {
     return this.planSchema.deleteOne({ trainerId, _id: deletePlanDto.id });
+  }
+
+  filterPlans(filterPlansDto: FilterPlansDto) {
+    return this.planSchema.find(filterPlansDto);
   }
 }

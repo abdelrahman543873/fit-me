@@ -40,8 +40,8 @@ export class AuthGuard implements CanActivate {
     const user = await this.userRepository.findOne({
       _id: new Types.ObjectId(payload._id),
     });
-    request.user = user;
     if (!user) throw new BaseHttpException(600);
+    request.user = user;
     return true;
   }
 }

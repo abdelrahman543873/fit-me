@@ -3,6 +3,7 @@ import { PlanRepository } from './plan.repository';
 import { AddPlanDto } from './inputs/add-plan.dto';
 import { ObjectId } from 'mongoose';
 import { DeletePlanDto } from './inputs/delete-plan.dto';
+import { FilterPlansDto } from './inputs/filter-plans.dto';
 
 @Injectable()
 export class PlanService {
@@ -13,5 +14,9 @@ export class PlanService {
 
   deletePlan(trainerId: ObjectId, deletePlanDto: DeletePlanDto) {
     return this.planRepository.deletePlan(trainerId, deletePlanDto);
+  }
+
+  filterPlans(filterPlansDto: FilterPlansDto) {
+    return this.planRepository.filterPlans(filterPlansDto);
   }
 }
