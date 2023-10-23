@@ -1,13 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, ObjectId, Types } from 'mongoose';
 import { FOLLOW_UP_FREQUENCY, PLAN_TYPE } from './plan.constants';
+import { ApiProperty } from '@nestjs/swagger';
 
 export type PlanDocument = HydratedDocument<Plan>;
 
 @Schema({ versionKey: false, timestamps: true })
 export class Plan {
+  @ApiProperty({ type: 'string' })
   _id?: ObjectId;
 
+  @ApiProperty({ type: 'string' })
   @Prop({
     type: Types.ObjectId,
     ref: 'User',
