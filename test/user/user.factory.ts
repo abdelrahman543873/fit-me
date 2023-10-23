@@ -5,18 +5,19 @@ import { generateAuthToken } from '../../src/shared/utils/token-utils';
 import { USER_ROLE } from '../../src/user/user.constants';
 import { hashPass } from '../../src/shared/utils/bcryptHelper';
 
-export const buildUserParams = (obj: Partial<User> = {}): Partial<User> => {
+export const buildUserParams = (obj: Partial<User> = {}) => {
   return {
     firstName: obj.firstName || faker.person.firstName(),
     lastName: obj.lastName || faker.person.lastName(),
     phoneNumber:
-      obj.phoneNumber || faker.helpers.replaceSymbolWithNumber('0100#######'),
+      obj.phoneNumber || faker.helpers.replaceSymbolWithNumber('+20100#######'),
     password: obj.password || faker.internet.password(),
     email: obj.email || faker.internet.email(),
     profilePicture: obj.profilePicture || faker.internet.url(),
     role:
       obj.role ||
-      (faker.helpers.arrayElement(Object.keys(USER_ROLE)) as USER_ROLE),
+      faker.helpers.arrayElement<USER_ROLE>(Object.values(USER_ROLE)),
+    countryCode: obj.countryCode || faker.location.countryCode(),
   };
 };
 

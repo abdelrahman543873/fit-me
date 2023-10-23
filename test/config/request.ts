@@ -1,21 +1,17 @@
 import request from 'supertest';
 import { HTTP_METHODS_ENUM } from './request.methods.enum';
 
-// done to allow random ordering when entering test request values and eliminate the need to enter num values
-interface testRequestInput {
+export const testRequest = async <T>(input: {
   method: HTTP_METHODS_ENUM;
   url: string;
-  variables?: Record<any, any>;
+  variables?: T;
+  params?: T;
   token?: string;
   fileParam?: string;
   filePath?: string;
   fileParams?: string[];
   headers?: Record<any, any>;
-}
-
-export const testRequest = async (
-  input: testRequestInput,
-): Promise<request.Test> => {
+}): Promise<request.Test> => {
   const server = request(global.app.getHttpServer());
   let req: request.Test;
   input.method === HTTP_METHODS_ENUM.POST && (req = server.post(input.url));
@@ -36,7 +32,7 @@ export const testRequest = async (
     ? req.attach(input.fileParam, input.filePath)
     : input.fileParams
     ? null
-    : req.send(input.variables);
+    : req.send(input.variables as 'object');
   input?.fileParams
     ? input.fileParams.forEach((param) => {
         req.attach(param, input.filePath);
@@ -47,5 +43,14 @@ export const testRequest = async (
     Object.keys(input.headers).forEach((header) => {
       req.set(header, input.headers[header]);
     });
+  if (input.params) {
+    const queryParams = {};
+    Object.keys(input.params).forEach((param) => {
+      queryParams[param] = input.params[param];
+    });
+    req = req.query({
+      ...queryParams,
+    });
+  }
   return req;
 };

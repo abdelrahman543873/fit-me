@@ -5,4 +5,6 @@ export const LocalizedErrorMessages: IErrorMessage = {
     EN: 'incorrect phone number or password',
     AR: 'incorrect phone number or password',
   },
+  602: { EN: 'auth token not provided', AR: 'auth token not provided' },
+  603: { EN: 'incorrectly formatted token', AR: 'incorrectly formatted token' },
 };

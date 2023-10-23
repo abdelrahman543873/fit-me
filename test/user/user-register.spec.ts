@@ -7,6 +7,7 @@ import { ClientRepo } from '../client/client.test-repo';
 import { Types } from 'mongoose';
 import { SubscriptionRepo } from '../subscription/subscription.test-repo';
 import { TrainerRepo } from '../trainer/trainer.test-repo';
+import { UserRegisterDto } from '../../src/user/inputs/user-register.dto';
 
 describe('user register suite case', () => {
   it('should register client successfully', async () => {
@@ -14,10 +15,10 @@ describe('user register suite case', () => {
     const client = await buildUserParams({ role: USER_ROLE.CLIENT });
     const testFiles = process.cwd();
     const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
-    const res = await testRequest({
+    const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
-      variables: { ...client, trainerId: trainer._id.toString() },
+      variables: { ...client, trainerId: trainer._id.toString() as any },
       filePath,
       fileParam: 'profilePicture',
     });
@@ -37,7 +38,7 @@ describe('user register suite case', () => {
     const trainer = await buildUserParams({ role: USER_ROLE.TRAINER });
     const testFiles = process.cwd();
     const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
-    const res = await testRequest({
+    const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
       variables: trainer,
@@ -55,10 +56,10 @@ describe('user register suite case', () => {
     const trainer = await buildUserParams({ role: USER_ROLE.CLIENT });
     const testFiles = process.cwd();
     const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
-    const res = await testRequest({
+    const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
-      variables: { ...trainer, trainerId: randomMongoId },
+      variables: { ...trainer, trainerId: randomMongoId as any },
       filePath,
       fileParam: 'profilePicture',
     });
@@ -70,7 +71,7 @@ describe('user register suite case', () => {
     await userFactory({ ...userParams, phoneNumber: null });
     const testFiles = process.cwd();
     const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
-    const res = await testRequest({
+    const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
       variables: { ...userParams },
@@ -86,10 +87,10 @@ describe('user register suite case', () => {
     const trainer = await buildUserParams({ role: USER_ROLE.TRAINER });
     const testFiles = process.cwd();
     const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
-    const res = await testRequest({
+    const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
-      variables: { ...trainer, trainerId: seededTrainer._id.toString() },
+      variables: { ...trainer, trainerId: seededTrainer._id.toString() as any },
       filePath,
       fileParam: 'profilePicture',
     });

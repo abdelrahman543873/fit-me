@@ -29,6 +29,9 @@ export class User {
   @Prop({ required: true, enum: USER_ROLE })
   role: USER_ROLE;
 
+  @Prop({ required: true })
+  countryCode: string;
+
   token?: string;
 }
 

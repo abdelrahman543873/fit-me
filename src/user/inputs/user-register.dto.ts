@@ -3,6 +3,7 @@ import {
   Allow,
   IsEmail,
   IsEnum,
+  IsISO31661Alpha2,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
@@ -40,7 +41,7 @@ export class UserRegisterDto {
   @IsExistingPhoneNumber()
   @IsString()
   @IsNotEmpty()
-  @IsPhoneNumber('EG')
+  @IsPhoneNumber()
   phoneNumber: string;
 
   @IsOptional()
@@ -57,4 +58,7 @@ export class UserRegisterDto {
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   trainerId?: ObjectId;
+
+  @IsISO31661Alpha2()
+  countryCode: string;
 }

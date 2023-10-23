@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { USER_ROLE, UserEvents } from './user.constants';
 import { ClientRegisteredEvent } from './events/client-registered.event';
-import { Types } from 'mongoose';
 import { UserLoginDto } from './inputs/user-login.dto';
 import { BaseHttpException } from '../shared/exceptions/base-http-exception';
 import { bcryptCheckPass } from '../shared/utils/bcryptHelper';
