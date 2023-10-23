@@ -17,7 +17,7 @@ import { ExistingEmailValidator } from './validators/existing-email.validator';
     MulterModule.register({
       preservePath: true,
       storage: diskStorage({
-        destination: './client/pictures',
+        destination: './client',
         filename,
       }),
     }),

@@ -12,8 +12,8 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'client'),
-      renderPath: join(__dirname, '..', '..', 'client'),
+      rootPath: join(__dirname, '..', '..', '..', 'client'),
+      renderPath: join(__dirname, '..', '..', '..', 'client'),
     }),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
