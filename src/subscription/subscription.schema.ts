@@ -5,10 +5,10 @@ export type SubscriptionDocument = HydratedDocument<Subscription>;
 
 @Schema({ versionKey: false, timestamps: true })
 export class Subscription {
-  @Prop({ type: Types.ObjectId, ref: 'Client', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   client: ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Trainer', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   trainer: ObjectId;
 }
 

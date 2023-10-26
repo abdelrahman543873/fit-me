@@ -15,6 +15,6 @@ export class SubscriptionService {
 
   async getTrainer(clientId: ObjectId) {
     const subscription = await this.subscriptionRepository.getTrainer(clientId);
-    return subscription.toJSON().trainer;
+    return subscription.trainer;
   }
 }

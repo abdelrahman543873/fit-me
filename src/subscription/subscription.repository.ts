@@ -22,8 +22,11 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
   }
 
   getTrainer(clientId: ObjectId) {
-    return this.subscriptionSchema.findOne({
-      client: clientId,
-    });
+    return this.subscriptionSchema
+      .findOne({
+        client: clientId,
+      })
+      .populate('trainer')
+      .lean();
   }
 }
