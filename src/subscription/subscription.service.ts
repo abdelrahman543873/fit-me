@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SubscriptionRepository } from './subscription.repository';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
+import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class SubscriptionService {
@@ -10,5 +11,10 @@ export class SubscriptionService {
 
   addSubscription(clientRegisteredEvent: ClientRegisteredEvent) {
     return this.subscriptionRepository.addSubscription(clientRegisteredEvent);
+  }
+
+  async getTrainer(clientId: ObjectId) {
+    const subscription = await this.subscriptionRepository.getTrainer(clientId);
+    return subscription.toJSON().trainer;
   }
 }
