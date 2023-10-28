@@ -9,8 +9,8 @@ import { userFactory } from '../user/user.factory';
 describe('add plan suite case', () => {
   it('should add plan successfully', async () => {
     const user = await userFactory({ role: USER_ROLE.TRAINER });
-    const params = await buildPlanParams({ trainerId: user._id });
-    delete params.trainerId;
+    const params = await buildPlanParams({ trainer: user._id });
+    delete params.trainer;
     const res = await testRequest<AddPlanDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: PLAN,

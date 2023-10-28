@@ -44,15 +44,15 @@ export class UserService {
     );
     if (user.role === USER_ROLE.CLIENT) {
       const clientRegisteredEvent = new ClientRegisteredEvent();
-      clientRegisteredEvent.clientId = user._id;
-      clientRegisteredEvent.trainerId = userRegisterDto.trainerId;
+      clientRegisteredEvent.client = user._id;
+      clientRegisteredEvent.trainer = userRegisterDto.trainer;
       this.eventEmitter.emit(
         UserEvents.CLIENT_REGISTRATION,
         clientRegisteredEvent,
       );
     } else if (user.role === USER_ROLE.TRAINER) {
       const trainerRegisteredEvent = new TrainerRegisteredEvent();
-      trainerRegisteredEvent.trainerId = user._id;
+      trainerRegisteredEvent.trainer = user._id;
       this.eventEmitter.emit(
         UserEvents.TRAINER_REGISTRATION,
         trainerRegisteredEvent,

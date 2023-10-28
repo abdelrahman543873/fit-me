@@ -17,7 +17,7 @@ export class TrainerRepository extends BaseRepository<Trainer> {
 
   registerTrainer(trainerRegisteredEvent: TrainerRegisteredEvent) {
     return this.trainerSchema.create({
-      _id: trainerRegisteredEvent.trainerId,
+      _id: trainerRegisteredEvent.trainer,
     });
   }
 

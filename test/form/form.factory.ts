@@ -9,7 +9,7 @@ export const buildFormParams = async (
 ): Promise<Partial<Form>> => {
   return {
     title: obj.title || faker.word.noun(),
-    trainerId: obj.trainerId || (await userFactory())._id,
+    trainer: obj.trainer || (await userFactory())._id,
     type:
       obj.type ||
       faker.helpers.arrayElement<FORM_TYPES>(Object.values(FORM_TYPES)),

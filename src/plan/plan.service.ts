@@ -8,12 +8,12 @@ import { FilterPlansDto } from './inputs/filter-plans.dto';
 @Injectable()
 export class PlanService {
   constructor(private readonly planRepository: PlanRepository) {}
-  addPlan(trainerId: ObjectId, addPlanDto: AddPlanDto) {
-    return this.planRepository.addPlan(trainerId, addPlanDto);
+  addPlan(trainer: ObjectId, addPlanDto: AddPlanDto) {
+    return this.planRepository.addPlan(trainer, addPlanDto);
   }
 
-  deletePlan(trainerId: ObjectId, deletePlanDto: DeletePlanDto) {
-    return this.planRepository.deletePlan(trainerId, deletePlanDto);
+  deletePlan(trainer: ObjectId, deletePlanDto: DeletePlanDto) {
+    return this.planRepository.deletePlan(trainer, deletePlanDto);
   }
 
   filterPlans(filterPlansDto: FilterPlansDto) {

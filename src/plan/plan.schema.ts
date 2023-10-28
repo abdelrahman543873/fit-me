@@ -16,7 +16,7 @@ export class Plan {
     ref: 'User',
     required: true,
   })
-  trainerId: ObjectId;
+  trainer: ObjectId;
 
   @Prop({ required: true })
   title: string;

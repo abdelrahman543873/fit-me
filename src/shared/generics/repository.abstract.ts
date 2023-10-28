@@ -1,7 +1,6 @@
 import { Repository } from '../interfaces/repository.interface';
 import {
   Model,
-  Document,
   FilterQuery,
   UpdateQuery,
   SaveOptions,
@@ -35,7 +34,7 @@ export abstract class BaseRepository<T> implements Repository<T> {
     return await this._model.deleteMany({});
   }
 
-  deleteOne(filter): QueryWithHelpers<any, any> {
+  deleteOne(filter: FilterQuery<T>): QueryWithHelpers<any, any> {
     return this._model.deleteOne(filter);
   }
 

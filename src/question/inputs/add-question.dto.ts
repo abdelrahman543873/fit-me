@@ -22,7 +22,7 @@ export class AddQuestionDto {
   @ApiProperty({ type: 'string' })
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
-  formId: ObjectId;
+  form: ObjectId;
 
   @IsNotEmpty()
   @IsString()

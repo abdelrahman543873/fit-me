@@ -7,8 +7,8 @@ import { USER_ROLE } from '../../src/user/user.constants';
 
 export const buildPlanParams = async (obj: Partial<Plan> = {}) => {
   return {
-    trainerId:
-      obj.trainerId || (await userFactory({ role: USER_ROLE.TRAINER }))._id,
+    trainer:
+      obj.trainer || (await userFactory({ role: USER_ROLE.TRAINER }))._id,
     title: obj.title || faker.word.noun(),
     type:
       obj.type ||

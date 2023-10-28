@@ -15,7 +15,7 @@ export class Question {
     ref: 'Form',
     required: true,
   })
-  formId: ObjectId;
+  form: ObjectId;
 
   @Prop()
   title: string;

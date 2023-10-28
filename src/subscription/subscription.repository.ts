@@ -16,15 +16,15 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
 
   addSubscription(clientRegisteredEvent: ClientRegisteredEvent) {
     return this.subscriptionSchema.create({
-      client: clientRegisteredEvent.clientId,
-      trainer: clientRegisteredEvent.trainerId,
+      client: clientRegisteredEvent.client,
+      trainer: clientRegisteredEvent.trainer,
     });
   }
 
-  getTrainer(clientId: ObjectId) {
+  getTrainer(client: ObjectId) {
     return this.subscriptionSchema
       .findOne({
-        client: clientId,
+        client: client,
       })
       .populate('trainer')
       .lean();

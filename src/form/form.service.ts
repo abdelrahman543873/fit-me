@@ -7,7 +7,7 @@ import { ObjectId } from 'mongoose';
 export class FormService {
   constructor(private readonly formRepository: FormRepository) {}
 
-  addForm(trainerId: ObjectId, addFormDto: AddFormDto) {
-    return this.formRepository.addForm(trainerId, addFormDto);
+  addForm(trainer: ObjectId, addFormDto: AddFormDto) {
+    return this.formRepository.addForm(trainer, addFormDto);
   }
 }

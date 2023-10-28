@@ -9,11 +9,11 @@ import { FilterPlansDto } from '../../src/plan/inputs/filter-plans.dto';
 describe('filter plans suite case', () => {
   it('should filter plans successfully', async () => {
     const user = await userFactory({ role: USER_ROLE.TRAINER });
-    const plan = await planFactory({ trainerId: user._id });
+    const plan = await planFactory({ trainer: user._id });
     const res = await testRequest<FilterPlansDto>({
       method: HTTP_METHODS_ENUM.GET,
       url: FILTER_PLANS,
-      params: { trainerId: user._id.toString() as any },
+      params: { trainer: user._id.toString() as any },
       token: user.token,
     });
     expect(res.body[0].title).toBe(plan.title);
@@ -26,7 +26,7 @@ describe('filter plans suite case', () => {
     const res = await testRequest<FilterPlansDto>({
       method: HTTP_METHODS_ENUM.GET,
       url: FILTER_PLANS,
-      params: { trainerId: randomMongoId as any },
+      params: { trainer: randomMongoId as any },
       token: user.token,
     });
     expect(res.body.message).toContain("this trainer doesn't exist");

@@ -7,7 +7,7 @@ import { QuestionRepo } from './question.test-repo';
 export const buildQuestionParams = async (obj: Partial<Question> = {}) => {
   return {
     title: obj.title || faker.word.noun(),
-    formId: obj.formId || (await formFactory())._id,
+    form: obj.form || (await formFactory())._id,
     type:
       obj.type ||
       faker.helpers.arrayElement<QUESTION_TYPES>(Object.values(QUESTION_TYPES)),

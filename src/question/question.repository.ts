@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddQuestionDto } from './inputs/add-question.dto';
 import { UpdateQuestionDto } from './inputs/update-questoin.dto';
+import { DeleteQuestionDto } from './inputs/delete-question.dto';
 
 @Injectable()
 export class QuestionRepository extends BaseRepository<Question> {
@@ -25,5 +26,9 @@ export class QuestionRepository extends BaseRepository<Question> {
       { ...updateQuestionDto },
       { new: true },
     );
+  }
+
+  deleteQuestionDto(deleteQuestionDto: DeleteQuestionDto) {
+    return this.questionSchema.deleteOne({ _id: deleteQuestionDto.id });
   }
 }

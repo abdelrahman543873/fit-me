@@ -16,12 +16,12 @@ export class PlanRepository extends BaseRepository<Plan> {
     super(planSchema);
   }
 
-  addPlan(trainerId: ObjectId, addPlanDto: AddPlanDto) {
-    return this.planSchema.create({ trainerId, ...addPlanDto });
+  addPlan(trainer: ObjectId, addPlanDto: AddPlanDto) {
+    return this.planSchema.create({ trainer, ...addPlanDto });
   }
 
-  deletePlan(trainerId: ObjectId, deletePlanDto: DeletePlanDto) {
-    return this.planSchema.deleteOne({ trainerId, _id: deletePlanDto.id });
+  deletePlan(trainer: ObjectId, deletePlanDto: DeletePlanDto) {
+    return this.planSchema.deleteOne({ trainer, _id: deletePlanDto.id });
   }
 
   filterPlans(filterPlansDto: FilterPlansDto) {

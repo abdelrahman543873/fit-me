@@ -15,6 +15,6 @@ export class ClientRepository extends BaseRepository<Client> {
   }
 
   registerClient(clientRegisterEvent: ClientRegisteredEvent) {
-    return this.clientSchema.create({ _id: clientRegisterEvent.clientId });
+    return this.clientSchema.create({ _id: clientRegisterEvent.client });
   }
 }

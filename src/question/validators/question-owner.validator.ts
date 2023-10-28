@@ -6,39 +6,41 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { ObjectId, Types } from 'mongoose';
-import { FormRepository } from '../form.repository';
+import { ObjectId } from 'mongoose';
 import { User } from '../../user/user.schema';
+import { QuestionRepository } from '../question.repository';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class FormOwnerValidator implements ValidatorConstraintInterface {
-  constructor(private formRepository: FormRepository) {}
+export class QuestionOwnerValidator implements ValidatorConstraintInterface {
+  constructor(private questionRepository: QuestionRepository) {}
   async validate(
     id: ObjectId,
     validationArguments: ValidationArguments,
   ): Promise<boolean> {
     const user: User = JSON.parse(validationArguments.object['user']);
-    const form = await this.formRepository.findOne({
-      _id: id,
-      trainer: new Types.ObjectId(user._id as any),
-    });
-    if (!form) return false;
+    const question = await this.questionRepository
+      .findOne({
+        _id: id,
+      })
+      .populate('form');
+    if ((question.form as any).trainer.toString() !== (user._id as any))
+      return false;
     return true;
   }
 
   defaultMessage() {
-    return 'unauthorized form';
+    return 'unauthorized question';
   }
 }
-export function IsFormOwner(validationOptions?: ValidationOptions) {
+export function IsQuestionOwner(validationOptions?: ValidationOptions) {
   return function (object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: FormOwnerValidator,
+      validator: QuestionOwnerValidator,
     });
   };
 }

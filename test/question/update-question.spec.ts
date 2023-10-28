@@ -10,8 +10,8 @@ import { UpdateQuestionDto } from '../../src/question/inputs/update-questoin.dto
 describe('question suite case', () => {
   it('should update question successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
-    const form = await formFactory({ trainerId: trainer._id });
-    const question = await questionFactory({ formId: form._id });
+    const form = await formFactory({ trainer: trainer._id });
+    const question = await questionFactory({ form: form._id });
     const questionParams = await buildQuestionParams();
     const res = await testRequest<UpdateQuestionDto>({
       method: HTTP_METHODS_ENUM.PUT,
@@ -20,7 +20,7 @@ describe('question suite case', () => {
       variables: {
         ...questionParams,
         id: question._id,
-        formId: question.formId,
+        form: question.form,
       },
     });
     expect(res.body.type).toBe(questionParams.type);

@@ -57,7 +57,7 @@ export class UserRegisterDto {
   @ApiProperty({ type: 'string' })
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
-  trainerId?: ObjectId;
+  trainer?: ObjectId;
 
   @IsISO31661Alpha2()
   countryCode: string;

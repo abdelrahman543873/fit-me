@@ -15,7 +15,7 @@ export class Form {
     ref: 'User',
     required: true,
   })
-  trainerId: ObjectId;
+  trainer: ObjectId;
 
   @Prop()
   title: string;

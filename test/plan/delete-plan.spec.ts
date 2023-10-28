@@ -9,7 +9,7 @@ import { DeletePlanDto } from '../../src/plan/inputs/delete-plan.dto';
 describe('delete plan suite case', () => {
   it('should delete plan successfully', async () => {
     const user = await userFactory({ role: USER_ROLE.TRAINER });
-    const plan = await planFactory({ trainerId: user._id });
+    const plan = await planFactory({ trainer: user._id });
     const res = await testRequest<DeletePlanDto>({
       method: HTTP_METHODS_ENUM.DELETE,
       url: PLAN,

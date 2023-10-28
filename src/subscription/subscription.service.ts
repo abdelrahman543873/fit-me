@@ -13,8 +13,8 @@ export class SubscriptionService {
     return this.subscriptionRepository.addSubscription(clientRegisteredEvent);
   }
 
-  async getTrainer(clientId: ObjectId) {
-    const subscription = await this.subscriptionRepository.getTrainer(clientId);
+  async getTrainer(client: ObjectId) {
+    const subscription = await this.subscriptionRepository.getTrainer(client);
     return subscription.trainer;
   }
 }

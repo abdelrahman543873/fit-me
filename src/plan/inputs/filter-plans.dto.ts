@@ -10,5 +10,5 @@ export class FilterPlansDto {
   @IsExistingTrainer()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
-  trainerId: ObjectId;
+  trainer: ObjectId;
 }

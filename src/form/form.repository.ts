@@ -14,7 +14,7 @@ export class FormRepository extends BaseRepository<Form> {
     super(formSchema);
   }
 
-  addForm(trainerId: ObjectId, addFormDto: AddFormDto) {
-    return this.formSchema.create({ trainerId, ...addFormDto });
+  addForm(trainer: ObjectId, addFormDto: AddFormDto) {
+    return this.formSchema.create({ trainer, ...addFormDto });
   }
 }

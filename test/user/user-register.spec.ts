@@ -18,7 +18,7 @@ describe('user register suite case', () => {
     const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
-      variables: { ...client, trainerId: trainer._id.toString() as any },
+      variables: { ...client, trainer: trainer._id.toString() as any },
       filePath,
       fileParam: 'profilePicture',
     });
@@ -59,7 +59,7 @@ describe('user register suite case', () => {
     const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
-      variables: { ...trainer, trainerId: randomMongoId as any },
+      variables: { ...trainer, trainer: randomMongoId as any },
       filePath,
       fileParam: 'profilePicture',
     });
@@ -90,7 +90,7 @@ describe('user register suite case', () => {
     const res = await testRequest<UserRegisterDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: REGISTER_USER,
-      variables: { ...trainer, trainerId: seededTrainer._id.toString() as any },
+      variables: { ...trainer, trainer: seededTrainer._id.toString() as any },
       filePath,
       fileParam: 'profilePicture',
     });

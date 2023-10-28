@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongoose';
 
 export class TrainerRegisteredEvent {
-  trainerId: ObjectId;
+  trainer: ObjectId;
 }
