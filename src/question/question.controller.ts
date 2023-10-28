@@ -9,10 +9,11 @@ import {
 import { QuestionService } from './question.service';
 import { AddQuestionDto } from './inputs/add-question.dto';
 import { UpdateQuestionDto } from './inputs/update-questoin.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { DeleteQuestionDto } from './inputs/delete-question.dto';
 
+@ApiTags('question')
 @ApiBearerAuth()
 @Controller('question')
 export class QuestionController {

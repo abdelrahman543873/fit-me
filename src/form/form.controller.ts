@@ -10,12 +10,13 @@ import {
 } from '@nestjs/common';
 import { FormService } from './form.service';
 import { AddFormDto } from './inputs/add-form.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { DeleteFormDto } from './inputs/delete-form.dto';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { Get } from '@nestjs/common';
 import { FilterFormsDto } from './inputs/filter-forms.dto';
 
+@ApiTags('form')
 @ApiBearerAuth()
 @Controller('form')
 export class FormController {

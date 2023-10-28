@@ -2,8 +2,9 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import { Controller, Get } from '@nestjs/common';
 import { SubscriptionService } from './subscription.service';
 import { Request } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('subscription')
 @ApiBearerAuth()
 @Controller('subscription')
 export class SubscriptionController {

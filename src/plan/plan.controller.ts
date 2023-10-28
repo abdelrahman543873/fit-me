@@ -10,11 +10,12 @@ import {
 import { PlanService } from './plan.service';
 import { AddPlanDto } from './inputs/add-plan.dto';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Plan } from './plan.schema';
 import { DeletePlanDto } from './inputs/delete-plan.dto';
 import { FilterPlansDto } from './inputs/filter-plans.dto';
 
+@ApiTags('plan')
 @ApiBearerAuth()
 @Controller('plan')
 export class PlanController {
