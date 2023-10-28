@@ -1,5 +1,54 @@
 import request from 'supertest';
 import { HTTP_METHODS_ENUM } from './request.methods.enum';
+import { isArray } from 'class-validator';
+
+const createRequest = (
+  server: request.SuperTest<request.Test>,
+  method: HTTP_METHODS_ENUM,
+  url: string,
+) => {
+  switch (method) {
+    case HTTP_METHODS_ENUM.POST:
+      return server.post(url);
+    case HTTP_METHODS_ENUM.GET:
+      return server.get(url);
+    case HTTP_METHODS_ENUM.PUT:
+      return server.put(url);
+    case HTTP_METHODS_ENUM.DELETE:
+      return server.delete(url);
+    default:
+      throw new Error('Invalid HTTP method');
+  }
+};
+
+const setRequestFields = (req: request.Test, input: any) => {
+  if (input.variables && input.filePath) {
+    Object.entries(input.variables).forEach(([key, value]) => {
+      if (typeof value === 'object' && isArray(value)) {
+        value.forEach((item, index) => {
+          req.field(`${key}[${index}]`, item);
+        });
+      } else {
+        req.field(
+          key,
+          typeof value === 'string' ? value : JSON.stringify(value),
+        );
+      }
+    });
+  }
+};
+
+const setRequestFiles = (req: request.Test, input: any) => {
+  if (input.fileParam && input.filePath) {
+    req.attach(input.fileParam, input.filePath);
+  } else if (input.fileParams) {
+    input.fileParams.forEach((param) => {
+      req.attach(param, input.filePath);
+    });
+  } else {
+    req.send(input.variables);
+  }
+};
 
 export const testRequest = async <T>(input: {
   method: HTTP_METHODS_ENUM;
@@ -13,48 +62,19 @@ export const testRequest = async <T>(input: {
   headers?: Record<any, any>;
 }): Promise<request.Test> => {
   const server = request(global.app.getHttpServer());
-  let req: request.Test;
-  input.method === HTTP_METHODS_ENUM.POST && (req = server.post(input.url));
-  input.method === HTTP_METHODS_ENUM.GET && (req = server.get(input.url));
-  input.method === HTTP_METHODS_ENUM.PUT && (req = server.put(input.url));
-  input.method === HTTP_METHODS_ENUM.DELETE && (req = server.delete(input.url));
-  //only way to upload a file and send object values
-  input?.variables && input?.filePath
-    ? Object.keys(input.variables).forEach((key) => {
-        typeof input.variables[key] === 'string'
-          ? req.field(key, input.variables[key])
-          : typeof input.variables[key] === 'object'
-          ? input.variables[key].length
-            ? input.variables[key].forEach((item, index) => {
-                req.field(`${key}[${index}]`, item);
-              })
-            : req.field(key, JSON.stringify(input.variables[key]))
-          : req.field(key, `${input.variables[key]}`);
-      })
-    : input.variables;
-  input?.fileParam && input?.filePath
-    ? req.attach(input.fileParam, input.filePath)
-    : input.fileParams
-    ? null
-    : req.send(input.variables as 'object');
-  input?.fileParams
-    ? input.fileParams.forEach((param) => {
-        req.attach(param, input.filePath);
-      })
-    : null;
+  let req: request.Test = createRequest(server, input.method, input.url);
+
+  setRequestFields(req, input);
+  setRequestFiles(req, input);
+
   if (input.token) req.set('Authorization', `Bearer ${input.token}`);
-  if (input.headers)
-    Object.keys(input.headers).forEach((header) => {
-      req.set(header, input.headers[header]);
+  if (input.headers) {
+    Object.entries(input.headers).forEach(([header, value]) => {
+      req.set(header, value);
     });
+  }
   if (input.params) {
-    const queryParams = {};
-    Object.keys(input.params).forEach((param) => {
-      queryParams[param] = input.params[param];
-    });
-    req = req.query({
-      ...queryParams,
-    });
+    req = req.query(input.params as object);
   }
   return req;
 };
