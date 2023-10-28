@@ -8,6 +8,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { PlanModule } from './plan/plan.module';
 import { AuthModule } from './shared/auth/auth.module';
 import { FormModule } from './form/form.module';
+import { QuestionModule } from './question/question.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { FormModule } from './form/form.module';
     SubscriptionModule,
     PlanModule,
     FormModule,
+    QuestionModule,
   ],
   controllers: [AppController],
 })

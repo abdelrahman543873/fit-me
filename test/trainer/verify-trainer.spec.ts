@@ -8,7 +8,7 @@ describe('verify trainer suite case', () => {
     const trainer = await trainerFactory();
     const res = await testRequest({
       method: HTTP_METHODS_ENUM.GET,
-      url: `${VERIFY_TRAINER}/${trainer._id.toString()}`,
+      url: `${VERIFY_TRAINER}/${trainer._id}`,
     });
     expect(res.body._id).toBe(trainer._id.toString());
   });

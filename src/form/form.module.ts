@@ -4,12 +4,13 @@ import { FormController } from './form.controller';
 import { FormRepository } from './form.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Form, FormSchema } from './form.schema';
+import { ExistingFormValidator } from './validators/existing-form.validator';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Form.name, schema: FormSchema }]),
   ],
-  providers: [FormService, FormRepository],
+  providers: [FormService, FormRepository, ExistingFormValidator],
   controllers: [FormController],
 })
 export class FormModule {}

@@ -24,7 +24,7 @@ describe('delete plan suite case', () => {
     const res = await testRequest<DeletePlanDto>({
       method: HTTP_METHODS_ENUM.DELETE,
       url: PLAN,
-      variables: { id: user._id.toString() as any },
+      variables: { id: user._id },
       token: user.token,
     });
     expect(res.body.message).toContain("this plan doesn't exist");
