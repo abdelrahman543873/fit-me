@@ -3,7 +3,7 @@ import { HydratedDocument, ObjectId, Types } from 'mongoose';
 
 export type ClientDocument = HydratedDocument<Client>;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({ versionKey: false, timestamps: true, strict: true })
 export class Client {
   @Prop({
     type: Types.ObjectId,

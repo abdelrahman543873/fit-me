@@ -24,7 +24,11 @@ export const testRequest = async <T>(input: {
         typeof input.variables[key] === 'string'
           ? req.field(key, input.variables[key])
           : typeof input.variables[key] === 'object'
-          ? req.field(key, JSON.stringify(input.variables[key]))
+          ? input.variables[key].length
+            ? input.variables[key].forEach((item, index) => {
+                req.field(`${key}[${index}]`, item);
+              })
+            : req.field(key, JSON.stringify(input.variables[key]))
           : req.field(key, `${input.variables[key]}`);
       })
     : input.variables;

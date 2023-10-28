@@ -1,0 +1,8 @@
+export enum MUSCLE_GROUP {
+  LEGS = 'LEGS',
+  SHOULDERS = 'SHOULDERS',
+  ARMS = 'ARMS',
+  BACK = 'BACK',
+  CHEST = 'CHEST',
+  TRAPS = 'TRAPS',
+}

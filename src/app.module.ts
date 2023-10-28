@@ -9,6 +9,7 @@ import { PlanModule } from './plan/plan.module';
 import { AuthModule } from './shared/auth/auth.module';
 import { FormModule } from './form/form.module';
 import { QuestionModule } from './question/question.module';
+import { ExerciseModule } from './exercise/exercise.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { QuestionModule } from './question/question.module';
     PlanModule,
     FormModule,
     QuestionModule,
+    ExerciseModule,
   ],
   controllers: [AppController],
 })
