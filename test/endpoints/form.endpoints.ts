@@ -1,1 +1,1 @@
-export const ADD_FORM = '/form';
+export const FORM = '/form';

@@ -4,6 +4,7 @@ import { Form, FormDocument } from './form.schema';
 import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddFormDto } from './inputs/add-form.dto';
+import { DeleteFormDto } from './inputs/delete-form.dto';
 
 @Injectable()
 export class FormRepository extends BaseRepository<Form> {
@@ -16,5 +17,9 @@ export class FormRepository extends BaseRepository<Form> {
 
   addForm(trainer: ObjectId, addFormDto: AddFormDto) {
     return this.formSchema.create({ trainer, ...addFormDto });
+  }
+
+  deleteForm(trainer: ObjectId, deleteFormDto: DeleteFormDto) {
+    return this.formSchema.deleteOne({ trainer, _id: deleteFormDto.id });
   }
 }
