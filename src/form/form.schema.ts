@@ -7,6 +7,7 @@ export type FormDocument = HydratedDocument<Form>;
 
 @Schema({ versionKey: false, timestamps: true, strict: true })
 export class Form {
+  @ApiProperty({ type: 'string' })
   _id?: ObjectId;
 
   @ApiProperty({ type: 'string' })

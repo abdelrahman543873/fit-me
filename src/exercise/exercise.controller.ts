@@ -11,6 +11,7 @@ import { AddExerciseDto } from './inputs/add-exercise.dto';
 import { ExerciseService } from './exercise.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { Exercise } from './exercise.schema';
 
 @ApiBearerAuth()
 @ApiTags('exercise')
@@ -25,7 +26,7 @@ export class ExerciseController {
     @Request() request: RequestContext,
     @Body() addExerciseDto: AddExerciseDto,
     @UploadedFiles() media: Array<Express.Multer.File>,
-  ) {
+  ): Promise<Exercise> {
     return await this.exerciseService.addExercise(
       request.user._id,
       addExerciseDto,
