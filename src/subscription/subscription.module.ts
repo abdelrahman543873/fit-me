@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { SubscriptionService } from './subscription.service';
 import { SubscriptionController } from './subscription.controller';
-import { SubscriptionRepository } from './subscription.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Subscription, SubscriptionSchema } from './subscription.schema';
 import { SubscriptionListener } from './subscription.listener';
+import { SubscriptionRepository } from './subscription.repository';
 
 @Module({
   imports: [
@@ -14,8 +14,8 @@ import { SubscriptionListener } from './subscription.listener';
   ],
   providers: [
     SubscriptionService,
-    SubscriptionRepository,
     SubscriptionListener,
+    SubscriptionRepository,
   ],
   controllers: [SubscriptionController],
 })

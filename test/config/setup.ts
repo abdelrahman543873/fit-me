@@ -7,6 +7,8 @@ import { useContainer } from 'class-validator';
 import { AppModule } from '../../src/app.module';
 import { MongooseExceptionFilter } from '../../src/shared/exception-filters/mongo-exception-filter';
 import { BaseHttpExceptionFilter } from '../../src/shared/exception-filters/base-http.exception-filter';
+import { SubscriptionRepository } from '../../src/subscription/subscription.repository';
+import { ClientTrainerInterceptor } from '../../src/shared/interceptors/client-trainer.interceptor';
 
 const mongod = new MongoMemoryServer({
   binary: { version: '7.0.2', arch: 'x64' },
@@ -39,6 +41,12 @@ module.exports = async (): Promise<void> => {
       stopAtFirstError: true,
       forbidNonWhitelisted: true,
     }),
+  );
+  const subscriptionRepository = app.get<SubscriptionRepository>(
+    SubscriptionRepository,
+  );
+  app.useGlobalInterceptors(
+    new ClientTrainerInterceptor(subscriptionRepository),
   );
   await app.init();
   global.app = app;

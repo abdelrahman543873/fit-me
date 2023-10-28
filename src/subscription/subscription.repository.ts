@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Global, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { Subscription, SubscriptionDocument } from './subscription.schema';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 
+@Global()
 @Injectable()
 export class SubscriptionRepository extends BaseRepository<Subscription> {
   constructor(

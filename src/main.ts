@@ -6,6 +6,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { MongooseExceptionFilter } from './shared/exception-filters/mongo-exception-filter';
 import { BaseHttpExceptionFilter } from './shared/exception-filters/base-http.exception-filter';
+import { ClientTrainerInterceptor } from './shared/interceptors/client-trainer.interceptor';
+import { SubscriptionRepository } from './subscription/subscription.repository';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,6 +30,12 @@ async function bootstrap() {
   app.useGlobalFilters(
     new BaseHttpExceptionFilter(),
     new MongooseExceptionFilter(),
+  );
+  const subscriptionRepository = app.get<SubscriptionRepository>(
+    SubscriptionRepository,
+  );
+  app.useGlobalInterceptors(
+    new ClientTrainerInterceptor(subscriptionRepository),
   );
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   SwaggerModule.setup('api', app, document);

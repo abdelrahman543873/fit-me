@@ -43,6 +43,9 @@ export class FormController {
     @Request() request: RequestContext,
     @Query() filterFormsDto: FilterFormsDto,
   ) {
-    return await this.formService.filterForms(request.user._id, filterFormsDto);
+    return await this.formService.filterForms(
+      request.trainerId || request.user._id,
+      filterFormsDto,
+    );
   }
 }
