@@ -1,3 +1,4 @@
+import { RequestContext } from './../shared/interfaces/request-context.interface';
 import {
   Body,
   Controller,
@@ -9,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { FormService } from './form.service';
 import { AddFormDto } from './inputs/add-form.dto';
-import { RequestContext } from '../../dist/shared/interfaces/request-context.interface';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { DeleteFormDto } from './inputs/delete-form.dto';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
