@@ -13,22 +13,9 @@ describe('filter plans suite case', () => {
     const res = await testRequest<FilterPlansDto>({
       method: HTTP_METHODS_ENUM.GET,
       url: FILTER_PLANS,
-      params: { trainer: user._id.toString() as any },
       token: user.token,
     });
     expect(res.body[0].title).toBe(plan.title);
     expect(res.body[0].description).toBe(plan.description);
-  });
-
-  it('should fail to get plan for non existing trainer', async () => {
-    const randomMongoId = '507f191e810c19729de860ea';
-    const user = await userFactory({ role: USER_ROLE.TRAINER });
-    const res = await testRequest<FilterPlansDto>({
-      method: HTTP_METHODS_ENUM.GET,
-      url: FILTER_PLANS,
-      params: { trainer: randomMongoId as any },
-      token: user.token,
-    });
-    expect(res.body.message).toContain("this trainer doesn't exist");
   });
 });

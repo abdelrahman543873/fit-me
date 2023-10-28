@@ -37,7 +37,13 @@ export class PlanController {
   }
 
   @Get('filter')
-  async filterPlans(@Query() filterPlansDto: FilterPlansDto): Promise<Plan[]> {
-    return await this.planService.filterPlans(filterPlansDto);
+  async filterPlans(
+    @Request() request: RequestContext,
+    @Query() filterPlansDto: FilterPlansDto,
+  ): Promise<Plan[]> {
+    return await this.planService.filterPlans(
+      request.trainerId || request.user._id,
+      filterPlansDto,
+    );
   }
 }

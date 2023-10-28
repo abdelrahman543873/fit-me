@@ -16,7 +16,7 @@ export class PlanService {
     return this.planRepository.deletePlan(trainer, deletePlanDto);
   }
 
-  filterPlans(filterPlansDto: FilterPlansDto) {
-    return this.planRepository.filterPlans(filterPlansDto);
+  filterPlans(trainer: ObjectId, filterPlansDto: FilterPlansDto) {
+    return this.planRepository.filterPlans(trainer, filterPlansDto);
   }
 }

@@ -24,7 +24,7 @@ export class PlanRepository extends BaseRepository<Plan> {
     return this.planSchema.deleteOne({ trainer, _id: deletePlanDto.id });
   }
 
-  filterPlans(filterPlansDto: FilterPlansDto) {
-    return this.planSchema.find(filterPlansDto);
+  filterPlans(trainer: ObjectId, filterPlansDto: FilterPlansDto) {
+    return this.planSchema.find({ trainer, ...filterPlansDto });
   }
 }
