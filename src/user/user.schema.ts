@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({ versionKey: false, timestamps: true, strict: true })
 export class User {
   @ApiProperty({ type: 'string' })
   _id?: ObjectId;

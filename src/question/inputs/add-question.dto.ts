@@ -1,4 +1,5 @@
 import {
+  Allow,
   IsArray,
   IsEnum,
   IsNotEmpty,
@@ -12,13 +13,16 @@ import { Transform } from 'class-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsExistingForm } from '../../form/validators/existing-form.validator';
+import { User } from '../../user/user.schema';
+import { IsFormOwner } from '../../form/validators/form-owner.validator';
 
 export class AddQuestionDto {
+  @IsFormOwner()
   @IsExistingForm()
   @ApiProperty({ type: 'string' })
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
-  formId?: ObjectId;
+  formId: ObjectId;
 
   @IsNotEmpty()
   @IsString()
@@ -31,4 +35,8 @@ export class AddQuestionDto {
   @IsArray()
   @IsString({ each: true })
   choices?: string[];
+
+  @ApiProperty({ readOnly: true })
+  @Allow()
+  user?: User;
 }

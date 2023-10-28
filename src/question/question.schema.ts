@@ -5,7 +5,7 @@ import { QUESTION_TYPES } from './question.constants';
 
 export type QuestionDocument = HydratedDocument<Question>;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({ versionKey: false, timestamps: true, strict: true })
 export class Question {
   _id?: ObjectId;
 

@@ -5,7 +5,7 @@ import { FORM_TYPES } from './form.constants';
 
 export type FormDocument = HydratedDocument<Form>;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({ versionKey: false, timestamps: true, strict: true })
 export class Form {
   _id?: ObjectId;
 
