@@ -1,3 +1,4 @@
 export enum FORM_TYPES {
   ONBOARDING = 'ONBOARDING',
+  FOLLOW_UP = 'FOLLOW_UP',
 }
