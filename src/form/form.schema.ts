@@ -22,6 +22,9 @@ export class Form {
 
   @Prop({ enum: FORM_TYPES })
   type: FORM_TYPES;
+
+  @Prop({ default: false })
+  isOptional: boolean;
 }
 
 export const FormSchema = SchemaFactory.createForClass(Form);

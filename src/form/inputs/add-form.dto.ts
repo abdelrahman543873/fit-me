@@ -1,5 +1,12 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { FORM_TYPES } from '../form.constants';
+import { Type } from 'class-transformer';
 
 export class AddFormDto {
   @IsNotEmpty()
@@ -8,4 +15,9 @@ export class AddFormDto {
 
   @IsEnum(FORM_TYPES)
   type: FORM_TYPES;
+
+  @IsOptional()
+  @IsBoolean()
+  @Type(() => Boolean)
+  isOptional?: boolean;
 }
