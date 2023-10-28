@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Post,
+  Query,
   Request,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,6 +13,8 @@ import { RequestContext } from '../../dist/shared/interfaces/request-context.int
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { DeleteFormDto } from './inputs/delete-form.dto';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
+import { Get } from '@nestjs/common';
+import { FilterFormsDto } from './inputs/filter-forms.dto';
 
 @ApiBearerAuth()
 @Controller('form')
@@ -33,5 +36,13 @@ export class FormController {
     @Body() deleteFormDto: DeleteFormDto,
   ) {
     return await this.formService.deleteForm(request.user._id, deleteFormDto);
+  }
+
+  @Get('filter')
+  async filterForms(
+    @Request() request: RequestContext,
+    @Query() filterFormsDto: FilterFormsDto,
+  ) {
+    return await this.formService.filterForms(request.user._id, filterFormsDto);
   }
 }

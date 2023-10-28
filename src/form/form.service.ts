@@ -3,6 +3,7 @@ import { FormRepository } from './form.repository';
 import { AddFormDto } from './inputs/add-form.dto';
 import { ObjectId } from 'mongoose';
 import { DeleteFormDto } from './inputs/delete-form.dto';
+import { FilterFormsDto } from './inputs/filter-forms.dto';
 
 @Injectable()
 export class FormService {
@@ -14,5 +15,9 @@ export class FormService {
 
   deleteForm(trainer: ObjectId, deleteFormDto: DeleteFormDto) {
     return this.formRepository.deleteForm(trainer, deleteFormDto);
+  }
+
+  filterForms(trainer: ObjectId, filterFormsDto: FilterFormsDto) {
+    return this.formRepository.filterForms(trainer, filterFormsDto);
   }
 }

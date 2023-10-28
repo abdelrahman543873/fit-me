@@ -5,6 +5,7 @@ import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddFormDto } from './inputs/add-form.dto';
 import { DeleteFormDto } from './inputs/delete-form.dto';
+import { FilterFormsDto } from './inputs/filter-forms.dto';
 
 @Injectable()
 export class FormRepository extends BaseRepository<Form> {
@@ -21,5 +22,19 @@ export class FormRepository extends BaseRepository<Form> {
 
   deleteForm(trainer: ObjectId, deleteFormDto: DeleteFormDto) {
     return this.formSchema.deleteOne({ trainer, _id: deleteFormDto.id });
+  }
+
+  filterForms(trainer: ObjectId, filterFormsDto: FilterFormsDto) {
+    return this.formSchema.aggregate([
+      { $match: { trainer, ...filterFormsDto } },
+      {
+        $lookup: {
+          from: 'questions',
+          foreignField: 'form',
+          localField: '_id',
+          as: 'questions',
+        },
+      },
+    ]);
   }
 }
