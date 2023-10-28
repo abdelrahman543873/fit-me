@@ -10,8 +10,9 @@ import {
 import { AddExerciseDto } from './inputs/add-exercise.dto';
 import { ExerciseService } from './exercise.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @ApiTags('exercise')
 @Controller('exercise')
 export class ExerciseController {
