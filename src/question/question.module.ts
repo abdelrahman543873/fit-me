@@ -4,6 +4,7 @@ import { QuestionController } from './question.controller';
 import { QuestionRepository } from './question.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Question, QuestionSchema } from './question.schema';
+import { ExistingQuestionValidator } from './validators/existing-question.validator';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { Question, QuestionSchema } from './question.schema';
       { name: Question.name, schema: QuestionSchema },
     ]),
   ],
-  providers: [QuestionService, QuestionRepository],
+  providers: [QuestionService, QuestionRepository, ExistingQuestionValidator],
   controllers: [QuestionController],
 })
 export class QuestionModule {}
