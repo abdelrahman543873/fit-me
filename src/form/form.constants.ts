@@ -1,0 +1,3 @@
+export enum FORM_TYPES {
+  ONBOARDING = 'ONBOARDING',
+}

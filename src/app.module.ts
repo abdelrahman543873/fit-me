@@ -7,6 +7,7 @@ import { ConfigurationModule } from './shared/configuration/configuration.module
 import { SubscriptionModule } from './subscription/subscription.module';
 import { PlanModule } from './plan/plan.module';
 import { AuthModule } from './shared/auth/auth.module';
+import { FormModule } from './form/form.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthModule } from './shared/auth/auth.module';
     UserModule,
     SubscriptionModule,
     PlanModule,
+    FormModule,
   ],
   controllers: [AppController],
 })
