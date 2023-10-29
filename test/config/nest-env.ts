@@ -8,6 +8,7 @@ import { PlanRepository } from '../../src/plan/plan.repository';
 import { FormRepository } from '../../src/form/form.repository';
 import { QuestionRepository } from '../../src/question/question.repository';
 import { ExerciseRepository } from '../../src/exercise/exercise.repository';
+import { WorkoutRepository } from '../../src/workout/workout.repository';
 
 class MongoEnvironment extends NodeEnvironment {
   constructor(config, context) {
@@ -33,6 +34,8 @@ class MongoEnvironment extends NodeEnvironment {
       app.get<QuestionRepository>(QuestionRepository);
     this.global.exerciseRepository =
       app.get<ExerciseRepository>(ExerciseRepository);
+    this.global.workoutRepository =
+      app.get<WorkoutRepository>(WorkoutRepository);
   }
 
   async teardown() {

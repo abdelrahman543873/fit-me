@@ -23,7 +23,7 @@ const createRequest = (
 };
 
 const setRequestFields = (req: request.Test, input: any) => {
-  if (input.variables && input.filePath) {
+  if (input.variables && input.fileParam) {
     Object.entries(input.variables).forEach(([key, value]) => {
       if (typeof value === 'object' && isArray(value)) {
         value.forEach((item, index) => {
