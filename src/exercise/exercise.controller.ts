@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   Request,
   UploadedFiles,
@@ -18,6 +19,8 @@ import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Exercise } from './exercise.schema';
 import { FilterExercisesDto } from './inputs/filter-exercises.dto';
 import { DeleteExerciseDto } from './inputs/delete-exercise.dto';
+import { UpdateExerciseDto } from './inputs/update-exercise.dto';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @ApiBearerAuth()
 @ApiTags('exercise')
@@ -48,6 +51,23 @@ export class ExerciseController {
     return await this.exerciseService.filterExercises(
       request.user._id,
       filterExercisesDto,
+    );
+  }
+
+  @Put(':id')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('media'))
+  async updateExercise(
+    @Request() request: RequestContext,
+    @Param() idInput: MongoIdDto,
+    @Query() updateExerciseDto: UpdateExerciseDto,
+    @UploadedFiles() media: Array<Express.Multer.File>,
+  ) {
+    return await this.exerciseService.updateExercise(
+      request.user._id,
+      idInput,
+      updateExerciseDto,
+      media,
     );
   }
 

@@ -10,8 +10,6 @@ describe('exercise suite case', () => {
   it('should add exercise successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const exercise = await buildExerciseParams({ trainer: trainer._id });
-    const testFiles = process.cwd();
-    const filePath = `${testFiles}/test/test-files/test-duck.jpeg`;
     const res = await testRequest<AddExerciseDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: EXERCISE,
@@ -22,7 +20,6 @@ describe('exercise suite case', () => {
         instructions: exercise.instructions,
         links: exercise.links,
       },
-      filePath,
       fileParam: 'media',
     });
     expect(res.body.title).toBe(exercise.title);

@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { HTTP_METHODS_ENUM } from './request.methods.enum';
 import { isArray } from 'class-validator';
+import * as qs from 'qs';
 
 const createRequest = (
   server: request.SuperTest<request.Test>,
@@ -45,6 +46,11 @@ const setRequestFiles = (req: request.Test, input: any) => {
     input.fileParams.forEach((param) => {
       req.attach(param, input.filePath);
     });
+  } else if (input.fileParam) {
+    req.attach(
+      input.fileParam,
+      `${process.cwd()}/test/test-files/test-duck.jpeg`,
+    );
   } else {
     req.send(input.variables);
   }
@@ -74,7 +80,7 @@ export const testRequest = async <T>(input: {
     });
   }
   if (input.params) {
-    req = req.query(input.params as object);
+    req = req.query(qs.stringify(input.params));
   }
   return req;
 };
