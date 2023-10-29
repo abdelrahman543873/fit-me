@@ -4,6 +4,7 @@ import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddExerciseDto } from './inputs/add-exercise.dto';
 import { Exercise, ExerciseDocument } from './exercise.schema';
+import { FilterExercisesDto } from './inputs/filter-exercises.dto';
 
 @Injectable()
 export class ExerciseRepository extends BaseRepository<Exercise> {
@@ -28,5 +29,9 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
         }),
       }),
     });
+  }
+
+  filterExercises(trainer: ObjectId, filterExercisesDto: FilterExercisesDto) {
+    return this.exerciseDocument.find({ trainer, ...filterExercisesDto });
   }
 }

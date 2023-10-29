@@ -2,7 +2,9 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Request,
   UploadedFiles,
   UseInterceptors,
@@ -12,6 +14,7 @@ import { ExerciseService } from './exercise.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Exercise } from './exercise.schema';
+import { FilterExercisesDto } from './inputs/filter-exercises.dto';
 
 @ApiBearerAuth()
 @ApiTags('exercise')
@@ -31,6 +34,17 @@ export class ExerciseController {
       request.user._id,
       addExerciseDto,
       media,
+    );
+  }
+
+  @Get('filter')
+  async filterExercises(
+    @Request() request: RequestContext,
+    @Query() filterExercisesDto: FilterExercisesDto,
+  ): Promise<Exercise[]> {
+    return await this.exerciseService.filterExercises(
+      request.user._id,
+      filterExercisesDto,
     );
   }
 }
