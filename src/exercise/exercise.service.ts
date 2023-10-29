@@ -3,6 +3,7 @@ import { ExerciseRepository } from './exercise.repository';
 import { AddExerciseDto } from './inputs/add-exercise.dto';
 import { ObjectId } from 'mongoose';
 import { FilterExercisesDto } from './inputs/filter-exercises.dto';
+import { DeleteExerciseDto } from './inputs/delete-exercise.dto';
 
 @Injectable()
 export class ExerciseService {
@@ -18,5 +19,9 @@ export class ExerciseService {
 
   filterExercises(trainer: ObjectId, filterExercisesDto: FilterExercisesDto) {
     return this.exerciseRepository.filterExercises(trainer, filterExercisesDto);
+  }
+
+  deleteExercise(trainer: ObjectId, deleteExerciseDto: DeleteExerciseDto) {
+    return this.exerciseRepository.deleteExercise(trainer, deleteExerciseDto);
   }
 }

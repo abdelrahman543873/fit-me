@@ -2,7 +2,9 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   Query,
   Request,
@@ -15,6 +17,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Exercise } from './exercise.schema';
 import { FilterExercisesDto } from './inputs/filter-exercises.dto';
+import { DeleteExerciseDto } from './inputs/delete-exercise.dto';
 
 @ApiBearerAuth()
 @ApiTags('exercise')
@@ -45,6 +48,17 @@ export class ExerciseController {
     return await this.exerciseService.filterExercises(
       request.user._id,
       filterExercisesDto,
+    );
+  }
+
+  @Delete(':id')
+  async deleteExercise(
+    @Request() request: RequestContext,
+    @Param() deleteExerciseDto: DeleteExerciseDto,
+  ) {
+    return await this.exerciseService.deleteExercise(
+      request.user._id,
+      deleteExerciseDto,
     );
   }
 }

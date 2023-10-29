@@ -4,13 +4,13 @@ import { USER_ROLE } from '../../src/user/user.constants';
 import { userFactory } from '../user/user.factory';
 import { exerciseFactory } from './exercise.factory';
 import { FILTER_EXERCISES } from '../endpoints/exercise.endpoints';
-import { AddExerciseDto } from '../../src/exercise/inputs/add-exercise.dto';
+import { FilterExercisesDto } from '../../src/exercise/inputs/filter-exercises.dto';
 
 describe('exercise suite case', () => {
   it('should filter exercises successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const exercise = await exerciseFactory({ trainer: trainer._id });
-    const res = await testRequest<AddExerciseDto>({
+    const res = await testRequest<FilterExercisesDto>({
       method: HTTP_METHODS_ENUM.GET,
       url: FILTER_EXERCISES,
       token: trainer.token,

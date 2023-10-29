@@ -5,14 +5,15 @@ import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddExerciseDto } from './inputs/add-exercise.dto';
 import { Exercise, ExerciseDocument } from './exercise.schema';
 import { FilterExercisesDto } from './inputs/filter-exercises.dto';
+import { DeleteExerciseDto } from './inputs/delete-exercise.dto';
 
 @Injectable()
 export class ExerciseRepository extends BaseRepository<Exercise> {
   constructor(
     @InjectModel(Exercise.name)
-    private exerciseDocument: Model<ExerciseDocument>,
+    private exerciseSchema: Model<ExerciseDocument>,
   ) {
-    super(exerciseDocument);
+    super(exerciseSchema);
   }
 
   addExercise(
@@ -20,7 +21,7 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
     addExerciseDto: AddExerciseDto,
     media: Array<Express.Multer.File>,
   ) {
-    return this.exerciseDocument.create({
+    return this.exerciseSchema.create({
       trainer,
       ...addExerciseDto,
       ...(media && {
@@ -32,6 +33,13 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
   }
 
   filterExercises(trainer: ObjectId, filterExercisesDto: FilterExercisesDto) {
-    return this.exerciseDocument.find({ trainer, ...filterExercisesDto });
+    return this.exerciseSchema.find({ trainer, ...filterExercisesDto });
+  }
+
+  deleteExercise(trainer: ObjectId, deleteExerciseDto: DeleteExerciseDto) {
+    return this.exerciseSchema.deleteOne({
+      trainer,
+      _id: deleteExerciseDto.id,
+    });
   }
 }
