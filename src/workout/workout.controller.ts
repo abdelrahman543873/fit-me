@@ -2,7 +2,7 @@ import { Body, Controller, Post, Request } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { AddWorkoutDto } from './inputs/add-workout.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { RequestContext } from '../../dist/shared/interfaces/request-context.interface';
+import { RequestContext } from '../shared/interfaces/request-context.interface';
 
 @ApiTags('workout')
 @Controller('workout')
