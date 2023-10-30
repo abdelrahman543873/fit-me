@@ -16,4 +16,5 @@ export enum MUSCLE_GROUP {
   LATS = 'LATS',
   LOWER_BACK = 'LOWER_BACK',
   HAMSTRING = 'HAMSTRING',
+  CARDIO = 'CARDIO',
 }
