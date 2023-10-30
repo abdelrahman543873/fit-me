@@ -83,7 +83,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "displayName": {
-      "name": "digital-workspace",
+      "name": "personal-trainer",
       "color": "blue"
     },
     "moduleFileExtensions": [
