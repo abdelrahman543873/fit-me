@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { AddWorkoutDto } from './inputs/add-workout.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -18,5 +18,10 @@ export class WorkoutController {
       request.user._id,
       addWorkoutDto,
     );
+  }
+
+  @Get('filter')
+  async filterWorkouts(@Request() request: RequestContext) {
+    return await this.workoutService.filterWorkouts(request.user._id);
   }
 }

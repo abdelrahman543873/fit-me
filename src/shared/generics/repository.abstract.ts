@@ -24,7 +24,7 @@ export abstract class BaseRepository<T> implements Repository<T> {
   }
 
   async addMany(
-    item: any[],
+    item: T[],
     options?: { ordered?: boolean; rawResult?: boolean },
   ) {
     return await this._model.insertMany(item, options);

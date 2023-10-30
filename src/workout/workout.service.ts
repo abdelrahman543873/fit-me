@@ -10,4 +10,8 @@ export class WorkoutService {
   addWorkout(trainer: ObjectId, addWorkoutDto: AddWorkoutDto) {
     return this.workoutRepository.addWorkout(trainer, addWorkoutDto);
   }
+
+  filterWorkouts(trainer: ObjectId) {
+    return this.workoutRepository.filterWorkouts(trainer);
+  }
 }

@@ -21,6 +21,17 @@ export const buildWorkoutExerciseParams = async (
   };
 };
 
+export const workoutExercisesFactory = async (
+  count = 10,
+  obj: Partial<WorkoutExercise> = {},
+): Promise<WorkoutExercise[]> => {
+  const workoutExercise: WorkoutExercise[] = [];
+  for (let i = 0; i < count; i++) {
+    workoutExercise.push(await buildWorkoutExerciseParams(obj));
+  }
+  return await WorkoutExerciseRepo().addMany(workoutExercise);
+};
+
 export const workoutExerciseFactory = async (
   obj: Partial<Trainer> = {},
 ): Promise<Trainer> => {
