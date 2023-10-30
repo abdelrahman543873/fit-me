@@ -1,12 +1,14 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import { WorkoutExerciseService } from './workout-exercise.service';
 import { AddWorkoutExerciseDto } from './inputs/add-workout-exercise.dto';
+import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 
 @Controller('workout-exercise')
 export class WorkoutExerciseController {
   constructor(private workoutExerciseService: WorkoutExerciseService) {}
 
   @Post()
+  @UseInterceptors(RequestInBodyInterceptor)
   async addWorkoutExercise(
     @Body() addWorkoutExerciseDto: AddWorkoutExerciseDto,
   ) {

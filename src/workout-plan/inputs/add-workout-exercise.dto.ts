@@ -4,15 +4,24 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { WORKOUT_STAGE } from '../workout-exercise.constants';
-import { IsEnum, IsInt } from 'class-validator';
+import { Allow, IsEnum, IsInt } from 'class-validator';
+import { IsExistingExercise } from '../../exercise/validators/existing-exercise.validator';
+import { IsExistingWorkout } from '../../workout/validators/existing-workout.controller';
+import { IsExerciseOwner } from '../../exercise/validators/exercise-owner.validator';
+import { IsWorkoutOwner } from '../../workout/validators/workout-owner.validator';
+import { User } from '../../user/user.schema';
 
 export class AddWorkoutExerciseDto {
   @ApiProperty({ type: 'string' })
+  @IsExerciseOwner()
+  @IsExistingExercise()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   exercise: ObjectId;
 
   @ApiProperty({ type: 'string' })
+  @IsWorkoutOwner()
+  @IsExistingWorkout()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   workout: ObjectId;
@@ -28,4 +37,8 @@ export class AddWorkoutExerciseDto {
 
   @IsInt()
   reps: number;
+
+  @ApiProperty({ readOnly: true })
+  @Allow()
+  user?: User;
 }

@@ -7,6 +7,8 @@ import { Exercise, ExerciseSchema } from './exercise.schema';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { filename } from '../shared/utils/multer-file-name';
+import { ExistingExerciseValidator } from './validators/existing-exercise.validator';
+import { ExerciseOwnerValidator } from './validators/exercise-owner.validator';
 
 @Module({
   imports: [
@@ -22,6 +24,11 @@ import { filename } from '../shared/utils/multer-file-name';
     }),
   ],
   controllers: [ExerciseController],
-  providers: [ExerciseService, ExerciseRepository],
+  providers: [
+    ExerciseService,
+    ExerciseRepository,
+    ExistingExerciseValidator,
+    ExerciseOwnerValidator,
+  ],
 })
 export class ExerciseModule {}
