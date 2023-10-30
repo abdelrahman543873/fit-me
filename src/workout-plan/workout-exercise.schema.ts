@@ -36,4 +36,5 @@ export class WorkoutExercise {
   reps: number;
 }
 
-export const WorkoutExerciseSchema = SchemaFactory.createForClass(WorkoutExercise);
+export const WorkoutExerciseSchema =
+  SchemaFactory.createForClass(WorkoutExercise);
