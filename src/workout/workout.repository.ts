@@ -28,10 +28,27 @@ export class WorkoutRepository extends BaseRepository<Workout> {
       },
       {
         $lookup: {
-          from: 'workoutexercises', // This should be the name of the collection
-          localField: '_id',
-          foreignField: 'workout',
+          from: 'workoutexercises',
+          let: { workoutId: '$_id' },
           as: 'exercises',
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$$workoutId', '$workout'],
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: 'exercises',
+                localField: 'exercise',
+                foreignField: '_id',
+                as: 'exercise',
+              },
+            },
+            { $unwind: '$exercise' },
+          ],
         },
       },
       {

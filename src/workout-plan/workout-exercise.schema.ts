@@ -29,11 +29,8 @@ export class WorkoutExercise {
   @Prop()
   minsDuration: number;
 
-  @Prop()
-  sets: number;
-
-  @Prop()
-  reps: number;
+  @Prop({ type: [Number] })
+  sets: Array<number>;
 }
 
 export const WorkoutExerciseSchema =

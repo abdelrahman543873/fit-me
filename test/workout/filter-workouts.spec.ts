@@ -21,6 +21,7 @@ describe('filter workout exercise suite case', () => {
       token: trainer.token,
     });
     expect(res.body[0].title).toBe(workout.title);
+    expect(res.body[0]['WARM_UP'][0].exercise.title).toBeTruthy();
     expect(res.body[0]['WARM_UP'][0].stage).toBe(WORKOUT_STAGE.WARM_UP);
     expect(res.body[0]['WARM_UP'][0].workout).toBe(workout._id.toString());
   });

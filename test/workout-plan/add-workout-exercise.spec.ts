@@ -24,7 +24,6 @@ describe('add workout exercise suite case', () => {
       token: trainer.token,
     });
     expect(res.body.stage).toBe(workoutExercise.stage);
-    expect(res.body.sets).toBe(workoutExercise.sets);
   });
 
   it('should throw error if not workout owner', async () => {

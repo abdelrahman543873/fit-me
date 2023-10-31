@@ -13,8 +13,7 @@ export const buildWorkoutExerciseParams = async (
     exercise: obj.exercise || (await exerciseFactory())._id,
     workout: obj.workout || (await workoutFactory())._id,
     minsDuration: obj.minsDuration || faker.number.int({ max: 100 }),
-    reps: obj.reps || faker.number.int({ max: 100 }),
-    sets: obj.sets || faker.number.int({ max: 100 }),
+    sets: obj.sets || [faker.number.int({ max: 100 })],
     stage:
       obj.stage ||
       faker.helpers.arrayElement<WORKOUT_STAGE>(Object.values(WORKOUT_STAGE)),
