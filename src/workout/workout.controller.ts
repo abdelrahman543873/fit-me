@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { AddWorkoutDto } from './inputs/add-workout.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
 
+@ApiBearerAuth()
 @ApiTags('workout')
 @Controller('workout')
 export class WorkoutController {
