@@ -18,6 +18,11 @@ export class WorkoutExerciseRepository extends BaseRepository<WorkoutExercise> {
   }
 
   addWorkoutExercise(addWorkoutExerciseDto: AddWorkoutExerciseDto) {
-    return this.workoutExerciseSchema.create(addWorkoutExerciseDto);
+    delete addWorkoutExerciseDto.user;
+    return this.workoutExerciseSchema.findOneAndUpdate(
+      addWorkoutExerciseDto,
+      { ...addWorkoutExerciseDto },
+      { upsert: true, new: true, populate: 'exercise' },
+    );
   }
 }
