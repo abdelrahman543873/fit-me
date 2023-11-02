@@ -4,7 +4,7 @@ import { BaseRepository } from '../shared/generics/repository.abstract';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { AddWorkoutDto } from './inputs/add-workout.dto';
-import { WORKOUT_STAGE } from '../workout-plan/workout-exercise.constants';
+import { WORKOUT_STAGE } from '../workout-exercise/workout-exercise.constants';
 
 @Injectable()
 export class WorkoutRepository extends BaseRepository<Workout> {

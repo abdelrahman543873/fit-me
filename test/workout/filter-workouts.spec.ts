@@ -5,8 +5,8 @@ import { userFactory } from '../user/user.factory';
 import { USER_ROLE } from '../../src/user/user.constants';
 import { workoutFactory } from './workout.factory';
 import { AddWorkoutDto } from '../../src/workout/inputs/add-workout.dto';
-import { workoutExercisesFactory } from '../workout-plan/workout-exercise.factory';
-import { WORKOUT_STAGE } from '../../src/workout-plan/workout-exercise.constants';
+import { workoutExercisesFactory } from '../workout-exercise/workout-exercise.factory';
+import { WORKOUT_STAGE } from '../../src/workout-exercise/workout-exercise.constants';
 
 describe('filter workout exercise suite case', () => {
   it('should filter workout exercise successfully', async () => {

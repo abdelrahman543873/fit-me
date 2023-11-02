@@ -1,10 +1,9 @@
-import { Trainer } from '../../src/trainer/trainer.schema';
-import { WorkoutExercise } from '../../src/workout-plan/workout-exercise.schema';
+import { WorkoutExercise } from '../../src/workout-exercise/workout-exercise.schema';
 import { exerciseFactory } from '../exercise/exercise.factory';
 import { workoutFactory } from '../workout/workout.factory';
 import { faker } from '@faker-js/faker';
 import { WorkoutExerciseRepo } from './workout-exercise.test-repo';
-import { WORKOUT_STAGE } from '../../src/workout-plan/workout-exercise.constants';
+import { WORKOUT_STAGE } from '../../src/workout-exercise/workout-exercise.constants';
 
 export const buildWorkoutExerciseParams = async (
   obj: Partial<WorkoutExercise> = {},
@@ -32,8 +31,9 @@ export const workoutExercisesFactory = async (
 };
 
 export const workoutExerciseFactory = async (
-  obj: Partial<Trainer> = {},
-): Promise<Trainer> => {
-  const params: Partial<Trainer> = await buildWorkoutExerciseParams(obj);
+  obj: Partial<WorkoutExercise> = {},
+): Promise<WorkoutExercise> => {
+  const params: Partial<WorkoutExercise> =
+    await buildWorkoutExerciseParams(obj);
   return await WorkoutExerciseRepo().add(params);
 };

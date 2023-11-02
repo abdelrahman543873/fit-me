@@ -4,7 +4,7 @@ import { userFactory } from '../user/user.factory';
 import { USER_ROLE } from '../../src/user/user.constants';
 import { buildWorkoutExerciseParams } from './workout-exercise.factory';
 import { WORKOUT_EXERCISE } from '../endpoints/workout-exercise.endpoints';
-import { AddWorkoutExerciseDto } from '../../src/workout-plan/inputs/add-workout-exercise.dto';
+import { AddWorkoutExerciseDto } from '../../src/workout-exercise/inputs/add-workout-exercise.dto';
 import { exerciseFactory } from '../exercise/exercise.factory';
 import { workoutFactory } from '../workout/workout.factory';
 

@@ -7,6 +7,8 @@ import {
   WorkoutExerciseSchema,
 } from './workout-exercise.schema';
 import { WorkoutExerciseRepository } from './workout-exercise.repository';
+import { ExistingWorkoutExerciseValidator } from './validators/existing-workout-exercise.validator';
+import { WorkoutExerciseOwnerValidator } from './validators/workout-exercise-owner';
 
 @Module({
   imports: [
@@ -14,7 +16,12 @@ import { WorkoutExerciseRepository } from './workout-exercise.repository';
       { name: WorkoutExercise.name, schema: WorkoutExerciseSchema },
     ]),
   ],
-  providers: [WorkoutExerciseService, WorkoutExerciseRepository],
+  providers: [
+    WorkoutExerciseService,
+    WorkoutExerciseRepository,
+    ExistingWorkoutExerciseValidator,
+    WorkoutExerciseOwnerValidator,
+  ],
   controllers: [WorkoutExerciseController],
 })
 export class WorkoutExerciseModule {}

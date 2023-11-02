@@ -7,6 +7,7 @@ import {
 import { Model } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddWorkoutExerciseDto } from './inputs/add-workout-exercise.dto';
+import { DeleteWorkoutExerciseDto } from './inputs/delete-workout-exercise.dto';
 
 @Injectable()
 export class WorkoutExerciseRepository extends BaseRepository<WorkoutExercise> {
@@ -24,5 +25,11 @@ export class WorkoutExerciseRepository extends BaseRepository<WorkoutExercise> {
       { ...addWorkoutExerciseDto },
       { upsert: true, new: true, populate: 'exercise' },
     );
+  }
+
+  deleteWorkoutExercise(deleteWorkoutExerciseDto: DeleteWorkoutExerciseDto) {
+    return this.workoutExerciseSchema.deleteOne({
+      _id: deleteWorkoutExerciseDto.id,
+    });
   }
 }
