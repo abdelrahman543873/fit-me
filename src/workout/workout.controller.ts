@@ -1,8 +1,18 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Request,
+} from '@nestjs/common';
 import { WorkoutService } from './workout.service';
 import { AddWorkoutDto } from './inputs/add-workout.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
+import { UpdateWorkoutDto } from './inputs/update-workout.dto';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @ApiBearerAuth()
 @ApiTags('workout')
@@ -18,6 +28,19 @@ export class WorkoutController {
     return await this.workoutService.addWorkout(
       request.user._id,
       addWorkoutDto,
+    );
+  }
+
+  @Put(':id')
+  async updateWorkout(
+    @Param() workoutId: MongoIdDto,
+    @Request() request: RequestContext,
+    @Body() updateWorkoutDto: UpdateWorkoutDto,
+  ) {
+    return await this.workoutService.updateWorkout(
+      request.user._id,
+      workoutId.id,
+      updateWorkoutDto,
     );
   }
 

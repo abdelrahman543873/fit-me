@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { AddWorkoutDto } from './inputs/add-workout.dto';
 import { WORKOUT_STAGE } from '../workout-exercise/workout-exercise.constants';
+import { UpdateWorkoutDto } from './inputs/update-workout.dto';
 
 @Injectable()
 export class WorkoutRepository extends BaseRepository<Workout> {
@@ -17,6 +18,18 @@ export class WorkoutRepository extends BaseRepository<Workout> {
 
   addWorkout(trainer: ObjectId, addWorkoutDto: AddWorkoutDto) {
     return this.workoutSchema.create({ trainer, ...addWorkoutDto });
+  }
+
+  updateWorkout(
+    trainer: ObjectId,
+    workoutId: ObjectId,
+    updateWorkoutDto: UpdateWorkoutDto,
+  ) {
+    return this.workoutSchema.findOneAndUpdate(
+      { trainer, _id: workoutId },
+      { ...updateWorkoutDto },
+      { new: true },
+    );
   }
 
   filterWorkouts(trainer: ObjectId) {
