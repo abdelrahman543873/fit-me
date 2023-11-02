@@ -49,6 +49,10 @@ export abstract class BaseRepository<T> implements Repository<T> {
     return this._model.find(filter, projection);
   }
 
+  count(filter?: FilterQuery<T>) {
+    return this._model.count(filter);
+  }
+
   updateOne(
     filter: FilterQuery<T>,
     update: UpdateQuery<HydratedDocument<T>>,

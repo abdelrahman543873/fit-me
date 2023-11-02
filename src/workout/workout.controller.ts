@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -47,5 +48,16 @@ export class WorkoutController {
   @Get('filter')
   async filterWorkouts(@Request() request: RequestContext) {
     return await this.workoutService.filterWorkouts(request.user._id);
+  }
+
+  @Delete(':id')
+  async deleteWorkout(
+    @Param() workoutId: MongoIdDto,
+    @Request() request: RequestContext,
+  ) {
+    return await this.workoutService.deleteWorkout(
+      request.user._id,
+      workoutId.id,
+    );
   }
 }

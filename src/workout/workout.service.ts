@@ -27,4 +27,8 @@ export class WorkoutService {
   filterWorkouts(trainer: ObjectId) {
     return this.workoutRepository.filterWorkouts(trainer);
   }
+
+  deleteWorkout(trainer: ObjectId, workoutId: ObjectId) {
+    return this.workoutRepository.deleteWorkout(trainer, workoutId);
+  }
 }
