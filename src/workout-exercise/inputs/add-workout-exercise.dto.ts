@@ -10,7 +10,6 @@ import {
   IsArray,
   IsEnum,
   IsInt,
-  IsOptional,
   ValidateIf,
 } from 'class-validator';
 import { IsExistingExercise } from '../../exercise/validators/existing-exercise.validator';

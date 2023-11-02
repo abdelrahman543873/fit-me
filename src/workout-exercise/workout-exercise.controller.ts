@@ -8,8 +8,10 @@ import {
 import { WorkoutExerciseService } from './workout-exercise.service';
 import { AddWorkoutExerciseDto } from './inputs/add-workout-exercise.dto';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { DeleteWorkoutExerciseDto } from './inputs/delete-workout-exercise.dto';
+import { AddWorkoutExercisesDto } from './inputs/add-workout-exercises.dto';
+import { IsUserInArray } from '../shared/decorators/is-user-in-array.decorator';
 
 @ApiBearerAuth()
 @ApiTags('workoutExercise')
@@ -23,6 +25,18 @@ export class WorkoutExerciseController {
     @Body() addWorkoutExerciseDto: AddWorkoutExerciseDto,
   ) {
     return await this.workoutExerciseService.addWorkoutExercise(
+      addWorkoutExerciseDto,
+    );
+  }
+
+  @ApiBody({ type: AddWorkoutExerciseDto, isArray: true })
+  @Post('bulk')
+  @IsUserInArray('workoutExercises')
+  @UseInterceptors(RequestInBodyInterceptor)
+  async addWorkoutExercises(
+    @Body() addWorkoutExerciseDto: AddWorkoutExercisesDto,
+  ) {
+    return await this.workoutExerciseService.addWorkoutExercises(
       addWorkoutExerciseDto,
     );
   }
