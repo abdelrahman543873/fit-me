@@ -2,14 +2,32 @@ import { Module } from '@nestjs/common';
 import { FormService } from './form.service';
 import { FormController } from './form.controller';
 import { FormRepository } from './form.repository';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { Form, FormSchema } from './form.schema';
 import { ExistingFormValidator } from './validators/existing-form.validator';
 import { FormOwnerValidator } from './validators/form-owner.validator';
+import { Question, QuestionSchema } from '../question/question.schema';
+import { Model } from 'mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Form.name, schema: FormSchema }]),
+    MongooseModule.forFeatureAsync([
+      {
+        name: Question.name,
+        useFactory: () => QuestionSchema,
+      },
+      {
+        name: Form.name,
+        useFactory: (questionSchema: Model<Question>) => {
+          FormSchema.pre('deleteOne', async function () {
+            const doc = await this.model.findOne(this.getFilter());
+            await questionSchema.deleteMany({ form: doc._id });
+          });
+          return FormSchema;
+        },
+        inject: [getModelToken(Question.name)],
+      },
+    ]),
   ],
   providers: [
     FormService,
