@@ -21,7 +21,8 @@ describe('filter programs suite case', () => {
       url: FILTER_PROGRAMS,
       token: trainer.token,
     });
-    expect(res.body[0].workouts[0].workout).toBe(workout._id.toString());
+    expect(res.body[0].workouts[0].workout._id).toBe(workout._id.toString());
+    expect(res.body[0].workouts[0].workout.title).toBe(workout.title);
     expect(res.body[0].workouts[0]._id).toBe(programWorkout._id.toString());
   });
 });

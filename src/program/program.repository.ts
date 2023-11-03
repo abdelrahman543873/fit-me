@@ -28,9 +28,26 @@ export class ProgramRepository extends BaseRepository<Program> {
       {
         $lookup: {
           from: 'programworkouts',
-          localField: '_id',
-          foreignField: 'program',
+          let: { programId: '$_id' },
           as: 'workouts',
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$$programId', '$program'],
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: 'workouts',
+                localField: 'workout',
+                foreignField: '_id',
+                as: 'workout',
+              },
+            },
+            { $unwind: '$workout' },
+          ],
         },
       },
     ]);
