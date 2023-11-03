@@ -7,6 +7,7 @@ import {
 import { Model } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddProgramWorkoutsDto } from './inputs/add-program-workouts.dto';
+import { DeleteProgramWorkoutDto } from './inputs/delete-program-workout.dto';
 
 @Injectable()
 export class ProgramWorkoutRepository extends BaseRepository<ProgramWorkout> {
@@ -21,5 +22,11 @@ export class ProgramWorkoutRepository extends BaseRepository<ProgramWorkout> {
     return this.programWorkoutSchema.insertMany(
       addProgramWorkouts.programWorkouts,
     );
+  }
+
+  deleteWorkoutProgram(deleteProgramWorkoutDto: DeleteProgramWorkoutDto) {
+    return this.programWorkoutSchema.deleteOne({
+      _id: deleteProgramWorkoutDto.id,
+    });
   }
 }

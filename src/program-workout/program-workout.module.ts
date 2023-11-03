@@ -4,6 +4,7 @@ import { ProgramWorkoutController } from './program-workout.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProgramWorkout, ProgramWorkoutSchema } from './program-workout.schema';
 import { ProgramWorkoutRepository } from './program-workout.repository';
+import { ProgramWorkoutOwnerValidator } from './validators/program-workout-owner.validator';
 
 @Module({
   imports: [
@@ -11,7 +12,11 @@ import { ProgramWorkoutRepository } from './program-workout.repository';
       { name: ProgramWorkout.name, schema: ProgramWorkoutSchema },
     ]),
   ],
-  providers: [ProgramWorkoutService, ProgramWorkoutRepository],
+  providers: [
+    ProgramWorkoutService,
+    ProgramWorkoutRepository,
+    ProgramWorkoutOwnerValidator,
+  ],
   controllers: [ProgramWorkoutController],
 })
 export class ProgramWorkoutModule {}

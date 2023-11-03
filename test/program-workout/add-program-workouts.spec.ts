@@ -8,7 +8,7 @@ import { PROGRAM_WORKOUT_BULK } from '../endpoints/program-workout.endpoints';
 import { AddProgramWorkoutsDto } from '../../src/program-workout/inputs/add-program-workouts.dto';
 import { programFactory } from '../program/program.factory';
 
-describe('add program workouts exercise suite case', () => {
+describe('add program workouts suite case', () => {
   it('should add program workouts successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const workout = await workoutFactory({ trainer: trainer._id });

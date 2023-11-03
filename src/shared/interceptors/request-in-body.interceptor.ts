@@ -24,6 +24,7 @@ export class RequestInBodyInterceptor implements NestInterceptor {
       return next.handle();
     }
     request.body.user = JSON.stringify(request.user);
+    request.params.user = JSON.stringify(request.user);
     return next.handle();
   }
 }
