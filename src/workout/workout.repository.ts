@@ -32,6 +32,10 @@ export class WorkoutRepository extends BaseRepository<Workout> {
     );
   }
 
+  getWorkout(trainer: ObjectId, workoutId: ObjectId) {
+    return this.workoutSchema.findOne({ trainer, _id: workoutId });
+  }
+
   deleteWorkout(trainer: ObjectId, workoutId: ObjectId) {
     return this.workoutSchema.deleteOne({ trainer, _id: workoutId });
   }

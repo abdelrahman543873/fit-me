@@ -45,6 +45,14 @@ export class WorkoutController {
     );
   }
 
+  @Get(':id')
+  async getWorkout(
+    @Param() workoutId: MongoIdDto,
+    @Request() request: RequestContext,
+  ) {
+    return await this.workoutService.getWorkout(request.user._id, workoutId.id);
+  }
+
   @Get('filter')
   async filterWorkouts(@Request() request: RequestContext) {
     return await this.workoutService.filterWorkouts(request.user._id);

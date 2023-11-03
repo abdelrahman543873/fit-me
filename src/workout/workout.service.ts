@@ -24,6 +24,10 @@ export class WorkoutService {
     );
   }
 
+  getWorkout(trainer: ObjectId, workoutId: ObjectId) {
+    return this.workoutRepository.getWorkout(trainer, workoutId);
+  }
+
   filterWorkouts(trainer: ObjectId) {
     return this.workoutRepository.filterWorkouts(trainer);
   }
