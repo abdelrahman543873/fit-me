@@ -4,12 +4,13 @@ import { ProgramService } from './program.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Program, ProgramSchema } from './program.schema';
 import { ProgramRepository } from './program.repository';
+import { ProgramOwnerValidator } from './validators/program-owner.validator';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Program.name, schema: ProgramSchema }]),
   ],
   controllers: [ProgramController],
-  providers: [ProgramService, ProgramRepository],
+  providers: [ProgramService, ProgramRepository, ProgramOwnerValidator],
 })
 export class ProgramModule {}
