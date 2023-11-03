@@ -17,4 +17,22 @@ export class ProgramRepository extends BaseRepository<Program> {
   addProgram(trainer: ObjectId, addProgramDto: AddProgramDto) {
     return this.programSchema.create({ trainer, ...addProgramDto });
   }
+
+  filterPrograms(trainer: ObjectId) {
+    return this.programSchema.aggregate([
+      {
+        $match: {
+          trainer,
+        },
+      },
+      {
+        $lookup: {
+          from: 'programworkouts',
+          localField: '_id',
+          foreignField: 'program',
+          as: 'workouts',
+        },
+      },
+    ]);
+  }
 }

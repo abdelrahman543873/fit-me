@@ -10,4 +10,8 @@ export class ProgramService {
   addProgram(trainer: ObjectId, addProgramDto: AddProgramDto) {
     return this.programRepository.addProgram(trainer, addProgramDto);
   }
+
+  async filterPrograms(trainer: ObjectId) {
+    return await this.programRepository.filterPrograms(trainer);
+  }
 }

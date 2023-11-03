@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { ProgramService } from './program.service';
 import { AddProgramDto } from './inputs/add-program.dto';
 import { RequestContext } from './../shared/interfaces/request-context.interface';
@@ -19,5 +19,10 @@ export class ProgramController {
       request.user._id,
       addWProgramDto,
     );
+  }
+
+  @Get('filter')
+  async filterPrograms(@Request() request: RequestContext) {
+    return await this.programService.filterPrograms(request.user._id);
   }
 }
