@@ -2,8 +2,10 @@ import { Body, Controller, Post, Request } from '@nestjs/common';
 import { ProgramService } from './program.service';
 import { AddProgramDto } from './inputs/add-program.dto';
 import { RequestContext } from './../shared/interfaces/request-context.interface';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('program')
+@ApiBearerAuth()
 export class ProgramController {
   constructor(private readonly programService: ProgramService) {}
 
