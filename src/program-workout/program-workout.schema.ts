@@ -6,6 +6,7 @@ export type ProgramWorkoutDocument = HydratedDocument<ProgramWorkout>;
 
 @Schema({ versionKey: false, timestamps: true, strict: true })
 export class ProgramWorkout {
+  @ApiProperty({ type: 'string' })
   _id?: ObjectId;
 
   @ApiProperty({ type: 'string' })

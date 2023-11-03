@@ -12,6 +12,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { DeleteWorkoutExerciseDto } from './inputs/delete-workout-exercise.dto';
 import { AddWorkoutExercisesDto } from './inputs/add-workout-exercises.dto';
 import { IsUserInArray } from '../shared/decorators/is-user-in-array.decorator';
+import { WorkoutExercise } from './workout-exercise.schema';
 
 @ApiBearerAuth()
 @ApiTags('workoutExercise')
@@ -34,7 +35,7 @@ export class WorkoutExerciseController {
   @UseInterceptors(RequestInBodyInterceptor)
   async addWorkoutExercises(
     @Body() addWorkoutExerciseDto: AddWorkoutExercisesDto,
-  ) {
+  ): Promise<WorkoutExercise[]> {
     return await this.workoutExerciseService.addWorkoutExercises(
       addWorkoutExerciseDto,
     );

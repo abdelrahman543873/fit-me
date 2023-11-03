@@ -2,8 +2,9 @@ import { Body, Controller, Post, Request } from '@nestjs/common';
 import { ProgramService } from './program.service';
 import { AddProgramDto } from './inputs/add-program.dto';
 import { RequestContext } from './../shared/interfaces/request-context.interface';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('program')
 @Controller('program')
 @ApiBearerAuth()
 export class ProgramController {

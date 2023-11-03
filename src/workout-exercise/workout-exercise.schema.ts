@@ -7,6 +7,7 @@ export type WorkoutExerciseDocument = HydratedDocument<WorkoutExercise>;
 
 @Schema({ versionKey: false, timestamps: true, strict: true })
 export class WorkoutExercise {
+  @ApiProperty({ type: 'string' })
   _id?: ObjectId;
 
   @ApiProperty({ type: 'string' })
@@ -30,7 +31,7 @@ export class WorkoutExercise {
   minsDuration: number;
 
   @Prop({ type: [Number] })
-  sets: Array<number>;
+  sets: number[];
 }
 
 export const WorkoutExerciseSchema =
