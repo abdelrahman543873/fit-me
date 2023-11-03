@@ -18,6 +18,10 @@ export class ProgramRepository extends BaseRepository<Program> {
     return this.programSchema.create({ trainer, ...addProgramDto });
   }
 
+  deleteProgram(trainer: ObjectId, programId: ObjectId) {
+    return this.programSchema.deleteOne({ trainer, _id: programId });
+  }
+
   filterPrograms(trainer: ObjectId) {
     return this.programSchema.aggregate([
       {

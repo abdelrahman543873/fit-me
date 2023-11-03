@@ -11,6 +11,10 @@ export class ProgramService {
     return this.programRepository.addProgram(trainer, addProgramDto);
   }
 
+  deleteProgram(trainer: ObjectId, programId: ObjectId) {
+    return this.programRepository.deleteProgram(trainer, programId);
+  }
+
   async filterPrograms(trainer: ObjectId) {
     return await this.programRepository.filterPrograms(trainer);
   }
