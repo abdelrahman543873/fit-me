@@ -4,6 +4,7 @@ import { Program, ProgramDocument } from './program.schema';
 import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddProgramDto } from './inputs/add-program.dto';
+import { UpdateProgramDto } from './inputs/update-program.dto';
 
 @Injectable()
 export class ProgramRepository extends BaseRepository<Program> {
@@ -20,6 +21,18 @@ export class ProgramRepository extends BaseRepository<Program> {
 
   deleteProgram(trainer: ObjectId, programId: ObjectId) {
     return this.programSchema.deleteOne({ trainer, _id: programId });
+  }
+
+  updateProgram(
+    trainer: ObjectId,
+    programId: ObjectId,
+    updateProgramDto: UpdateProgramDto,
+  ) {
+    return this.programSchema.findOneAndUpdate(
+      { trainer, _id: programId },
+      { ...updateProgramDto },
+      { new: true },
+    );
   }
 
   filterPrograms(trainer: ObjectId) {
