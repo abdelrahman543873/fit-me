@@ -34,6 +34,10 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
     });
   }
 
+  getExercise(trainer: ObjectId, exerciseId: ObjectId) {
+    return this.exerciseSchema.findOne({ trainer, _id: exerciseId });
+  }
+
   filterExercises(trainer: ObjectId, filterExercisesDto: FilterExercisesDto) {
     return this.exerciseSchema.find({ trainer, ...filterExercisesDto });
   }

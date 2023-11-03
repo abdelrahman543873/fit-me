@@ -54,6 +54,17 @@ export class ExerciseController {
     );
   }
 
+  @Get(':id')
+  async getExercise(
+    @Request() request: RequestContext,
+    @Param() exerciseId: MongoIdDto,
+  ) {
+    return await this.exerciseService.getExercise(
+      request.user._id,
+      exerciseId.id,
+    );
+  }
+
   @Put(':id')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FilesInterceptor('media'))

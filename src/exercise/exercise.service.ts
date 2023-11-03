@@ -23,6 +23,10 @@ export class ExerciseService {
     return this.exerciseRepository.filterExercises(trainer, filterExercisesDto);
   }
 
+  getExercise(trainer: ObjectId, exerciseId: ObjectId) {
+    return this.exerciseRepository.getExercise(trainer, exerciseId);
+  }
+
   deleteExercise(trainer: ObjectId, deleteExerciseDto: DeleteExerciseDto) {
     return this.exerciseRepository.deleteExercise(trainer, deleteExerciseDto);
   }
