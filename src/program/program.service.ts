@@ -12,6 +12,10 @@ export class ProgramService {
     return this.programRepository.addProgram(trainer, addProgramDto);
   }
 
+  getProgram(trainer: ObjectId, programId: ObjectId) {
+    return this.programRepository.getProgram(trainer, programId);
+  }
+
   deleteProgram(trainer: ObjectId, programId: ObjectId) {
     return this.programRepository.deleteProgram(trainer, programId);
   }

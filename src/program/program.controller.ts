@@ -14,7 +14,6 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 import { UpdateProgramDto } from './inputs/update-program.dto';
-import { ObjectId } from 'mongoose';
 
 @ApiTags('program')
 @Controller('program')
@@ -31,6 +30,14 @@ export class ProgramController {
       request.user._id,
       addWProgramDto,
     );
+  }
+
+  @Get(':id')
+  async getProgram(
+    @Request() request: RequestContext,
+    @Param() programId: MongoIdDto,
+  ) {
+    return await this.programService.getProgram(request.user._id, programId.id);
   }
 
   @Put(':id')
