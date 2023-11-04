@@ -28,10 +28,10 @@ export class WorkoutExercise {
   stage: WORKOUT_STAGE;
 
   @Prop()
-  minsDuration: number;
+  minsDuration?: number;
 
   @Prop({ type: [Number] })
-  sets: number[];
+  sets?: number[];
 }
 
 export const WorkoutExerciseSchema =
