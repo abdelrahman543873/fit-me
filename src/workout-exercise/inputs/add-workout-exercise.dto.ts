@@ -38,14 +38,15 @@ export class AddWorkoutExerciseDto {
 
   @ValidateIf((input) => 'minsDuration' in input)
   @IsInt()
-  minsDuration: number;
+  minsDuration?: number;
 
+  @ValidateIf((input) => 'sets' in input)
   @ApiProperty({ isArray: true, type: Number })
   @IsArray()
   @ArrayNotEmpty()
   @IsInt({ each: true })
   @Transform(({ value }) => (Array.isArray(value) ? value : Array(value)))
-  sets: Array<number>;
+  sets?: Array<number>;
 
   @ApiProperty({ readOnly: true })
   @Allow()
