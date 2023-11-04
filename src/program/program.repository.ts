@@ -20,7 +20,39 @@ export class ProgramRepository extends BaseRepository<Program> {
   }
 
   getProgram(trainer: ObjectId, programId: ObjectId) {
-    return this.programSchema.findOne({ trainer, _id: programId });
+    return this.programSchema.aggregate([
+      {
+        $match: {
+          trainer,
+          _id: programId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'programworkouts',
+          let: { programId: '$_id' },
+          as: 'workouts',
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$$programId', '$program'],
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: 'workouts',
+                localField: 'workout',
+                foreignField: '_id',
+                as: 'workout',
+              },
+            },
+            { $unwind: '$workout' },
+          ],
+        },
+      },
+    ]);
   }
 
   deleteProgram(trainer: ObjectId, programId: ObjectId) {

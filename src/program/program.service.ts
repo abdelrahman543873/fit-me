@@ -12,8 +12,13 @@ export class ProgramService {
     return this.programRepository.addProgram(trainer, addProgramDto);
   }
 
-  getProgram(trainer: ObjectId, programId: ObjectId) {
-    return this.programRepository.getProgram(trainer, programId);
+  async getProgram(trainer: ObjectId, programId: ObjectId) {
+    const programs = await this.programRepository.getProgram(
+      trainer,
+      programId,
+    );
+    if (programs.length) return programs[0];
+    return null;
   }
 
   deleteProgram(trainer: ObjectId, programId: ObjectId) {

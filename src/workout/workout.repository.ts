@@ -33,7 +33,66 @@ export class WorkoutRepository extends BaseRepository<Workout> {
   }
 
   getWorkout(trainer: ObjectId, workoutId: ObjectId) {
-    return this.workoutSchema.findOne({ trainer, _id: workoutId });
+    return this.workoutSchema.aggregate([
+      {
+        $match: {
+          trainer,
+          _id: workoutId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'workoutexercises',
+          let: { workoutId: '$_id' },
+          as: 'exercises',
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$$workoutId', '$workout'],
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: 'exercises',
+                localField: 'exercise',
+                foreignField: '_id',
+                as: 'exercise',
+              },
+            },
+            { $unwind: '$exercise' },
+          ],
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          WARM_UP: {
+            $filter: {
+              input: '$exercises',
+              as: 'exercise',
+              cond: { $eq: ['$$exercise.stage', WORKOUT_STAGE.WARM_UP] },
+            },
+          },
+          MAIN: {
+            $filter: {
+              input: '$exercises',
+              as: 'exercise',
+              cond: { $eq: ['$$exercise.stage', WORKOUT_STAGE.MAIN] },
+            },
+          },
+          COOL_DOWN: {
+            $filter: {
+              input: '$exercises',
+              as: 'exercise',
+              cond: { $eq: ['$$exercise.stage', WORKOUT_STAGE.COOL_DOWN] },
+            },
+          },
+        },
+      },
+    ]);
   }
 
   deleteWorkout(trainer: ObjectId, workoutId: ObjectId) {

@@ -24,8 +24,13 @@ export class WorkoutService {
     );
   }
 
-  getWorkout(trainer: ObjectId, workoutId: ObjectId) {
-    return this.workoutRepository.getWorkout(trainer, workoutId);
+  async getWorkout(trainer: ObjectId, workoutId: ObjectId) {
+    const workouts = await this.workoutRepository.getWorkout(
+      trainer,
+      workoutId,
+    );
+    if (workouts.length) return workouts[0];
+    return null;
   }
 
   filterWorkouts(trainer: ObjectId) {

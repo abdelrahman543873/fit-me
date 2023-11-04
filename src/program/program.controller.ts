@@ -32,6 +32,11 @@ export class ProgramController {
     );
   }
 
+  @Get('filter')
+  async filterPrograms(@Request() request: RequestContext) {
+    return await this.programService.filterPrograms(request.user._id);
+  }
+
   @Get(':id')
   async getProgram(
     @Request() request: RequestContext,
@@ -62,10 +67,5 @@ export class ProgramController {
       request.user._id,
       programId.id,
     );
-  }
-
-  @Get('filter')
-  async filterPrograms(@Request() request: RequestContext) {
-    return await this.programService.filterPrograms(request.user._id);
   }
 }

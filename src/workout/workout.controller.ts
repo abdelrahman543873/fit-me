@@ -44,6 +44,10 @@ export class WorkoutController {
       updateWorkoutDto,
     );
   }
+  @Get('filter')
+  async filterWorkouts(@Request() request: RequestContext) {
+    return await this.workoutService.filterWorkouts(request.user._id);
+  }
 
   @Get(':id')
   async getWorkout(
@@ -51,11 +55,6 @@ export class WorkoutController {
     @Request() request: RequestContext,
   ) {
     return await this.workoutService.getWorkout(request.user._id, workoutId.id);
-  }
-
-  @Get('filter')
-  async filterWorkouts(@Request() request: RequestContext) {
-    return await this.workoutService.filterWorkouts(request.user._id);
   }
 
   @Delete(':id')
