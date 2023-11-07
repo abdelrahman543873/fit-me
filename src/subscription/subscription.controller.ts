@@ -6,6 +6,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 import { UpdateSubscriptionDto } from './inputs/update-subscription.dto';
+import { Subscription } from './subscription.schema';
 
 @ApiTags('subscription')
 @ApiBearerAuth()
@@ -34,7 +35,7 @@ export class SubscriptionController {
     @Request() request: RequestContext,
     @Param() subscriptionId: MongoIdDto,
     @Body() updateSubscriptionDto: UpdateSubscriptionDto,
-  ) {
+  ): Promise<Subscription> {
     return await this.subscriptionService.updateSubscription(
       request.trainerId || request.user._id,
       subscriptionId,
