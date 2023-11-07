@@ -7,6 +7,9 @@ export type SubscriptionDocument = HydratedDocument<Subscription>;
 @Schema({ versionKey: false, timestamps: true, strict: true })
 export class Subscription {
   @ApiProperty({ type: 'string' })
+  _id?: ObjectId;
+
+  @ApiProperty({ type: 'string' })
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   client: ObjectId;
 

@@ -3,6 +3,8 @@ import { SubscriptionRepository } from './subscription.repository';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 import { ObjectId } from 'mongoose';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
+import { UpdateSubscriptionDto } from './inputs/update-subscription.dto';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @Injectable()
 export class SubscriptionService {
@@ -26,6 +28,18 @@ export class SubscriptionService {
     return this.subscriptionRepository.filterSubscriptions(
       trainerId,
       filterSubscriptionsDto,
+    );
+  }
+
+  updateSubscription(
+    trainerId: ObjectId,
+    subscriptionId: MongoIdDto,
+    updateSubscriptionDto: UpdateSubscriptionDto,
+  ) {
+    return this.subscriptionRepository.updateSubscription(
+      trainerId,
+      subscriptionId,
+      updateSubscriptionDto,
     );
   }
 }
