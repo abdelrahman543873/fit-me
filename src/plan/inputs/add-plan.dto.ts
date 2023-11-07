@@ -5,10 +5,10 @@ import {
   IsNotEmpty,
   IsNumber,
   IsString,
-  ValidateIf,
 } from 'class-validator';
 import { FOLLOW_UP_FREQUENCY, PLAN_TYPE } from '../plan.constants';
 import { Type } from 'class-transformer';
+import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
 export class AddPlanDto {
   @IsNotEmpty()
@@ -24,7 +24,7 @@ export class AddPlanDto {
   @IsEnum(FOLLOW_UP_FREQUENCY)
   followUpFrequency: FOLLOW_UP_FREQUENCY;
 
-  @ValidateIf((input) => 'description' in input)
+  @ValidateIfDefined()
   @IsNotEmpty()
   @IsString()
   description?: string;

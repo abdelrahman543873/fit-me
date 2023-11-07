@@ -4,19 +4,13 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { WORKOUT_STAGE } from '../workout-exercise.constants';
-import {
-  Allow,
-  ArrayNotEmpty,
-  IsArray,
-  IsEnum,
-  IsInt,
-  ValidateIf,
-} from 'class-validator';
+import { Allow, ArrayNotEmpty, IsArray, IsEnum, IsInt } from 'class-validator';
 import { IsExistingExercise } from '../../exercise/validators/existing-exercise.validator';
 import { IsExistingWorkout } from '../../workout/validators/existing-workout.controller';
 import { IsExerciseOwner } from '../../exercise/validators/exercise-owner.validator';
 import { IsWorkoutOwner } from '../../workout/validators/workout-owner.validator';
 import { User } from '../../user/user.schema';
+import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
 export class AddWorkoutExerciseDto {
   @ApiProperty({ type: 'string' })
@@ -36,11 +30,11 @@ export class AddWorkoutExerciseDto {
   @IsEnum(WORKOUT_STAGE)
   stage: WORKOUT_STAGE;
 
-  @ValidateIf((input) => 'minsDuration' in input)
+  @ValidateIfDefined()
   @IsInt()
   minsDuration?: number;
 
-  @ValidateIf((input) => 'sets' in input)
+  @ValidateIfDefined()
   @ApiProperty({ isArray: true, type: Number })
   @IsArray()
   @ArrayNotEmpty()

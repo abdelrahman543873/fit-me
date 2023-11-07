@@ -4,6 +4,7 @@ import { Model, ObjectId } from 'mongoose';
 import { Subscription, SubscriptionDocument } from './subscription.schema';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
+import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
 
 @Global()
 @Injectable()
@@ -29,5 +30,39 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
       })
       .populate('trainer')
       .lean();
+  }
+
+  filterSubscriptions(
+    trainer: ObjectId,
+    filterSubscriptionsDto: FilterSubscriptionsDto,
+  ) {
+    return this.subscriptionSchema.aggregate<Subscription>([
+      {
+        $match: {
+          trainer,
+          ...(filterSubscriptionsDto.accepted && {
+            accepted: filterSubscriptionsDto.accepted,
+          }),
+        },
+      },
+      {
+        $lookup: {
+          from: 'plans',
+          localField: 'plan',
+          foreignField: '_id',
+          as: 'plan',
+        },
+      },
+      { $unwind: '$plan' },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client',
+        },
+      },
+      { $unwind: '$client' },
+    ]);
   }
 }

@@ -26,6 +26,23 @@ describe('add workout exercise suite case', () => {
     expect(res.body.stage).toBe(workoutExercise.stage);
   });
 
+  it('should throw error if sets are null', async () => {
+    const trainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const exercise = await exerciseFactory({ trainer: trainer._id });
+    const workout = await workoutFactory({ trainer: trainer._id });
+    const workoutExercise = await buildWorkoutExerciseParams({
+      exercise: exercise._id,
+      workout: workout._id,
+    });
+    const res = await testRequest<AddWorkoutExerciseDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: WORKOUT_EXERCISE,
+      variables: { ...workoutExercise, sets: null },
+      token: trainer.token,
+    });
+    expect(res.body.statusCode).toBe(400);
+  });
+
   it('should throw error if not workout owner', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const exercise = await exerciseFactory({ trainer: trainer._id });

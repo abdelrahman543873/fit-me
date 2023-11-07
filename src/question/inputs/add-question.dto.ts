@@ -1,11 +1,4 @@
-import {
-  Allow,
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  ValidateIf,
-} from 'class-validator';
+import { Allow, IsArray, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { QUESTION_TYPES } from '../question.constants';
 import { ObjectId } from 'mongoose';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
@@ -15,6 +8,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsExistingForm } from '../../form/validators/existing-form.validator';
 import { User } from '../../user/user.schema';
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
+import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
 export class AddQuestionDto {
   @IsFormOwner()
@@ -31,7 +25,7 @@ export class AddQuestionDto {
   @IsEnum(QUESTION_TYPES)
   type: QUESTION_TYPES;
 
-  @ValidateIf((input) => 'choices' in input)
+  @ValidateIfDefined()
   @IsArray()
   @IsString({ each: true })
   choices?: string[];
