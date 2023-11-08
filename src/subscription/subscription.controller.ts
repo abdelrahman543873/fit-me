@@ -30,7 +30,7 @@ export class SubscriptionController {
     );
   }
 
-  @Put(':id')
+  @Put('plan/:id')
   async updateSubscription(
     @Request() request: RequestContext,
     @Param() subscriptionId: MongoIdDto,
