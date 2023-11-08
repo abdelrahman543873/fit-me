@@ -42,8 +42,8 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
       {
         $match: {
           trainer,
-          ...(filterSubscriptionsDto.accepted && {
-            accepted: filterSubscriptionsDto.accepted,
+          ...(filterSubscriptionsDto.status && {
+            status: filterSubscriptionsDto.status,
           }),
         },
       },

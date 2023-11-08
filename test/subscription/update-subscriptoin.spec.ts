@@ -18,8 +18,8 @@ describe('update subscriptions suite case', () => {
       method: HTTP_METHODS_ENUM.PUT,
       url: `${SUBSCRIPTION}/${subscription._id.toString()}`,
       token: trainer.token,
-      variables: { accepted: !subscription.accepted },
+      variables: { plan: subscription.plan.toString() as any },
     });
-    expect(res.body.accepted).toBe(!subscription.accepted);
+    expect(res.body.plan).toBe(subscription.plan.toString());
   });
 });

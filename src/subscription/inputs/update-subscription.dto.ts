@@ -1,5 +1,4 @@
-import { Transform, Type } from 'class-transformer';
-import { IsBoolean } from 'class-validator';
+import { Transform } from 'class-transformer';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { ObjectId } from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
@@ -8,11 +7,6 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { IsExistingPlan } from '../../plan/validators/existing-plan.validator';
 
 export class UpdateSubscriptionDto {
-  @ValidateIfDefined()
-  @IsBoolean()
-  @Type(() => Boolean)
-  accepted?: boolean;
-
   @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
   @IsExistingPlan()
