@@ -5,6 +5,7 @@ import { Subscription, SubscriptionDocument } from './subscription.schema';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
+import { SUBSCRIPTION_STATUS } from './subscription.constants';
 
 @Global()
 @Injectable()
@@ -49,7 +50,7 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
   }) {
     return this.subscriptionSchema.findOneAndUpdate(
       { trainer, client },
-      { plan },
+      { plan, status: SUBSCRIPTION_STATUS.PLAN_CHOSEN },
       { new: true },
     );
   }

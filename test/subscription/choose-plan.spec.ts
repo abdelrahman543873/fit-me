@@ -6,6 +6,7 @@ import { userFactory } from '../user/user.factory';
 import { USER_ROLE } from '../../src/user/user.constants';
 import { ChoosePlanDto } from '../../src/subscription/inputs/choose-plan.dto';
 import { planFactory } from '../plan/plan.factory';
+import { SUBSCRIPTION_STATUS } from '../../src/subscription/subscription.constants';
 
 describe('choose plan suite case', () => {
   it('should choose plan successfully', async () => {
@@ -23,5 +24,6 @@ describe('choose plan suite case', () => {
       variables: { id: plan._id.toString() as any },
     });
     expect(res.body.plan).toBe(plan._id.toString());
+    expect(res.body.status).toBe(SUBSCRIPTION_STATUS.PLAN_CHOSEN);
   });
 });
