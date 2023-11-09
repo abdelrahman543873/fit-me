@@ -30,6 +30,13 @@ export class SubscriptionController {
     );
   }
 
+  @Get()
+  async getClientSubscription(@Request() request: RequestContext) {
+    return await this.subscriptionService.getClientSubscription(
+      request.trainerId,
+    );
+  }
+
   @Put('plan/:id')
   async updateSubscription(
     @Request() request: RequestContext,

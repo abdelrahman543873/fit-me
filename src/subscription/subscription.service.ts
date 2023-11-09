@@ -31,6 +31,10 @@ export class SubscriptionService {
     );
   }
 
+  getClientSubscription(trainer: ObjectId) {
+    return this.subscriptionRepository.getClientSubscription(trainer);
+  }
+
   updateSubscription(
     trainerId: ObjectId,
     subscriptionId: MongoIdDto,

@@ -34,6 +34,12 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
       .lean();
   }
 
+  getClientSubscription(trainer: ObjectId) {
+    return this.subscriptionSchema
+      .findOne({ trainer })
+      .populate(['client', 'plan']);
+  }
+
   filterSubscriptions(
     trainer: ObjectId,
     filterSubscriptionsDto: FilterSubscriptionsDto,
