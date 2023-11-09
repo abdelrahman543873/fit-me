@@ -5,8 +5,6 @@ import { Subscription, SubscriptionDocument } from './subscription.schema';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
-import { UpdateSubscriptionDto } from './inputs/update-subscription.dto';
-import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @Global()
 @Injectable()
@@ -38,6 +36,22 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
     return this.subscriptionSchema
       .findOne({ trainer })
       .populate(['client', 'plan']);
+  }
+
+  choosePlan({
+    trainer,
+    client,
+    plan,
+  }: {
+    trainer: ObjectId;
+    client: ObjectId;
+    plan: ObjectId;
+  }) {
+    return this.subscriptionSchema.findOneAndUpdate(
+      { trainer, client },
+      { plan },
+      { new: true },
+    );
   }
 
   filterSubscriptions(
@@ -72,17 +86,5 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
       },
       { $unwind: '$client' },
     ]);
-  }
-
-  updateSubscription(
-    trainer: ObjectId,
-    subscriptionId: MongoIdDto,
-    updateSubscriptionDto: UpdateSubscriptionDto,
-  ) {
-    return this.subscriptionSchema.findOneAndUpdate(
-      { _id: subscriptionId.id, trainer },
-      { ...updateSubscriptionDto },
-      { new: true },
-    );
   }
 }
