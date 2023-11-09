@@ -8,8 +8,10 @@ import {
 import { AnswerService } from './answer.service';
 import { AddAnswerDto } from './inputs/add-answer.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('answer')
 @Controller('answer')
 export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}
