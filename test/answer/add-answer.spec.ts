@@ -11,6 +11,7 @@ describe('add answer suite case', () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const params = await buildAnswerParams();
     delete params.media;
+    delete params.client;
     const res = await testRequest<AddAnswerDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: ANSWER,

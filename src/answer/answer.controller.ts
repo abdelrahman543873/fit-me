@@ -1,7 +1,9 @@
+import { RequestContext } from './../shared/interfaces/request-context.interface';
 import {
   Body,
   Controller,
   Post,
+  Request,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -20,9 +22,14 @@ export class AnswerController {
   @Post()
   @UseInterceptors(FileInterceptor('media'))
   async addAnswer(
+    @Request() request: RequestContext,
     @Body() addAnswerDto: AddAnswerDto,
     @UploadedFile() media?: Express.Multer.File,
   ) {
-    return await this.answerService.addAnswer(addAnswerDto, media);
+    return await this.answerService.addAnswer(
+      request.user._id,
+      addAnswerDto,
+      media,
+    );
   }
 }

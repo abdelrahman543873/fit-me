@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Answer, AnswerDocument } from './answer.scheme';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddAnswerDto } from './inputs/add-answer.dto';
 
@@ -14,8 +14,13 @@ export class AnswerRepository extends BaseRepository<Answer> {
     super(answerSchema);
   }
 
-  addAnswer(addAnswerDto: AddAnswerDto, media: Express.Multer.File) {
+  addAnswer(
+    client: ObjectId,
+    addAnswerDto: AddAnswerDto,
+    media: Express.Multer.File,
+  ) {
     return this.answerSchema.create({
+      client,
       ...addAnswerDto,
       ...(media && {
         media: `${process.env.HOST}${media.filename}`,

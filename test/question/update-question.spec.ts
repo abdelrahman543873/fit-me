@@ -5,7 +5,7 @@ import { USER_ROLE } from '../../src/user/user.constants';
 import { userFactory } from '../user/user.factory';
 import { buildQuestionParams, questionFactory } from './question.factory';
 import { QUESTION } from '../endpoints/question.endpoints';
-import { UpdateQuestionDto } from '../../src/question/inputs/update-questoin.dto';
+import { UpdateQuestionDto } from '../../src/question/inputs/update-question.dto';
 
 describe('question suite case', () => {
   it('should update question successfully', async () => {

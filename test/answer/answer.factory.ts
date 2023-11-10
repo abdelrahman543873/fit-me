@@ -2,6 +2,8 @@ import { AnswerRepo } from './answer.test-repo';
 import { Answer } from '../../src/answer/answer.scheme';
 import { questionFactory } from '../question/question.factory';
 import { faker } from '@faker-js/faker';
+import { userFactory } from '../user/user.factory';
+import { USER_ROLE } from '../../src/user/user.constants';
 
 export const buildAnswerParams = async (
   obj: Partial<Answer> = {},
@@ -11,6 +13,7 @@ export const buildAnswerParams = async (
     text: obj.text || faker.word.verb(),
     choices: obj.choices || [faker.word.verb()],
     media: obj.media || faker.word.verb(),
+    client: obj.client || (await userFactory({ role: USER_ROLE.CLIENT }))._id,
   };
 };
 

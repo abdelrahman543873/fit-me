@@ -17,6 +17,10 @@ export class Answer {
   })
   question: ObjectId;
 
+  @ApiProperty({ type: 'string' })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  client: ObjectId;
+
   @Prop()
   text?: string;
 
