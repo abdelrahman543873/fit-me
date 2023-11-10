@@ -29,6 +29,14 @@ export class SubscriptionController {
     );
   }
 
+  @Put('skip-form')
+  async skipForm(@Request() request: RequestContext): Promise<Subscription> {
+    return await this.subscriptionService.skipForm(
+      request.trainerId,
+      request.user._id,
+    );
+  }
+
   @Get()
   async getClientSubscription(@Request() request: RequestContext) {
     return await this.subscriptionService.getClientSubscription(

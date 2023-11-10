@@ -29,6 +29,10 @@ export class SubscriptionService {
     );
   }
 
+  skipForm(trainer: ObjectId, client: ObjectId) {
+    return this.subscriptionRepository.skipForm(trainer, client);
+  }
+
   getClientSubscription(trainer: ObjectId) {
     return this.subscriptionRepository.getClientSubscription(trainer);
   }

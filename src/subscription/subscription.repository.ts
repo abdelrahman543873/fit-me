@@ -55,6 +55,14 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
     );
   }
 
+  skipForm(trainer: ObjectId, client: ObjectId) {
+    return this.subscriptionSchema.findOneAndUpdate(
+      { client, trainer },
+      { status: SUBSCRIPTION_STATUS.PENDING },
+      { new: true },
+    );
+  }
+
   filterSubscriptions(
     trainer: ObjectId,
     filterSubscriptionsDto: FilterSubscriptionsDto,
