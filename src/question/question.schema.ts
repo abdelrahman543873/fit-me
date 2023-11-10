@@ -7,6 +7,7 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema({ versionKey: false, timestamps: true, strict: true })
 export class Question {
+  @ApiProperty({ type: 'string' })
   _id?: ObjectId;
 
   @ApiProperty({ type: 'string' })
