@@ -3,6 +3,8 @@ import { OnEvent } from '@nestjs/event-emitter';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 import { SubscriptionService } from './subscription.service';
 import { UserEvents } from '../user/user.constants';
+import { CompletedFormEvent } from '../form/events/form-completed.event';
+import { FormEvents } from '../form/form.constants';
 
 @Injectable()
 export class SubscriptionListener {
@@ -13,5 +15,10 @@ export class SubscriptionListener {
     clientRegisteredEvent: ClientRegisteredEvent,
   ) {
     await this.subscriptionService.addSubscription(clientRegisteredEvent);
+  }
+
+  @OnEvent(FormEvents.FORM_COMPLETED)
+  async handleCompletedFormEvent(completedFormEvent: CompletedFormEvent) {
+    await this.subscriptionService.completedFormHandler(completedFormEvent);
   }
 }

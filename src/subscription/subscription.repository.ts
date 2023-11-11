@@ -24,6 +24,18 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
     });
   }
 
+  updateSubscriptionStatus({
+    client,
+    trainer,
+    status,
+  }: {
+    client: ObjectId;
+    trainer: ObjectId;
+    status: SUBSCRIPTION_STATUS;
+  }) {
+    return this.subscriptionSchema.updateOne({ client, trainer }, { status });
+  }
+
   getTrainer(client: ObjectId) {
     return this.subscriptionSchema
       .findOne({

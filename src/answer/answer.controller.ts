@@ -30,6 +30,7 @@ export class AnswerController {
       request.user._id,
       addAnswerDto,
       media,
+      request.trainerId,
     );
   }
 }

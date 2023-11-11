@@ -14,6 +14,10 @@ export class AnswerRepository extends BaseRepository<Answer> {
     super(answerSchema);
   }
 
+  getAnswerQuestion(question: ObjectId, client: ObjectId) {
+    return this.answerSchema.findOne({ question, client }).populate('question');
+  }
+
   addAnswer(
     client: ObjectId,
     addAnswerDto: AddAnswerDto,

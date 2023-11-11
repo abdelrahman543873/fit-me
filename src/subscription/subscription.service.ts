@@ -3,6 +3,8 @@ import { SubscriptionRepository } from './subscription.repository';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 import { ObjectId } from 'mongoose';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
+import { CompletedFormEvent } from '../form/events/form-completed.event';
+import { SUBSCRIPTION_STATUS } from './subscription.constants';
 
 @Injectable()
 export class SubscriptionService {
@@ -12,6 +14,14 @@ export class SubscriptionService {
 
   addSubscription(clientRegisteredEvent: ClientRegisteredEvent) {
     return this.subscriptionRepository.addSubscription(clientRegisteredEvent);
+  }
+
+  completedFormHandler(completedFormEvent: CompletedFormEvent) {
+    return this.subscriptionRepository.updateSubscriptionStatus({
+      client: completedFormEvent.client,
+      trainer: completedFormEvent.trainer,
+      status: SUBSCRIPTION_STATUS.PENDING,
+    });
   }
 
   async getTrainer(client: ObjectId) {

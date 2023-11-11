@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Question, QuestionSchema } from './question.schema';
 import { ExistingQuestionValidator } from './validators/existing-question.validator';
 import { QuestionOwnerValidator } from './validators/question-owner.validator';
+import { QuestionListener } from './question.listener';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { QuestionOwnerValidator } from './validators/question-owner.validator';
     QuestionRepository,
     ExistingQuestionValidator,
     QuestionOwnerValidator,
+    QuestionListener,
   ],
   controllers: [QuestionController],
 })

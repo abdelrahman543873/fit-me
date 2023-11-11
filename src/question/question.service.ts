@@ -4,10 +4,17 @@ import { QuestionRepository } from './question.repository';
 import { UpdateQuestionDto } from './inputs/update-question.dto';
 import { DeleteQuestionDto } from './inputs/delete-question.dto';
 import { ObjectId } from 'mongoose';
+import { SubmittedAnswerEvent } from '../answer/events/answered-question.event';
+import { CompletedFormEvent } from '../form/events/form-completed.event';
+import { FormEvents } from '../form/form.constants';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class QuestionService {
-  constructor(private readonly questionRepository: QuestionRepository) {}
+  constructor(
+    private readonly questionRepository: QuestionRepository,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
   addQuestion(addQuestion: AddQuestionDto) {
     return this.questionRepository.addQuestion(addQuestion);
@@ -15,6 +22,19 @@ export class QuestionService {
 
   getUnansweredQuestions(form: ObjectId, client: ObjectId) {
     return this.questionRepository.getUnansweredQuestions(form, client);
+  }
+
+  async checkCompletedForm(submittedAnswerEvent: SubmittedAnswerEvent) {
+    const unansweredQuestions = await this.getUnansweredQuestions(
+      submittedAnswerEvent.form,
+      submittedAnswerEvent.client,
+    );
+    if (unansweredQuestions.length === 0) {
+      const formCompletedEvent = new CompletedFormEvent();
+      formCompletedEvent.client = submittedAnswerEvent.client;
+      formCompletedEvent.trainer = submittedAnswerEvent.trainer;
+      this.eventEmitter.emit(FormEvents.FORM_COMPLETED, formCompletedEvent);
+    }
   }
 
   updateQuestion(updateQuestionDto: UpdateQuestionDto) {

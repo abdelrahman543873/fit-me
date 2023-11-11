@@ -2,16 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { AnswerRepository } from './answer.repository';
 import { AddAnswerDto } from './inputs/add-answer.dto';
 import { ObjectId } from 'mongoose';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { SubmittedAnswerEvent } from './events/answered-question.event';
+import { AnswerEvents } from './answer.constants';
 
 @Injectable()
 export class AnswerService {
-  constructor(private readonly answerRepository: AnswerRepository) {}
+  constructor(
+    private readonly answerRepository: AnswerRepository,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
-  addAnswer(
+  async addAnswer(
     client: ObjectId,
     addAnswerDto: AddAnswerDto,
     media: Express.Multer.File,
+    trainer: ObjectId,
   ) {
-    return this.answerRepository.addAnswer(client, addAnswerDto, media);
+    const answer = await this.answerRepository.addAnswer(
+      client,
+      addAnswerDto,
+      media,
+    );
+    const answerPopulatedQuestion =
+      await this.answerRepository.getAnswerQuestion(
+        addAnswerDto.question,
+        client,
+      );
+    const submittedAnswerEvent = new SubmittedAnswerEvent();
+    submittedAnswerEvent.client = client;
+    submittedAnswerEvent.form = answerPopulatedQuestion.question['form'];
+    submittedAnswerEvent.trainer = trainer;
+    this.eventEmitter.emit(AnswerEvents.ANSWER_SUBMITTED, submittedAnswerEvent);
+    return answer;
   }
 }
