@@ -33,4 +33,29 @@ describe('filter answers suite case', () => {
       differentTrainerFormAnswers._id.toString(),
     );
   });
+
+  it('should filter answers based on form', async () => {
+    const client = await userFactory({ role: USER_ROLE.CLIENT });
+    const trainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const form = await formFactory({ trainer: trainer._id });
+    const question = await questionFactory({ form: form._id });
+    const answer = await answerFactory({
+      client: client._id,
+      question: question._id,
+    });
+    const differentTrainerFormAnswers = await answerFactory();
+    const res = await testRequest<FilterAnswersDto>({
+      method: HTTP_METHODS_ENUM.GET,
+      url: FILTER_ANSWERS,
+      token: trainer.token,
+      params: { form: form._id as any },
+    });
+    expect(res.body[0]._id).toBe(answer._id.toString());
+    expect(res.body[0].client).toBe(client._id.toString());
+    expect(res.body[0].question.form.trainer).toBe(trainer._id.toString());
+    expect(res.body.length).toBe(1);
+    expect(res.body.map((answer) => answer._id)).not.toContain(
+      differentTrainerFormAnswers._id.toString(),
+    );
+  });
 });

@@ -23,7 +23,7 @@ export class AnswerRepository extends BaseRepository<Answer> {
     return this.answerSchema.aggregate([
       {
         $match: {
-          ...filterAnswersDto,
+          ...(filterAnswersDto.client && { client: filterAnswersDto.client }),
         },
       },
       {
@@ -48,6 +48,15 @@ export class AnswerRepository extends BaseRepository<Answer> {
               },
             },
             { $unwind: '$form' },
+            {
+              $match: {
+                ...(filterAnswersDto.form && {
+                  $expr: {
+                    $eq: ['$form._id', filterAnswersDto.form],
+                  },
+                }),
+              },
+            },
           ],
         },
       },
