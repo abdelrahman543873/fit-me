@@ -1,11 +1,12 @@
 import { RequestContext } from './../shared/interfaces/request-context.interface';
-import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, Query } from '@nestjs/common';
 import { SubscriptionService } from './subscription.service';
 import { Request } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
 import { ChoosePlanDto } from './inputs/choose-plan.dto';
 import { Subscription } from './subscription.schema';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @ApiTags('subscription')
 @ApiBearerAuth()
@@ -35,6 +36,11 @@ export class SubscriptionController {
       request.trainerId,
       request.user._id,
     );
+  }
+
+  @Put('approve/:id')
+  async approveSubscription(@Param() id: MongoIdDto) {
+    return await this.subscriptionService.approveSubscription(id);
   }
 
   @Get()

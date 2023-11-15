@@ -6,6 +6,7 @@ import { BaseRepository } from '../shared/generics/repository.abstract';
 import { ClientRegisteredEvent } from '../user/events/client-registered.event';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
 import { SUBSCRIPTION_STATUS } from './subscription.constants';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @Global()
 @Injectable()
@@ -22,6 +23,18 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
       client: clientRegisteredEvent.client,
       trainer: clientRegisteredEvent.trainer,
     });
+  }
+
+  approveSubscription(subscriptionId: MongoIdDto) {
+    return this.subscriptionSchema.findOneAndUpdate(
+      {
+        _id: subscriptionId.id,
+      },
+      {
+        status: SUBSCRIPTION_STATUS.APPROVED,
+      },
+      { new: true },
+    );
   }
 
   updateSubscriptionStatus({

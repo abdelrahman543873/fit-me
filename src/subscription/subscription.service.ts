@@ -5,6 +5,7 @@ import { ObjectId } from 'mongoose';
 import { FilterSubscriptionsDto } from './inputs/filter-subscriptions.dto';
 import { CompletedFormEvent } from '../form/events/form-completed.event';
 import { SUBSCRIPTION_STATUS } from './subscription.constants';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @Injectable()
 export class SubscriptionService {
@@ -22,6 +23,10 @@ export class SubscriptionService {
       trainer: completedFormEvent.trainer,
       status: SUBSCRIPTION_STATUS.PENDING,
     });
+  }
+
+  approveSubscription(subscriptionId: MongoIdDto) {
+    return this.subscriptionRepository.approveSubscription(subscriptionId);
   }
 
   async getTrainer(client: ObjectId) {
