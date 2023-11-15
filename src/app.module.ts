@@ -15,6 +15,7 @@ import { WorkoutExerciseModule } from './workout-exercise/workout-exercise.modul
 import { ProgramModule } from './program/program.module';
 import { ProgramWorkoutModule } from './program-workout/program-workout.module';
 import { AnswerModule } from './answer/answer.module';
+import { ClientProgramModule } from './client-program/client-program.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AnswerModule } from './answer/answer.module';
     ProgramModule,
     ProgramWorkoutModule,
     AnswerModule,
+    ClientProgramModule,
   ],
   controllers: [AppController],
 })

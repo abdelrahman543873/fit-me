@@ -10,6 +10,7 @@ import {
   ProgramWorkoutSchema,
 } from '../program-workout/program-workout.schema';
 import { Model } from 'mongoose';
+import { ExistingProgramValidator } from './validators/existing-program.validator';
 
 @Module({
   imports: [
@@ -32,6 +33,11 @@ import { Model } from 'mongoose';
     ]),
   ],
   controllers: [ProgramController],
-  providers: [ProgramService, ProgramRepository, ProgramOwnerValidator],
+  providers: [
+    ProgramService,
+    ProgramRepository,
+    ProgramOwnerValidator,
+    ExistingProgramValidator,
+  ],
 })
 export class ProgramModule {}

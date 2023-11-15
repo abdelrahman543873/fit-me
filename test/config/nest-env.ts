@@ -13,6 +13,7 @@ import { WorkoutExerciseRepository } from '../../src/workout-exercise/workout-ex
 import { ProgramWorkoutRepository } from '../../src/program-workout/program-workout.repository';
 import { ProgramRepository } from '../../src/program/program.repository';
 import { AnswerRepository } from '../../src/answer/answer.repository';
+import { ClientProgramRepository } from '../../src/client-program/client-program.repository';
 
 class MongoEnvironment extends NodeEnvironment {
   constructor(config, context) {
@@ -48,8 +49,10 @@ class MongoEnvironment extends NodeEnvironment {
     );
     this.global.programRepository =
       app.get<ProgramRepository>(ProgramRepository);
-
     this.global.answerRepository = app.get<AnswerRepository>(AnswerRepository);
+    this.global.clientProgramRepository = app.get<ClientProgramRepository>(
+      ClientProgramRepository,
+    );
   }
 
   async teardown() {
