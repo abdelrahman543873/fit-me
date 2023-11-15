@@ -8,6 +8,7 @@ import { ANSWER } from '../endpoints/answer.endpoints';
 import { subscriptionFactory } from '../subscription/subscription.factory';
 import { SUBSCRIPTION_STATUS } from '../../src/subscription/subscription.constants';
 import { SubscriptionRepo } from '../subscription/subscription.test-repo';
+import { waitForMilliSeconds } from '../utils/wait-for.util';
 
 describe('add answer suite case', () => {
   it('should add answer successfully and change subscription status to pending when all form is answered', async () => {
@@ -30,6 +31,7 @@ describe('add answer suite case', () => {
     });
     expect(res.body.text).toBe(params.text);
     expect(res.body.text).toBe(params.text);
+    await waitForMilliSeconds(1);
     const subscriptionAfterFormCompletion = await SubscriptionRepo().findOne({
       _id: subscription._id,
     });
