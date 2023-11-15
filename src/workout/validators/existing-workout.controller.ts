@@ -1,37 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { ValidatorConstraint } from 'class-validator';
 import { WorkoutRepository } from '../workout.repository';
+import {
+  ExistingEntityRecordValidator,
+  isExistingEntityRecordValidator,
+} from '../../shared/validators/existing-entity-record.validator';
+import { Workout } from '../workout.schema';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class ExistingWorkoutValidator implements ValidatorConstraintInterface {
-  constructor(private workoutRepository: WorkoutRepository) {}
-  async validate(id: ObjectId): Promise<boolean> {
-    const workout = await this.workoutRepository.findOne({
-      _id: id,
-    });
-    if (!workout) return false;
-    return true;
-  }
-
-  defaultMessage() {
-    return "this workout doesn't exist";
+export class ExistingWorkoutValidator extends ExistingEntityRecordValidator {
+  constructor(workoutRepository: WorkoutRepository) {
+    super(workoutRepository, Workout.name);
   }
 }
-export function IsExistingWorkout(validationOptions?: ValidationOptions) {
-  return function (object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [],
-      validator: ExistingWorkoutValidator,
-    });
-  };
-}
+export const IsExistingWorkout = isExistingEntityRecordValidator(
+  ExistingWorkoutValidator,
+);

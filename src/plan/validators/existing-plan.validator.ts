@@ -1,37 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from 'class-validator';
-import { ObjectId } from 'mongoose';
 import { PlanRepository } from '../plan.repository';
+import {
+  ExistingEntityRecordValidator,
+  isExistingEntityRecordValidator,
+} from '../../shared/validators/existing-entity-record.validator';
+import { Plan } from '../plan.schema';
+import { ValidatorConstraint } from 'class-validator';
 
-@ValidatorConstraint({ async: true })
 @Injectable()
-export class ExistingPlanValidator implements ValidatorConstraintInterface {
-  constructor(private planRepository: PlanRepository) {}
-  async validate(id: ObjectId): Promise<boolean> {
-    const plan = await this.planRepository.findOne({
-      _id: id,
-    });
-    if (!plan) return false;
-    return true;
-  }
-
-  defaultMessage() {
-    return "this plan doesn't exist";
+@ValidatorConstraint({ async: true })
+export class ExistingPlanValidator extends ExistingEntityRecordValidator {
+  constructor(planRepository: PlanRepository) {
+    super(planRepository, Plan.name);
   }
 }
-export function IsExistingPlan(validationOptions?: ValidationOptions) {
-  return function (object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [],
-      validator: ExistingPlanValidator,
-    });
-  };
-}
+export const IsExistingPlan = isExistingEntityRecordValidator(
+  ExistingPlanValidator,
+);

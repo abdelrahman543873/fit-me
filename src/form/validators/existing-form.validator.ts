@@ -1,37 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { ValidatorConstraint } from 'class-validator';
 import { FormRepository } from '../form.repository';
+import { Form } from '../form.schema';
+import {
+  ExistingEntityRecordValidator,
+  isExistingEntityRecordValidator,
+} from '../../shared/validators/existing-entity-record.validator';
 
-@ValidatorConstraint({ async: true })
 @Injectable()
-export class ExistingFormValidator implements ValidatorConstraintInterface {
-  constructor(private formRepository: FormRepository) {}
-  async validate(id: ObjectId): Promise<boolean> {
-    const form = await this.formRepository.findOne({
-      _id: id,
-    });
-    if (!form) return false;
-    return true;
-  }
-
-  defaultMessage() {
-    return "this form doesn't exist";
+@ValidatorConstraint({ async: true })
+export class ExistingFormValidator extends ExistingEntityRecordValidator {
+  constructor(formRepository: FormRepository) {
+    super(formRepository, Form.name);
   }
 }
-export function IsExistingForm(validationOptions?: ValidationOptions) {
-  return function (object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [],
-      validator: ExistingFormValidator,
-    });
-  };
-}
+export const IsExistingForm = isExistingEntityRecordValidator(
+  ExistingFormValidator,
+);

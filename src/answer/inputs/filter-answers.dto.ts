@@ -4,9 +4,11 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { ApiProperty } from '@nestjs/swagger';
 import { ObjectId } from 'mongoose';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
+import { IsExistingClient } from '../../client/validators/existing-client.validator';
 
 export class FilterAnswersDto {
   @ValidateIfDefined()
+  @IsExistingClient()
   @ApiProperty({ type: 'string' })
   @IsMongoIdObject()
   @Transform(objectIdTransformer)

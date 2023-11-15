@@ -1,37 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import {
-  registerDecorator,
-  ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-} from 'class-validator';
-import { ObjectId } from 'mongoose';
+import { ValidatorConstraint } from 'class-validator';
 import { QuestionRepository } from '../question.repository';
+import {
+  ExistingEntityRecordValidator,
+  isExistingEntityRecordValidator,
+} from '../../shared/validators/existing-entity-record.validator';
+import { Question } from '../question.schema';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class ExistingQuestionValidator implements ValidatorConstraintInterface {
-  constructor(private questionRepository: QuestionRepository) {}
-  async validate(id: ObjectId): Promise<boolean> {
-    const question = await this.questionRepository.findOne({
-      _id: id,
-    });
-    if (!question) return false;
-    return true;
-  }
-
-  defaultMessage() {
-    return "this question doesn't exist";
+export class ExistingQuestionValidator extends ExistingEntityRecordValidator {
+  constructor(questionRepository: QuestionRepository) {
+    super(questionRepository, Question.name);
   }
 }
-export function IsExistingQuestion(validationOptions?: ValidationOptions) {
-  return function (object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [],
-      validator: ExistingQuestionValidator,
-    });
-  };
-}
+export const IsExistingQuestion = isExistingEntityRecordValidator(
+  ExistingQuestionValidator,
+);

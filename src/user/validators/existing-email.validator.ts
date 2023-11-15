@@ -12,10 +12,10 @@ import { UserRepository } from '../user.repository';
 export class ExistingEmailValidator implements ValidatorConstraintInterface {
   constructor(private userRepository: UserRepository) {}
   async validate(email: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({
+    const emailRecord = await this.userRepository.findOne({
       email: email.toLowerCase(),
     });
-    if (user) return false;
+    if (emailRecord) return false;
     return true;
   }
 
