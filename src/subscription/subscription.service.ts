@@ -48,8 +48,8 @@ export class SubscriptionService {
     return this.subscriptionRepository.skipForm(trainer, client);
   }
 
-  getClientSubscription(trainer: ObjectId) {
-    return this.subscriptionRepository.getClientSubscription(trainer);
+  getClientSubscription(client: ObjectId, trainer: ObjectId) {
+    return this.subscriptionRepository.getClientSubscription(client, trainer);
   }
 
   choosePlan({

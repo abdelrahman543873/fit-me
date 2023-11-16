@@ -46,6 +46,7 @@ export class SubscriptionController {
   @Get()
   async getClientSubscription(@Request() request: RequestContext) {
     return await this.subscriptionService.getClientSubscription(
+      request.user._id,
       request.trainerId,
     );
   }
