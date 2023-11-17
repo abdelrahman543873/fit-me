@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsExistingClient } from '../../client/validators/existing-client.validator';
 import { ObjectId } from 'mongoose';
 import { IsExistingProgram } from '../../program/validators/existing-program.validator';
-import { Allow, IsDate, IsDateString } from 'class-validator';
+import { Allow, IsDate } from 'class-validator';
 import { IsProgramOwner } from '../../program/validators/program-owner.validator';
 import { User } from '../../user/user.schema';
 

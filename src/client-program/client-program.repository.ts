@@ -4,6 +4,7 @@ import { ClientProgram, ClientProgramDocument } from './client-program.schema';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { Model, ObjectId } from 'mongoose';
 import { AddClientProgramDto } from './inputs/add-client-program.dto';
+import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
 
 @Injectable()
 export class ClientProgramRepository extends BaseRepository<ClientProgram> {
@@ -18,7 +19,34 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
     return this.clientProgramSchema.create(addClientProgramDto);
   }
 
-  filterClientPrograms(client: ObjectId) {
-    return this.clientProgramSchema.find({ client }).populate(['program']);
+  filterClientPrograms(
+    trainer: ObjectId,
+    filterClientProgramDto: FilterClientProgramDto,
+  ) {
+    return this.clientProgramSchema.aggregate([
+      {
+        $match: {
+          ...(filterClientProgramDto.client && {
+            client: filterClientProgramDto.client,
+          }),
+        },
+      },
+      {
+        $lookup: {
+          from: 'programs',
+          localField: 'program',
+          foreignField: '_id',
+          as: 'program',
+        },
+      },
+      { $unwind: '$program' },
+      {
+        $match: {
+          $expr: {
+            $eq: ['$program.trainer', trainer],
+          },
+        },
+      },
+    ]);
   }
 }

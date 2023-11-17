@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Request,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,6 +13,8 @@ import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
 import { ClientProgram } from './client-program.schema';
+import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
+import { USER_ROLE } from '../user/user.constants';
 
 @ApiBearerAuth()
 @ApiTags('client-program')
@@ -28,9 +31,13 @@ export class ClientProgramController {
   @Get('filter')
   async filterClientPrograms(
     @Request() request: RequestContext,
+    @Query() filterClientProgramDto: FilterClientProgramDto,
   ): Promise<ClientProgram[]> {
     return await this.clientProgramService.filterClientPrograms(
-      request.user._id,
+      request.user.role === USER_ROLE.CLIENT
+        ? request.trainerId
+        : request.user._id,
+      filterClientProgramDto,
     );
   }
 }
