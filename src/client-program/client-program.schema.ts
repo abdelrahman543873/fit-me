@@ -26,6 +26,9 @@ export class ClientProgram {
   @Prop({ type: Date })
   endDate: Date;
 
+  @Prop({ type: Date })
+  startDate: Date;
+
   @Prop({ type: [Date] })
   followUpDates: Date[];
 }

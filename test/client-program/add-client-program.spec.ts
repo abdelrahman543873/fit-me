@@ -26,6 +26,7 @@ describe('add client program suite case', () => {
         endDate: params.endDate.toISOString().slice(0, 10) as any,
         followUpDates: [params.endDate.toISOString().slice(0, 10)] as any,
         program: params.program,
+        startDate: params.startDate,
       },
     });
     expect(res.body.client).toBe(client._id.toString());

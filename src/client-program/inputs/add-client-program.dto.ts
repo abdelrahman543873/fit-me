@@ -27,6 +27,10 @@ export class AddClientProgramDto {
   @Type(() => Date)
   endDate: Date;
 
+  @IsDate()
+  @Type(() => Date)
+  startDate: Date;
+
   @IsDate({ each: true })
   @Type(() => Date)
   followUpDates: Date[];
