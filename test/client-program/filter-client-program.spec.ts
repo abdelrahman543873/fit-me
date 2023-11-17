@@ -24,6 +24,6 @@ describe('get client program suite case', () => {
       token: client.token,
       params: { client: client._id },
     });
-    expect(res.body[0].client).toBe(client._id.toString());
+    expect(res.body.docs[0].client).toBe(client._id.toString());
   });
 });

@@ -5,8 +5,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsExistingClient } from '../../client/validators/existing-client.validator';
 import { ObjectId } from 'mongoose';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
+import { Pagination } from '../../shared/inputs/pagination.input';
 
-export class FilterClientProgramDto {
+export class FilterClientProgramDto extends Pagination {
   @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
   @IsExistingClient()

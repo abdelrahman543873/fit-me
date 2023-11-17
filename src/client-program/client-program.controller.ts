@@ -12,7 +12,6 @@ import { ClientProgramService } from './client-program.service';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RequestContext } from '../shared/interfaces/request-context.interface';
-import { ClientProgram } from './client-program.schema';
 import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
 import { USER_ROLE } from '../user/user.constants';
 
@@ -32,7 +31,7 @@ export class ClientProgramController {
   async filterClientPrograms(
     @Request() request: RequestContext,
     @Query() filterClientProgramDto: FilterClientProgramDto,
-  ): Promise<ClientProgram[]> {
+  ) {
     return await this.clientProgramService.filterClientPrograms(
       request.user.role === USER_ROLE.CLIENT
         ? request.trainerId

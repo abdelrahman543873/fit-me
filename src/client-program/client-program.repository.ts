@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientProgram, ClientProgramDocument } from './client-program.schema';
 import { BaseRepository } from '../shared/generics/repository.abstract';
-import { Model, ObjectId } from 'mongoose';
+import { AggregatePaginateModel, ObjectId } from 'mongoose';
 import { AddClientProgramDto } from './inputs/add-client-program.dto';
 import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
 
@@ -10,7 +10,7 @@ import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
 export class ClientProgramRepository extends BaseRepository<ClientProgram> {
   constructor(
     @InjectModel(ClientProgram.name)
-    private clientProgramSchema: Model<ClientProgramDocument>,
+    private clientProgramSchema: AggregatePaginateModel<ClientProgramDocument>,
   ) {
     super(clientProgramSchema);
   }
@@ -23,7 +23,7 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
     trainer: ObjectId,
     filterClientProgramDto: FilterClientProgramDto,
   ) {
-    return this.clientProgramSchema.aggregate([
+    const aggregation = this.clientProgramSchema.aggregate([
       {
         $match: {
           ...(filterClientProgramDto.client && {
@@ -47,6 +47,15 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
           },
         },
       },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
     ]);
+    return this.clientProgramSchema.aggregatePaginate(aggregation, {
+      offset: filterClientProgramDto.offset * filterClientProgramDto.limit,
+      limit: filterClientProgramDto.limit,
+    });
   }
 }
