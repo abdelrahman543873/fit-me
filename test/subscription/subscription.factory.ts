@@ -19,6 +19,7 @@ export const buildSubscriptionParams = async (
         Object.values(SUBSCRIPTION_STATUS),
       ),
     plan: obj.plan || (await planFactory())._id,
+    approvedAt: obj.approvedAt || faker.date.past(),
   };
 };
 

@@ -48,8 +48,18 @@ export class SubscriptionService {
     return this.subscriptionRepository.skipForm(trainer, client);
   }
 
-  getClientSubscription(client: ObjectId, trainer: ObjectId) {
-    return this.subscriptionRepository.getClientSubscription(client, trainer);
+  async getClientSubscription(client: ObjectId, trainer: ObjectId) {
+    const subscription = (
+      await this.subscriptionRepository.getClientSubscription(client, trainer)
+    ).toJSON();
+    if (subscription.approvedAt) {
+      const endDate = new Date(subscription.approvedAt.toISOString());
+      endDate.setMonth(
+        endDate.getMonth() + subscription.plan['monthsDuration'],
+      );
+      subscription.endDate = endDate;
+    }
+    return subscription;
   }
 
   choosePlan({

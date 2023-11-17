@@ -28,6 +28,11 @@ export class Subscription {
   @ApiProperty({ type: 'string' })
   @Prop({ type: Types.ObjectId, ref: 'Plan' })
   plan: ObjectId;
+
+  @Prop({ type: Date })
+  approvedAt?: Date;
+
+  endDate?: Date;
 }
 
 export const SubscriptionSchema = SchemaFactory.createForClass(Subscription);

@@ -32,6 +32,7 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
       },
       {
         status: SUBSCRIPTION_STATUS.APPROVED,
+        approvedAt: new Date(),
       },
       { new: true },
     );
