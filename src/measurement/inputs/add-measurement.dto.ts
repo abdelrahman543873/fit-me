@@ -21,7 +21,7 @@ export class AddMeasurementDto {
   @IsImageInImageMeasurement()
   @IsCorrectMeasurementUnit()
   @IsEnum(MEASUREMENT_TYPE)
-  type: string;
+  type: MEASUREMENT_TYPE;
 
   @ValidateIfDefined()
   @IsNumber()
