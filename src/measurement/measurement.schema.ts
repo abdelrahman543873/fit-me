@@ -18,8 +18,8 @@ export class Measurement {
   })
   client: ObjectId;
 
-  @Prop({ enum: MEASUREMENT_TYPE })
-  type: string;
+  @Prop({ type: String, enum: MEASUREMENT_TYPE })
+  type: MEASUREMENT_TYPE;
 
   @Prop()
   value: number;
