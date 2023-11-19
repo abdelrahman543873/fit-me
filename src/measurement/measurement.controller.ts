@@ -1,3 +1,4 @@
+import { RequestContext } from './../shared/interfaces/request-context.interface';
 import {
   Body,
   Controller,
@@ -9,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { MeasurementService } from './measurement.service';
 import { AddMeasurementDto } from './inputs/add-measurement.dto';
-import { RequestContext } from '../../dist/shared/interfaces/request-context.interface';
 import { Client } from '../shared/decorators/client.decorator';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
