@@ -2,7 +2,7 @@ import { testRequest } from '../config/request';
 import { HTTP_METHODS_ENUM } from '../config/request.methods.enum';
 import { userFactory } from '../user/user.factory';
 import { USER_ROLE } from '../../src/user/user.constants';
-import { buildMeasurementParams } from './measurement.fatory';
+import { buildMeasurementParams } from './measurement.factory';
 import { AddMeasurementDto } from '../../src/measurement/inputs/add-measurement.dto';
 import { MEASUREMENT } from '../endpoints/measurement.endpoints';
 import {
@@ -21,6 +21,26 @@ describe('add measurement suite case', () => {
       url: MEASUREMENT,
       variables: measurement,
       token: client.token,
+    });
+    expect(res.body.value).toBe(measurement.value);
+    expect(res.body.type).toBe(measurement.type);
+  });
+
+  it('should add media measurement successfully', async () => {
+    const client = await userFactory({ role: USER_ROLE.CLIENT });
+    const measurement = await buildMeasurementParams({
+      client: client._id,
+      type: MEASUREMENT_TYPE.BACK_IMAGE,
+    });
+    delete measurement.client;
+    delete measurement.measuredAt;
+    delete measurement.media;
+    const res = await testRequest<AddMeasurementDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: MEASUREMENT,
+      variables: measurement,
+      token: client.token,
+      fileParam: 'media',
     });
     expect(res.body.value).toBe(measurement.value);
     expect(res.body.type).toBe(measurement.type);

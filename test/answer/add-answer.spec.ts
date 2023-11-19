@@ -31,7 +31,7 @@ describe('add answer suite case', () => {
     });
     expect(res.body.text).toBe(params.text);
     expect(res.body.text).toBe(params.text);
-    await waitForMilliSeconds(1);
+    await waitForMilliSeconds(10);
     const subscriptionAfterFormCompletion = await SubscriptionRepo().findOne({
       _id: subscription._id,
     });

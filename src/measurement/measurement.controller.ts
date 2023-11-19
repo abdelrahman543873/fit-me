@@ -14,6 +14,7 @@ import { Client } from '../shared/decorators/client.decorator';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ClientGuard } from '../shared/guards/client.guard';
+import { MediaInBodyInterceptor } from '../shared/interceptors/media-in-body.interceptor';
 
 @ApiTags('measurement')
 @ApiBearerAuth()
@@ -25,6 +26,7 @@ export class MeasurementController {
   @Post()
   @Client()
   @UseGuards(ClientGuard)
+  @UseInterceptors(MediaInBodyInterceptor)
   @UseInterceptors(FileInterceptor('media'))
   async addMeasurement(
     @Request() request: RequestContext,
