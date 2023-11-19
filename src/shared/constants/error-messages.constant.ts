@@ -7,4 +7,8 @@ export const LocalizedErrorMessages: IErrorMessage = {
   },
   602: { EN: 'auth token not provided', AR: 'auth token not provided' },
   603: { EN: 'incorrectly formatted token', AR: 'incorrectly formatted token' },
+  604: {
+    EN: 'only clients can use this feature',
+    AR: 'only clients can use this feature',
+  },
 };

@@ -16,6 +16,7 @@ import { ProgramModule } from './program/program.module';
 import { ProgramWorkoutModule } from './program-workout/program-workout.module';
 import { AnswerModule } from './answer/answer.module';
 import { ClientProgramModule } from './client-program/client-program.module';
+import { MeasurementModule } from './measurement/measurement.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ClientProgramModule } from './client-program/client-program.module';
     ProgramWorkoutModule,
     AnswerModule,
     ClientProgramModule,
+    MeasurementModule,
   ],
   controllers: [AppController],
 })
