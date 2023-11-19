@@ -9,6 +9,7 @@ import {
 } from '../../src/measurement/measurement.constants';
 import { MeasurementRepo } from './measurement.test-repo';
 import { USER_ROLE } from '../../src/user/user.constants';
+import { MeasurementRepository } from '../../src/measurement/measurement.repository';
 
 export const buildMeasurementParams = async (
   obj: Partial<Measurement> = {},
@@ -42,4 +43,15 @@ export const measurementFactory = async (
 ): Promise<Measurement> => {
   const params: Partial<Measurement> = await buildMeasurementParams(obj);
   return await MeasurementRepo().add(params);
+};
+
+export const measurementsFactory = async (
+  count = 10,
+  obj: Partial<Measurement> = {},
+): Promise<Measurement[]> => {
+  const measurements: Measurement[] = [];
+  for (let i = 0; i < count; i++) {
+    measurements.push(await buildMeasurementParams(obj));
+  }
+  return await MeasurementRepo().addMany(measurements);
 };

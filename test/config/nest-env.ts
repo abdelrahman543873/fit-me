@@ -14,6 +14,7 @@ import { ProgramWorkoutRepository } from '../../src/program-workout/program-work
 import { ProgramRepository } from '../../src/program/program.repository';
 import { AnswerRepository } from '../../src/answer/answer.repository';
 import { ClientProgramRepository } from '../../src/client-program/client-program.repository';
+import { MeasurementRepository } from '../../src/measurement/measurement.repository';
 
 class MongoEnvironment extends NodeEnvironment {
   constructor(config, context) {
@@ -52,6 +53,9 @@ class MongoEnvironment extends NodeEnvironment {
     this.global.answerRepository = app.get<AnswerRepository>(AnswerRepository);
     this.global.clientProgramRepository = app.get<ClientProgramRepository>(
       ClientProgramRepository,
+    );
+    this.global.measurementRepository = app.get<MeasurementRepository>(
+      MeasurementRepository,
     );
   }
 

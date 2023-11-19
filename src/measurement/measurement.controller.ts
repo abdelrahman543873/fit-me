@@ -2,7 +2,9 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Request,
   UploadedFile,
   UseGuards,
@@ -15,6 +17,7 @@ import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ClientGuard } from '../shared/guards/client.guard';
 import { MediaInBodyInterceptor } from '../shared/interceptors/media-in-body.interceptor';
+import { FilterMeasurementsDto } from './inputs/filter-measurements.dto';
 
 @ApiTags('measurement')
 @ApiBearerAuth()
@@ -37,6 +40,17 @@ export class MeasurementController {
       request.user._id,
       addMeasurementDto,
       media,
+    );
+  }
+
+  @Get('filter')
+  async filterMeasurements(
+    @Request() request: RequestContext,
+    @Query() filterMeasurementsDto: FilterMeasurementsDto,
+  ) {
+    return await this.measurementService.filterMeasurements(
+      request.user._id,
+      filterMeasurementsDto,
     );
   }
 }
