@@ -18,7 +18,7 @@ export class Measurement {
   })
   client: ObjectId;
 
-  @Prop({ type: String, enum: MEASUREMENT_TYPE })
+  @Prop({ type: String, enum: MEASUREMENT_TYPE, required: true })
   type: MEASUREMENT_TYPE;
 
   @Prop()

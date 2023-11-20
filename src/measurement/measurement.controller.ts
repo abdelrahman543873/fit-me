@@ -18,6 +18,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ClientGuard } from '../shared/guards/client.guard';
 import { MediaInBodyInterceptor } from '../shared/interceptors/media-in-body.interceptor';
 import { FilterMeasurementsDto } from './inputs/filter-measurements.dto';
+import { AddMeasurementsDto } from './inputs/add-measurements.dto';
+import { BulkMeasurementsInterceptor } from './interceptors/bulk-measurements.interceptor';
 
 @ApiTags('measurement')
 @ApiBearerAuth()
@@ -41,6 +43,14 @@ export class MeasurementController {
       addMeasurementDto,
       media,
     );
+  }
+
+  @Post('bulk')
+  @Client()
+  @UseGuards(ClientGuard)
+  @UseInterceptors(BulkMeasurementsInterceptor)
+  async addMeasurements(@Body() addMeasurementsDto: AddMeasurementsDto) {
+    return await this.measurementService.addMeasurements(addMeasurementsDto);
   }
 
   @Get('filter')

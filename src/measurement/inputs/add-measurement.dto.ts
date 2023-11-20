@@ -14,6 +14,7 @@ import { IsCorrectMeasurementUnit } from '../validators/correct-measurement-unit
 import { IsImageInImageMeasurement } from '../validators/image-measurement-has-image.validator';
 import { IsCorrectMeasurementValue } from '../validators/correct-measurement-value.validator';
 import { IsUnitMeasurementImageEmpty } from '../validators/unit-measurment-with-no-image.validator';
+import { ObjectId } from 'mongoose';
 
 export class AddMeasurementDto {
   @IsUnitMeasurementImageEmpty()
@@ -42,4 +43,8 @@ export class AddMeasurementDto {
   @IsNotEmpty()
   @IsString()
   unit?: string;
+
+  @ApiProperty({ readOnly: true })
+  @Allow()
+  client: ObjectId;
 }

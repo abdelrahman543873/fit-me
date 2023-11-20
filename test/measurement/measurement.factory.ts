@@ -9,7 +9,6 @@ import {
 } from '../../src/measurement/measurement.constants';
 import { MeasurementRepo } from './measurement.test-repo';
 import { USER_ROLE } from '../../src/user/user.constants';
-import { MeasurementRepository } from '../../src/measurement/measurement.repository';
 
 export const buildMeasurementParams = async (
   obj: Partial<Measurement> = {},

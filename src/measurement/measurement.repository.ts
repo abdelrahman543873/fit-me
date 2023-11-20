@@ -5,6 +5,7 @@ import { AggregatePaginateModel, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddMeasurementDto } from './inputs/add-measurement.dto';
 import { FilterMeasurementsDto } from './inputs/filter-measurements.dto';
+import { AddMeasurementsDto } from './inputs/add-measurements.dto';
 
 @Injectable()
 export class MeasurementRepository extends BaseRepository<Measurement> {
@@ -21,12 +22,16 @@ export class MeasurementRepository extends BaseRepository<Measurement> {
     media: Express.Multer.File,
   ) {
     return this.measurementSchema.create({
-      client,
       ...addMeasurementDto,
+      client,
       ...(media && {
         media: `${process.env.HOST}${media.filename}`,
       }),
     });
+  }
+
+  addMeasurements(addMeasurementsDto: AddMeasurementsDto) {
+    return this.measurementSchema.insertMany(addMeasurementsDto.measurements);
   }
 
   filterMeasurements(
