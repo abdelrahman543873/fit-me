@@ -1,3 +1,4 @@
+import { RequestContext } from './../../shared/interfaces/request-context.interface';
 import {
   Injectable,
   NestInterceptor,
@@ -5,7 +6,6 @@ import {
   CallHandler,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { RequestContext } from '../../../dist/shared/interfaces/request-context.interface';
 
 @Injectable()
 export class BulkMeasurementsInterceptor implements NestInterceptor {
