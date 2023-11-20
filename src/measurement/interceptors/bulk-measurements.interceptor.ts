@@ -14,7 +14,6 @@ export class BulkMeasurementsInterceptor implements NestInterceptor {
     request.body.measurements = request.body.measurements.map((measurement) => {
       return { ...measurement, client: request.user._id };
     });
-    console.log(request.body.measurements);
     return next.handle();
   }
 }
