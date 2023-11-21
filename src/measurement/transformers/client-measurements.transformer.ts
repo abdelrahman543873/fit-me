@@ -1,5 +1,6 @@
 import { TransformFnParams } from 'class-transformer';
 import { AddMeasurementDto } from '../inputs/add-measurement.dto';
+import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 
 export const clientMeasurementsTransformer: (
   params: TransformFnParams,
@@ -7,7 +8,7 @@ export const clientMeasurementsTransformer: (
   const user = JSON.parse(input.obj.user);
   const measurements = input.value.map((measurement) => {
     const addMeasurementDto = new AddMeasurementDto();
-    addMeasurementDto.client = user._id;
+    addMeasurementDto.client = objectIdTransformer({ value: user._id });
     addMeasurementDto.type = measurement.type;
     measurement.measuredAt &&
       (addMeasurementDto.measuredAt = new Date(measurement.measuredAt));
