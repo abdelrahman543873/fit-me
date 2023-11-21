@@ -19,7 +19,7 @@ import { ClientGuard } from '../shared/guards/client.guard';
 import { MediaInBodyInterceptor } from '../shared/interceptors/media-in-body.interceptor';
 import { FilterMeasurementsDto } from './inputs/filter-measurements.dto';
 import { AddMeasurementsDto } from './inputs/add-measurements.dto';
-import { BulkMeasurementsInterceptor } from './interceptors/bulk-measurements.interceptor';
+import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 
 @ApiTags('measurement')
 @ApiBearerAuth()
@@ -48,7 +48,7 @@ export class MeasurementController {
   @Post('bulk')
   @Client()
   @UseGuards(ClientGuard)
-  @UseInterceptors(BulkMeasurementsInterceptor)
+  @UseInterceptors(RequestInBodyInterceptor)
   async addMeasurements(@Body() addMeasurementsDto: AddMeasurementsDto) {
     return await this.measurementService.addMeasurements(addMeasurementsDto);
   }

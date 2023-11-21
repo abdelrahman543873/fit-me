@@ -13,7 +13,7 @@ import { Type } from 'class-transformer';
 import { IsCorrectMeasurementUnit } from '../validators/correct-measurement-unit.validator';
 import { IsImageInImageMeasurement } from '../validators/image-measurement-has-image.validator';
 import { IsCorrectMeasurementValue } from '../validators/correct-measurement-value.validator';
-import { IsUnitMeasurementImageEmpty } from '../validators/unit-measurment-with-no-image.validator';
+import { IsUnitMeasurementImageEmpty } from '../validators/unit-measurement-with-no-image.validator';
 import { ObjectId } from 'mongoose';
 
 export class AddMeasurementDto {
