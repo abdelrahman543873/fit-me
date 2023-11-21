@@ -19,4 +19,15 @@ describe('filter measurements suite case', () => {
       measurements[0].client.toString(),
     );
   });
+
+  it('should filter measurements with type', async () => {
+    const client = await userFactory({ role: USER_ROLE.CLIENT });
+    const measurements = await measurementsFactory(10, { client: client._id });
+    const res = await testRequest<FilterMeasurementsDto>({
+      method: HTTP_METHODS_ENUM.GET,
+      url: `${FILTER_MEASUREMENTS}?type=${measurements[0].type}`,
+      token: client.token,
+    });
+    expect(res.body[0].type).toBe(measurements[0].type);
+  });
 });
