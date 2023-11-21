@@ -46,6 +46,12 @@ export class MeasurementRepository extends BaseRepository<Measurement> {
         },
       },
       {
+        $sort: {
+          measuredAt: -1,
+          createdAt: -1,
+        },
+      },
+      {
         $group: {
           _id: '$type',
           measurements: { $push: '$$ROOT' },
