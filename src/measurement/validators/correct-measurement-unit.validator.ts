@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   MEASUREMENT_CATEGORY,
+  MEASUREMENT_CATEGORY_ENUM,
   MEASUREMENT_CATEGORY_UNITS,
   MEASUREMENT_TYPE,
 } from '../measurement.constants';
@@ -25,10 +26,15 @@ export class CorrectMeasurementUnitValidator
     const measurementUnits = MEASUREMENT_CATEGORY_UNITS[
       measurementCategory
     ] as [string];
-    if (measurementCategory === 'IMAGE' && validationArguments.object['unit'])
+    if (
+      (measurementCategory === MEASUREMENT_CATEGORY_ENUM.IMAGE ||
+        measurementCategory === MEASUREMENT_CATEGORY_ENUM.PERCENTAGE) &&
+      validationArguments.object['unit']
+    )
       return false;
     if (
-      measurementCategory !== 'IMAGE' &&
+      measurementUnits &&
+      measurementCategory !== MEASUREMENT_CATEGORY_ENUM.IMAGE &&
       !measurementUnits.includes(validationArguments.object['unit'])
     ) {
       return false;

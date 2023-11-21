@@ -26,6 +26,23 @@ describe('add measurement suite case', () => {
     expect(res.body.type).toBe(measurement.type);
   });
 
+  it('should add percentage measurement successfully', async () => {
+    const client = await userFactory({ role: USER_ROLE.CLIENT });
+    const measurement = await buildMeasurementParams({
+      client: client._id,
+      type: MEASUREMENT_TYPE.FAT_PERCENTAGE,
+    });
+    delete measurement.client;
+    const res = await testRequest<AddMeasurementDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: MEASUREMENT,
+      variables: measurement,
+      token: client.token,
+    });
+    expect(res.body.value).toBe(measurement.value);
+    expect(res.body.type).toBe(measurement.type);
+  });
+
   it('should add media measurement successfully', async () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });
     const measurement = await buildMeasurementParams({
