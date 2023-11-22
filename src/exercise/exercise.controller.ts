@@ -60,7 +60,7 @@ export class ExerciseController {
     @Param() exerciseId: MongoIdDto,
   ) {
     return await this.exerciseService.getExercise(
-      request.user._id,
+      request.trainerId || request.user._id,
       exerciseId.id,
     );
   }

@@ -54,7 +54,10 @@ export class WorkoutController {
     @Param() workoutId: MongoIdDto,
     @Request() request: RequestContext,
   ) {
-    return await this.workoutService.getWorkout(request.user._id, workoutId.id);
+    return await this.workoutService.getWorkout(
+      request.trainerId || request.user._id,
+      workoutId.id,
+    );
   }
 
   @Delete(':id')

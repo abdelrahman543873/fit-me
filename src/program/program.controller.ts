@@ -42,7 +42,10 @@ export class ProgramController {
     @Request() request: RequestContext,
     @Param() programId: MongoIdDto,
   ) {
-    return await this.programService.getProgram(request.user._id, programId.id);
+    return await this.programService.getProgram(
+      request.trainerId || request.user._id,
+      programId.id,
+    );
   }
 
   @Put(':id')
