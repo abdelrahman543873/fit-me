@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Allow } from 'class-validator';
 import { ObjectId } from 'mongoose';
-import { User } from '../../user/user.schema';
 import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
@@ -16,5 +15,5 @@ export class DeleteProgramWorkoutDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }
