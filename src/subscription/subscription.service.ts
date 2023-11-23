@@ -49,9 +49,10 @@ export class SubscriptionService {
   }
 
   async getClientSubscription(client: ObjectId, trainer: ObjectId) {
-    const subscription = (
-      await this.subscriptionRepository.getClientSubscription(client, trainer)
-    ).toJSON();
+    const subscriptionRecord =
+      await this.subscriptionRepository.getClientSubscription(client, trainer);
+    if (!subscriptionRecord) return null;
+    const subscription = subscriptionRecord.toJSON();
     if (subscription.approvedAt) {
       const endDate = new Date(subscription.approvedAt.toISOString());
       endDate.setMonth(
