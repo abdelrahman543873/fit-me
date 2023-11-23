@@ -4,6 +4,7 @@ import { ClientProgramController } from './client-program.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ClientProgram, ClientProgramSchema } from './client-program.schema';
 import { ClientProgramRepository } from './client-program.repository';
+import { ClientProgramListener } from './client-program.listener';
 
 @Module({
   imports: [
@@ -11,7 +12,11 @@ import { ClientProgramRepository } from './client-program.repository';
       { name: ClientProgram.name, schema: ClientProgramSchema },
     ]),
   ],
-  providers: [ClientProgramService, ClientProgramRepository],
+  providers: [
+    ClientProgramService,
+    ClientProgramRepository,
+    ClientProgramListener,
+  ],
   controllers: [ClientProgramController],
 })
 export class ClientProgramModule {}

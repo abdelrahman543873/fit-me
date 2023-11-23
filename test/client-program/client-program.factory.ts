@@ -1,4 +1,3 @@
-import { Trainer } from '../../src/trainer/trainer.schema';
 import { ClientProgram } from '../../src/client-program/client-program.schema';
 import { userFactory } from '../user/user.factory';
 import { USER_ROLE } from '../../src/user/user.constants';
@@ -15,12 +14,13 @@ export const buildClientProgramParams = async (
     endDate: obj.endDate || faker.date.future(),
     followUpDates: obj.followUpDates || [faker.date.future()],
     startDate: obj.startDate || faker.date.past(),
+    lastFollowUpDate: obj.lastFollowUpDate || faker.date.past(),
   };
 };
 
 export const clientProgramFactory = async (
   obj: Partial<ClientProgram> = {},
-): Promise<Trainer> => {
+): Promise<ClientProgram> => {
   const params: Partial<ClientProgram> = await buildClientProgramParams(obj);
   return await ClientProgramRepo().add(params);
 };

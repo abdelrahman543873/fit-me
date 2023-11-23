@@ -31,6 +31,9 @@ export class ClientProgram {
 
   @Prop({ type: [Date] })
   followUpDates: Date[];
+
+  @Prop({ type: Date, default: null })
+  lastFollowUpDate?: Date;
 }
 
 export const ClientProgramSchema = SchemaFactory.createForClass(ClientProgram);

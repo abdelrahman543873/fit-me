@@ -5,6 +5,7 @@ import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AggregatePaginateModel, ObjectId } from 'mongoose';
 import { AddClientProgramDto } from './inputs/add-client-program.dto';
 import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
+import { AddedFollowUpEvent } from '../follow-up/events/added-follow-up';
 
 @Injectable()
 export class ClientProgramRepository extends BaseRepository<ClientProgram> {
@@ -17,6 +18,16 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
 
   addClientProgram(addClientProgramDto: AddClientProgramDto) {
     return this.clientProgramSchema.create(addClientProgramDto);
+  }
+
+  updateLastFollowUpDate(addedFollowUpEvent: AddedFollowUpEvent) {
+    return this.clientProgramSchema.findOneAndUpdate(
+      {
+        client: addedFollowUpEvent.client,
+      },
+      { lastFollowUpDate: new Date() },
+      { sort: { createdAt: -1 } },
+    );
   }
 
   filterClientPrograms(

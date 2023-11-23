@@ -1,3 +1,4 @@
+import { clientFactory } from './../client/client.factory';
 import { testRequest } from '../config/request';
 import { HTTP_METHODS_ENUM } from '../config/request.methods.enum';
 import { clientProgramFactory } from './client-program.factory';
@@ -10,7 +11,8 @@ import { FilterClientProgramDto } from '../../src/client-program/inputs/filter-c
 
 describe('get client program suite case', () => {
   it('should get client program successfully', async () => {
-    const client = await userFactory();
+    const clientUser = await userFactory({ role: USER_ROLE.CLIENT });
+    const client = await clientFactory({ _id: clientUser._id });
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const program = await programFactory({ trainer: trainer._id });
     await subscriptionFactory({ client: client._id, trainer: trainer._id });
@@ -21,7 +23,7 @@ describe('get client program suite case', () => {
     const res = await testRequest<FilterClientProgramDto>({
       method: HTTP_METHODS_ENUM.GET,
       url: FILTER_CLIENT_PROGRAMS,
-      token: client.token,
+      token: clientUser.token,
       params: { client: client._id },
     });
     expect(res.body.docs[0].client).toBe(client._id.toString());
