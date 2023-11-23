@@ -1,3 +1,4 @@
+import { RequestContext } from './../shared/interfaces/request-context.interface';
 import {
   Body,
   Controller,
@@ -12,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { AddFollowUpDto } from './inputs/add-follow-up.dto';
 import { FollowUpService } from './follow-up.service';
-import { RequestContext } from '../../dist/shared/interfaces/request-context.interface';
 import { RoleGuard } from '../shared/guards/role.guard';
 import { USER_ROLE } from '../user/user.constants';
 import { Role } from '../shared/decorators/client.decorator';
