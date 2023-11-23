@@ -6,10 +6,11 @@ import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { Transform } from 'class-transformer';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { MEASUREMENT_TYPE } from '../../measurement/measurement.constants';
-import { Allow, IsEnum } from 'class-validator';
+import { Allow, IsEnum, IsIn } from 'class-validator';
 import { IsExistingClient } from '../../client/validators/existing-client.validator';
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
 import { User } from '../../user/user.schema';
+import { FOLLOW_UP_STATUS } from '../follow-up.constants';
 
 export class AddFollowUpDto {
   @ApiProperty({ type: 'string' })
@@ -29,6 +30,10 @@ export class AddFollowUpDto {
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   client: ObjectId;
+
+  @ValidateIfDefined()
+  @IsIn([FOLLOW_UP_STATUS.SKIPPED])
+  status?: FOLLOW_UP_STATUS;
 
   @ApiProperty({ readOnly: true })
   @Allow()
