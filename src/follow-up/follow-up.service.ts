@@ -24,4 +24,8 @@ export class FollowUpService {
   filterFollowUps(user: User, filterFollowUpsDto: FilterFollowUpsDto) {
     return this.followUpRepository.filterFollowUps(user, filterFollowUpsDto);
   }
+
+  completeFollowUp(id: ObjectId) {
+    return this.followUpRepository.completeFollowUp(id);
+  }
 }

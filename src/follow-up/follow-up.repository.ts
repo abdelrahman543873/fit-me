@@ -25,6 +25,14 @@ export class FollowUpRepository extends BaseRepository<FollowUp> {
     });
   }
 
+  completeFollowUp(id: ObjectId) {
+    return this.followUpSchema.findOneAndUpdate(
+      { _id: id },
+      { status: FOLLOW_UP_STATUS.COMPLETED },
+      { new: true },
+    );
+  }
+
   filterFollowUps(user: User, filterFollowUpsDto: FilterFollowUpsDto) {
     const { limit, offset, ...filterFollowUps } = filterFollowUpsDto;
     const aggregation = this.followUpSchema.aggregate([

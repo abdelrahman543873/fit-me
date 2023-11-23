@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
+  Put,
   Query,
   Request,
   UseGuards,
@@ -17,6 +19,7 @@ import { Role } from '../shared/decorators/client.decorator';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FilterFollowUpsDto } from './inputs/filter-follow-ups.dto';
+import { CompleteFollowUpsDto } from './inputs/complete-follow-up.dto';
 
 @ApiBearerAuth()
 @ApiTags('follow-up')
@@ -47,5 +50,13 @@ export class FollowUpController {
       request.user,
       filterFollowUps,
     );
+  }
+
+  @Put('complete/:id')
+  @Role(USER_ROLE.TRAINER)
+  @UseGuards(RoleGuard)
+  @UseInterceptors(RequestInBodyInterceptor)
+  async completeFollowUp(@Param() completeFollowUpsDto: CompleteFollowUpsDto) {
+    return await this.followUpService.completeFollowUp(completeFollowUpsDto.id);
   }
 }
