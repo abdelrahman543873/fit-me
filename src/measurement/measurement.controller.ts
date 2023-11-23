@@ -12,14 +12,15 @@ import {
 } from '@nestjs/common';
 import { MeasurementService } from './measurement.service';
 import { AddMeasurementDto } from './inputs/add-measurement.dto';
-import { Client } from '../shared/decorators/client.decorator';
+import { Role } from '../shared/decorators/client.decorator';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ClientGuard } from '../shared/guards/client.guard';
+import { RoleGuard } from '../shared/guards/role.guard';
 import { MediaInBodyInterceptor } from '../shared/interceptors/media-in-body.interceptor';
 import { FilterMeasurementsDto } from './inputs/filter-measurements.dto';
 import { AddMeasurementsDto } from './inputs/add-measurements.dto';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
+import { USER_ROLE } from '../user/user.constants';
 
 @ApiTags('measurement')
 @ApiBearerAuth()
@@ -29,8 +30,8 @@ export class MeasurementController {
 
   @ApiConsumes('multipart/form-data')
   @Post()
-  @Client()
-  @UseGuards(ClientGuard)
+  @Role(USER_ROLE.CLIENT)
+  @UseGuards(RoleGuard)
   @UseInterceptors(MediaInBodyInterceptor)
   @UseInterceptors(FileInterceptor('media'))
   async addMeasurement(
@@ -46,8 +47,8 @@ export class MeasurementController {
   }
 
   @Post('bulk')
-  @Client()
-  @UseGuards(ClientGuard)
+  @Role(USER_ROLE.CLIENT)
+  @UseGuards(RoleGuard)
   @UseInterceptors(RequestInBodyInterceptor)
   async addMeasurements(@Body() addMeasurementsDto: AddMeasurementsDto) {
     return await this.measurementService.addMeasurements(addMeasurementsDto);

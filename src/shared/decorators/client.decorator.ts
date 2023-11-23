@@ -1,4 +1,4 @@
 import { SetMetadata } from '@nestjs/common';
+import { USER_ROLE } from '../../user/user.constants';
 
-export const IS_CLIENT_KEY = 'isClient';
-export const Client = () => SetMetadata(IS_CLIENT_KEY, true);
+export const Role = (role: USER_ROLE) => SetMetadata('ROLE', role);

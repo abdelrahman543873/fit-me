@@ -21,7 +21,7 @@ import { Model } from 'mongoose';
         useFactory: (questionSchema: Model<Question>) => {
           FormSchema.pre('deleteOne', async function () {
             const doc = await this.model.findOne(this.getFilter());
-            await questionSchema.deleteMany({ form: doc._id });
+            await questionSchema.deleteOne({ form: doc._id });
           });
           return FormSchema;
         },
