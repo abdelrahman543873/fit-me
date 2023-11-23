@@ -2,7 +2,6 @@ import { Transform } from 'class-transformer';
 import { Allow, IsArray, ValidateNested } from 'class-validator';
 import { AddMeasurementDto } from './add-measurement.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from '../../user/user.schema';
 import { clientMeasurementsTransformer } from '../transformers/client-measurements.transformer';
 
 export class AddMeasurementsDto {
@@ -13,5 +12,5 @@ export class AddMeasurementsDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

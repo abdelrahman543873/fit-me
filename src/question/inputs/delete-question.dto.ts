@@ -5,7 +5,6 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { ApiProperty } from '@nestjs/swagger';
 import { IsExistingQuestion } from '../validators/existing-question.validator';
 import { Allow } from 'class-validator';
-import { User } from '../../user/user.schema';
 import { IsQuestionOwner } from '../validators/question-owner.validator';
 
 export class DeleteQuestionDto {
@@ -18,5 +17,5 @@ export class DeleteQuestionDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user: User;
+  user?;
 }

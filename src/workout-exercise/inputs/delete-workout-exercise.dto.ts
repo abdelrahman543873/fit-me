@@ -5,7 +5,6 @@ import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsExistingWorkoutExercise } from '../validators/existing-workout-exercise.validator';
 import { Allow } from 'class-validator';
-import { User } from '../../user/user.schema';
 import { IsWorkoutExerciseOwner } from '../validators/workout-exercise-owner';
 
 export class DeleteWorkoutExerciseDto {
@@ -18,5 +17,5 @@ export class DeleteWorkoutExerciseDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

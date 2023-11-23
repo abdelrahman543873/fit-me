@@ -6,7 +6,6 @@ import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsProgramOwner } from '../../program/validators/program-owner.validator';
 import { IsWorkoutOwner } from '../../workout/validators/workout-owner.validator';
 import { Allow } from 'class-validator';
-import { User } from '../../user/user.schema';
 
 export class AddProgramWorkoutDto {
   @ApiProperty({ type: 'string' })
@@ -23,5 +22,5 @@ export class AddProgramWorkoutDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

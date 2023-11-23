@@ -7,7 +7,6 @@ import { ObjectId } from 'mongoose';
 import { IsExistingProgram } from '../../program/validators/existing-program.validator';
 import { Allow, IsDate } from 'class-validator';
 import { IsProgramOwner } from '../../program/validators/program-owner.validator';
-import { User } from '../../user/user.schema';
 
 export class AddClientProgramDto {
   @ApiProperty({ type: 'string' })
@@ -37,5 +36,5 @@ export class AddClientProgramDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

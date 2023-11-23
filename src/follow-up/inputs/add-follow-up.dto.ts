@@ -9,7 +9,6 @@ import { MEASUREMENT_TYPE } from '../../measurement/measurement.constants';
 import { Allow, IsEnum, IsIn } from 'class-validator';
 import { IsExistingClient } from '../../client/validators/existing-client.validator';
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
-import { User } from '../../user/user.schema';
 import { FOLLOW_UP_STATUS } from '../follow-up.constants';
 
 export class AddFollowUpDto {
@@ -37,5 +36,5 @@ export class AddFollowUpDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

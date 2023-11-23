@@ -6,7 +6,6 @@ import { Transform } from 'class-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsExistingForm } from '../../form/validators/existing-form.validator';
-import { User } from '../../user/user.schema';
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
@@ -32,5 +31,5 @@ export class AddQuestionDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

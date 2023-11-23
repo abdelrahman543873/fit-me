@@ -6,7 +6,6 @@ import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { ObjectId } from 'mongoose';
 import { Allow } from 'class-validator';
-import { User } from '../../user/user.schema';
 
 export class DeleteFormDto {
   @ApiProperty({ type: 'string' })
@@ -18,5 +17,5 @@ export class DeleteFormDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }

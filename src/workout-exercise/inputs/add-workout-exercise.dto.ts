@@ -9,7 +9,6 @@ import { IsExistingExercise } from '../../exercise/validators/existing-exercise.
 import { IsExistingWorkout } from '../../workout/validators/existing-workout.controller';
 import { IsExerciseOwner } from '../../exercise/validators/exercise-owner.validator';
 import { IsWorkoutOwner } from '../../workout/validators/workout-owner.validator';
-import { User } from '../../user/user.schema';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
 export class AddWorkoutExerciseDto {
@@ -44,5 +43,5 @@ export class AddWorkoutExerciseDto {
 
   @ApiProperty({ readOnly: true })
   @Allow()
-  user?: User;
+  user?;
 }
