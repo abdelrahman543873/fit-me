@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber, IsOptional } from 'class-validator';
+import { ValidateIfDefined } from '../validators/validate-if-defined.validator';
 
 export class Pagination {
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  @IsOptional()
+  @ValidateIfDefined()
   @ApiProperty({
     default: 0,
     description:
@@ -14,8 +14,7 @@ export class Pagination {
   @IsNumber()
   offset?: number = 0;
 
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  @IsOptional()
+  @ValidateIfDefined()
   @ApiProperty({
     default: 15,
     description: 'max number of elements per page',

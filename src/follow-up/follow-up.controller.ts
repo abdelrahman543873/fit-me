@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Request,
   UseGuards,
   UseInterceptors,
@@ -14,6 +16,7 @@ import { USER_ROLE } from '../user/user.constants';
 import { Role } from '../shared/decorators/client.decorator';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { FilterFollowUpsDto } from './inputs/filter-follow-ups.dto';
 
 @ApiBearerAuth()
 @ApiTags('follow-up')
@@ -32,6 +35,17 @@ export class FollowUpController {
     return await this.followUpService.addFollowUp(
       request.user._id,
       addFollowUpDto,
+    );
+  }
+
+  @Get()
+  async filterFollowUps(
+    @Request() request: RequestContext,
+    @Query() filterFollowUps: FilterFollowUpsDto,
+  ) {
+    return await this.followUpService.filterFollowUps(
+      request.user,
+      filterFollowUps,
     );
   }
 }
