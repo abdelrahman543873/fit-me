@@ -6,6 +6,8 @@ import { IsExistingClient } from '../../client/validators/existing-client.valida
 import { ObjectId } from 'mongoose';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { Pagination } from '../../shared/inputs/pagination.input';
+import { CLIENT_PROGRAM_STATUS_FIlTER } from '../client-program.constants';
+import { IsEnum } from 'class-validator';
 
 export class FilterClientProgramDto extends Pagination {
   @ApiProperty({ type: 'string' })
@@ -14,4 +16,8 @@ export class FilterClientProgramDto extends Pagination {
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   client?: ObjectId;
+
+  @ValidateIfDefined()
+  @IsEnum(CLIENT_PROGRAM_STATUS_FIlTER)
+  status?: CLIENT_PROGRAM_STATUS_FIlTER;
 }

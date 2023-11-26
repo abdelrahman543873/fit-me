@@ -6,6 +6,7 @@ import { AggregatePaginateModel, ObjectId } from 'mongoose';
 import { AddClientProgramDto } from './inputs/add-client-program.dto';
 import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
 import { AddedFollowUpEvent } from '../follow-up/events/added-follow-up';
+import { CLIENT_PROGRAM_STATUS_FIlTER } from './client-program.constants';
 
 @Injectable()
 export class ClientProgramRepository extends BaseRepository<ClientProgram> {
@@ -39,6 +40,52 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
         $match: {
           ...(filterClientProgramDto.client && {
             client: filterClientProgramDto.client,
+          }),
+        },
+      },
+      {
+        $match: {
+          ...(filterClientProgramDto.status ===
+            CLIENT_PROGRAM_STATUS_FIlTER.FUTURE && {
+            $expr: {
+              $allElementsTrue: {
+                $map: {
+                  input: '$followUpDates',
+                  as: 'date',
+                  in: {
+                    $gt: ['$$date', '$lastFollowUpDate'],
+                  },
+                },
+              },
+            },
+          }),
+          ...(filterClientProgramDto.status ===
+            CLIENT_PROGRAM_STATUS_FIlTER.PAST && {
+            $expr: {
+              $allElementsTrue: {
+                $map: {
+                  input: '$followUpDates',
+                  as: 'date',
+                  in: {
+                    $lt: ['$$date', '$lastFollowUpDate'],
+                  },
+                },
+              },
+            },
+          }),
+          ...(filterClientProgramDto.status ===
+            CLIENT_PROGRAM_STATUS_FIlTER.PRESENT && {
+            $expr: {
+              $anyElementTrue: {
+                $map: {
+                  input: '$followUpDates',
+                  as: 'date',
+                  in: {
+                    $eq: ['$$date', '$lastFollowUpDate'],
+                  },
+                },
+              },
+            },
           }),
         },
       },
