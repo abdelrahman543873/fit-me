@@ -106,6 +106,15 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
         },
       },
       {
+        $lookup: {
+          from: 'users',
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client',
+        },
+      },
+      { $unwind: '$client' },
+      {
         $sort: {
           createdAt: -1,
         },

@@ -52,6 +52,15 @@ export class FollowUpRepository extends BaseRepository<FollowUp> {
           }),
         },
       },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'client',
+          foreignField: '_id',
+          as: 'client',
+        },
+      },
+      { $unwind: '$client' },
     ]);
     return this.followUpSchema.aggregatePaginate(aggregation, {
       offset: offset * limit,

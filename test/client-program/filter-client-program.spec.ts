@@ -28,7 +28,7 @@ describe('get client program suite case', () => {
       token: clientUser.token,
       params: { client: client._id },
     });
-    expect(res.body.docs[0].client).toBe(client._id.toString());
+    expect(res.body.docs[0].client._id).toBe(client._id.toString());
   });
 
   it('should get future client program successfully', async () => {
@@ -59,7 +59,7 @@ describe('get client program suite case', () => {
         status: CLIENT_PROGRAM_STATUS_FIlTER.FUTURE,
       },
     });
-    expect(res.body.docs[0].client).toBe(client._id.toString());
+    expect(res.body.docs[0].client._id).toBe(client._id.toString());
     expect(res.body.docs[0]._id).toBe(
       futureFollowUpClientProgram._id.toString(),
     );
@@ -92,7 +92,7 @@ describe('get client program suite case', () => {
         status: CLIENT_PROGRAM_STATUS_FIlTER.PAST,
       },
     });
-    expect(res.body.docs[0].client).toBe(client._id.toString());
+    expect(res.body.docs[0].client._id).toBe(client._id.toString());
     expect(res.body.docs[0]._id).toBe(pastFollowUpClientProgram._id.toString());
     expect(res.body.totalDocs).toBe(1);
   });
@@ -124,7 +124,7 @@ describe('get client program suite case', () => {
         status: CLIENT_PROGRAM_STATUS_FIlTER.PRESENT,
       },
     });
-    expect(res.body.docs[0].client).toBe(client._id.toString());
+    expect(res.body.docs[0].client._id).toBe(client._id.toString());
     expect(res.body.docs[0]._id).toBe(
       presentFollowUpClientProgram._id.toString(),
     );

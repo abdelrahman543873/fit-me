@@ -31,6 +31,6 @@ describe('filter follow ups suite case', () => {
     expect(res.body.docs[0].measurementTypes[0]).toBe(
       followUp.measurementTypes[0],
     );
-    expect(res.body.docs[0].client).toBe(followUp.client.toString());
+    expect(res.body.docs[0].client._id).toBe(followUp.client.toString());
   });
 });
