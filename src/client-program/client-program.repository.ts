@@ -48,7 +48,7 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
           ...(filterClientProgramDto.status ===
             CLIENT_PROGRAM_STATUS_FIlTER.FUTURE && {
             $expr: {
-              $allElementsTrue: {
+              $anyElementTrue: {
                 $map: {
                   input: '$followUpDates',
                   as: 'date',
@@ -62,7 +62,7 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
           ...(filterClientProgramDto.status ===
             CLIENT_PROGRAM_STATUS_FIlTER.PAST && {
             $expr: {
-              $allElementsTrue: {
+              $anyElementTrue: {
                 $map: {
                   input: '$followUpDates',
                   as: 'date',
@@ -114,6 +114,38 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
         },
       },
       { $unwind: '$client' },
+      {
+        $addFields: {
+          ...(filterClientProgramDto.status ===
+            CLIENT_PROGRAM_STATUS_FIlTER.FUTURE && {
+            dueDate: {
+              $min: {
+                $filter: {
+                  input: '$followUpDates',
+                  as: 'date',
+                  cond: { $gte: ['$$date', '$lastFollowUpDate'] },
+                },
+              },
+            },
+          }),
+          ...(filterClientProgramDto.status ===
+            CLIENT_PROGRAM_STATUS_FIlTER.PAST && {
+            dueDate: {
+              $min: {
+                $filter: {
+                  input: '$followUpDates',
+                  as: 'date',
+                  cond: { $lte: ['$$date', '$lastFollowUpDate'] },
+                },
+              },
+            },
+          }),
+          ...(filterClientProgramDto.status ===
+            CLIENT_PROGRAM_STATUS_FIlTER.PRESENT && {
+            dueDate: '$lastFollowUpDate',
+          }),
+        },
+      },
       {
         $sort: {
           createdAt: -1,

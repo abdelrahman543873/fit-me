@@ -29,6 +29,7 @@ describe('get client program suite case', () => {
       params: { client: client._id },
     });
     expect(res.body.docs[0].client._id).toBe(client._id.toString());
+    expect(res.body.docs[0]).not.toHaveProperty('dueDate');
   });
 
   it('should get future client program successfully', async () => {
@@ -37,10 +38,11 @@ describe('get client program suite case', () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const program = await programFactory({ trainer: trainer._id });
     await subscriptionFactory({ client: client._id, trainer: trainer._id });
+    const randomFutureDate = faker.date.future();
     const futureFollowUpClientProgram = await clientProgramFactory({
       client: client._id,
       program: program._id,
-      followUpDates: [faker.date.future()],
+      followUpDates: [randomFutureDate, faker.date.past()],
       lastFollowUpDate: faker.date.recent(),
     });
     // past followup client program
@@ -63,6 +65,7 @@ describe('get client program suite case', () => {
     expect(res.body.docs[0]._id).toBe(
       futureFollowUpClientProgram._id.toString(),
     );
+    expect(res.body.docs[0].dueDate).toBe(randomFutureDate.toISOString());
     expect(res.body.totalDocs).toBe(1);
   });
   it('should get past client program successfully', async () => {
@@ -128,6 +131,7 @@ describe('get client program suite case', () => {
     expect(res.body.docs[0]._id).toBe(
       presentFollowUpClientProgram._id.toString(),
     );
+    expect(res.body.docs[0].dueDate).toBe(res.body.docs[0].lastFollowUpDate);
     expect(res.body.totalDocs).toBe(1);
   });
 });
