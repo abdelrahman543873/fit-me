@@ -28,7 +28,7 @@ describe('follow up suite case', () => {
       variables: params,
     });
     expect(res.body.client).toBe(params.client.toString());
-    expect(res.body.measurementType).toBe(params.measurementType);
+    expect(res.body.measurementTypes[0]).toBe(params.measurementTypes[0]);
     expect(res.body.status).toBe(FOLLOW_UP_STATUS.REQUESTED);
   });
 

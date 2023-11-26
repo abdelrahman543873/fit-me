@@ -46,6 +46,9 @@ export class FollowUpRepository extends BaseRepository<FollowUp> {
                 client: user._id,
               }),
           ...filterFollowUps,
+          ...(filterFollowUps.measurementTypes && {
+            measurementTypes: { $in: filterFollowUps.measurementTypes },
+          }),
         },
       },
     ]);

@@ -41,7 +41,7 @@ export class FollowUpController {
     );
   }
 
-  @Get()
+  @Get('filter')
   async filterFollowUps(
     @Request() request: RequestContext,
     @Query() filterFollowUps: FilterFollowUpsDto,

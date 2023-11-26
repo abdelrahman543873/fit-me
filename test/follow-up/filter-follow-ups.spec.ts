@@ -3,7 +3,7 @@ import { HTTP_METHODS_ENUM } from '../config/request.methods.enum';
 import { USER_ROLE } from '../../src/user/user.constants';
 import { userFactory } from '../user/user.factory';
 import { followUpFactory } from './follow-up.factory';
-import { FOLLOW_UP } from '../endpoints/follow-up.endpoints';
+import { FILTER_FOLLOW_UP } from '../endpoints/follow-up.endpoints';
 import { formFactory } from '../form/form.factory';
 import { FilterFollowUpsDto } from '../../src/follow-up/inputs/filter-follow-ups.dto';
 
@@ -18,17 +18,19 @@ describe('filter follow ups suite case', () => {
     delete followUp.trainer;
     const res = await testRequest<FilterFollowUpsDto>({
       method: HTTP_METHODS_ENUM.GET,
-      url: FOLLOW_UP,
+      url: FILTER_FOLLOW_UP,
       token: trainer.token,
       params: {
         status: followUp.status,
         client: followUp.client.toString() as any,
-        measurementType: followUp.measurementType,
+        measurementTypes: followUp.measurementTypes,
         form: followUp.form.toString() as any,
       },
     });
     expect(res.body.docs[0].form).toBe(followUp.form.toString());
-    expect(res.body.docs[0].measurementType).toBe(followUp.measurementType);
+    expect(res.body.docs[0].measurementTypes[0]).toBe(
+      followUp.measurementTypes[0],
+    );
     expect(res.body.docs[0].client).toBe(followUp.client.toString());
   });
 });

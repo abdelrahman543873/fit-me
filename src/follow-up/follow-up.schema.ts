@@ -18,8 +18,8 @@ export class FollowUp {
   })
   form?: ObjectId;
 
-  @Prop({ type: String, enum: MEASUREMENT_TYPE })
-  measurementType?: MEASUREMENT_TYPE;
+  @Prop({ type: [String], enum: MEASUREMENT_TYPE })
+  measurementTypes?: MEASUREMENT_TYPE[];
 
   @ApiProperty({ type: 'string' })
   @Prop({

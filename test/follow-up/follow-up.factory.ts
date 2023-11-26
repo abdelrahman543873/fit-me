@@ -15,11 +15,11 @@ export const buildFollowUpParams = async (
     client: obj.client || (await clientFactory())._id,
     trainer:
       obj.trainer || (await userFactory({ role: USER_ROLE.TRAINER }))._id,
-    measurementType:
-      obj.measurementType ||
+    measurementTypes: obj.measurementTypes || [
       faker.helpers.arrayElement<MEASUREMENT_TYPE>(
         Object.values(MEASUREMENT_TYPE),
       ),
+    ],
     form: obj.form || (await formFactory())._id,
     status:
       obj.status ||
