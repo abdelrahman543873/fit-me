@@ -7,6 +7,7 @@ import { User } from '../user/user.schema';
 import { AddedFollowUpEvent } from './events/added-follow-up';
 import { FollowUpEvents } from './follow-up.constants';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UpdateFollowUpDto } from './inputs/update-follow-up.dto';
 
 @Injectable()
 export class FollowUpService {
@@ -25,7 +26,7 @@ export class FollowUpService {
     return this.followUpRepository.filterFollowUps(user, filterFollowUpsDto);
   }
 
-  completeFollowUp(id: ObjectId) {
-    return this.followUpRepository.completeFollowUp(id);
+  updateFollowUp(id: ObjectId, updateFollowUpDto: UpdateFollowUpDto) {
+    return this.followUpRepository.updateFollowUp(id, updateFollowUpDto);
   }
 }

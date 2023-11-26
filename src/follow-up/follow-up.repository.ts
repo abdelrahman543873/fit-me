@@ -8,6 +8,7 @@ import { FOLLOW_UP_STATUS } from './follow-up.constants';
 import { FilterFollowUpsDto } from './inputs/filter-follow-ups.dto';
 import { User } from '../user/user.schema';
 import { USER_ROLE } from '../user/user.constants';
+import { UpdateFollowUpDto } from './inputs/update-follow-up.dto';
 
 @Injectable()
 export class FollowUpRepository extends BaseRepository<FollowUp> {
@@ -25,10 +26,10 @@ export class FollowUpRepository extends BaseRepository<FollowUp> {
     });
   }
 
-  completeFollowUp(id: ObjectId) {
+  updateFollowUp(id: ObjectId, updateFollowUpDto: UpdateFollowUpDto) {
     return this.followUpSchema.findOneAndUpdate(
       { _id: id },
-      { status: FOLLOW_UP_STATUS.COMPLETED },
+      { status: updateFollowUpDto.status },
       { new: true },
     );
   }

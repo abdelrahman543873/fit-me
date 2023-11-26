@@ -19,7 +19,8 @@ import { Role } from '../shared/decorators/client.decorator';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FilterFollowUpsDto } from './inputs/filter-follow-ups.dto';
-import { CompleteFollowUpsDto } from './inputs/complete-follow-up.dto';
+import { FollowUpIdDto } from './inputs/follow-up-id.dto';
+import { UpdateFollowUpDto } from './inputs/update-follow-up.dto';
 
 @ApiBearerAuth()
 @ApiTags('follow-up')
@@ -52,11 +53,17 @@ export class FollowUpController {
     );
   }
 
-  @Put('complete/:id')
+  @Put(':id')
   @Role(USER_ROLE.TRAINER)
   @UseGuards(RoleGuard)
   @UseInterceptors(RequestInBodyInterceptor)
-  async completeFollowUp(@Param() completeFollowUpsDto: CompleteFollowUpsDto) {
-    return await this.followUpService.completeFollowUp(completeFollowUpsDto.id);
+  async updateFollowUp(
+    @Param() followUpIdDto: FollowUpIdDto,
+    @Body() updateFollowUpDto: UpdateFollowUpDto,
+  ) {
+    return await this.followUpService.updateFollowUp(
+      followUpIdDto.id,
+      updateFollowUpDto,
+    );
   }
 }

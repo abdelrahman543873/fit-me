@@ -7,7 +7,7 @@ import { IsExistingFollowUp } from '../validators/existing-follow-up.validator';
 import { Allow } from 'class-validator';
 import { IsFollowUpOwner } from '../validators/follow-up-owner.validator';
 
-export class CompleteFollowUpsDto {
+export class FollowUpIdDto {
   @ApiProperty({ type: 'string' })
   @IsExistingFollowUp()
   @IsFollowUpOwner()
