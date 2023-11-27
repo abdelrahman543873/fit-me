@@ -22,13 +22,13 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
   }
 
   updateLastFollowUpDate(addedFollowUpEvent: AddedFollowUpEvent) {
-    const dayDate = new Date();
-    dayDate.setHours(0, 0, 0, 0);
+    const lastFollowUpDate = new Date();
+    lastFollowUpDate.setHours(0, 0, 0, 0);
     return this.clientProgramSchema.findOneAndUpdate(
       {
         client: addedFollowUpEvent.client,
       },
-      { lastFollowUpDate: dayDate },
+      { lastFollowUpDate },
       { sort: { createdAt: -1 } },
     );
   }
