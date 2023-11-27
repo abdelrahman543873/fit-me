@@ -21,8 +21,8 @@ export class FollowUpRepository extends BaseRepository<FollowUp> {
   addFollowUp(trainer: ObjectId, addFollowUpDto: AddFollowUpDto) {
     return this.followUpSchema.create({
       trainer,
-      ...addFollowUpDto,
       status: FOLLOW_UP_STATUS.REQUESTED,
+      ...addFollowUpDto,
     });
   }
 
