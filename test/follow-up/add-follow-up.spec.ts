@@ -10,11 +10,15 @@ import { FOLLOW_UP } from '../endpoints/follow-up.endpoints';
 import { formFactory } from '../form/form.factory';
 import { clientProgramFactory } from '../client-program/client-program.factory';
 import { ClientProgramRepo } from '../client-program/client-program.test-repo';
+import { FORM_TYPES } from '../../src/form/form.constants';
 
 describe('follow up suite case', () => {
   it('should add follow up successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
-    const form = await formFactory({ trainer: trainer._id });
+    const form = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.FOLLOW_UP,
+    });
     const params = await buildFollowUpParams({
       trainer: trainer._id,
       form: form._id,
@@ -35,7 +39,10 @@ describe('follow up suite case', () => {
   it('should update only last client program with last follow up date', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const client = await clientFactory();
-    const form = await formFactory({ trainer: trainer._id });
+    const form = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.FOLLOW_UP,
+    });
     const clientProgram = await clientProgramFactory({ client: client._id });
     const moreRecentClientProgram = await clientProgramFactory({
       client: client._id,

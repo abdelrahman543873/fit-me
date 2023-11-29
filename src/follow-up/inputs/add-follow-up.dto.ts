@@ -10,11 +10,13 @@ import { Allow, IsArray, IsEnum, IsIn } from 'class-validator';
 import { IsExistingClient } from '../../client/validators/existing-client.validator';
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
 import { FOLLOW_UP_STATUS } from '../follow-up.constants';
+import { IsFollowUpForm } from '../../form/validators/follow-up-form.validator';
 
 export class AddFollowUpDto {
   @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
   @IsFormOwner()
+  @IsFollowUpForm()
   @IsExistingForm()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
