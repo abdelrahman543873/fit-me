@@ -54,8 +54,6 @@ export class FollowUpController {
   }
 
   @Put(':id')
-  @Role(USER_ROLE.TRAINER)
-  @UseGuards(RoleGuard)
   @UseInterceptors(RequestInBodyInterceptor)
   async updateFollowUp(
     @Param() followUpIdDto: FollowUpIdDto,
