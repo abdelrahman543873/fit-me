@@ -6,6 +6,7 @@ import { FollowUpRepository } from './follow-up.repository';
 import { FollowUp, FollowUpSchema } from './follow-up.schema';
 import { ExistingFollowUpValidator } from './validators/existing-follow-up.validator';
 import { FollowUpOwnerValidator } from './validators/follow-up-owner.validator';
+import { QuestionOfFollowUpValidator } from './validators/question-of-follow-up.validator';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { FollowUpOwnerValidator } from './validators/follow-up-owner.validator';
     FollowUpRepository,
     ExistingFollowUpValidator,
     FollowUpOwnerValidator,
+    QuestionOfFollowUpValidator,
   ],
   controllers: [FollowUpController],
 })

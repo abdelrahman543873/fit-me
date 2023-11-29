@@ -29,6 +29,12 @@ export class Answer {
 
   @Prop()
   choices?: string[];
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'FollowUp',
+  })
+  followUp?: ObjectId;
 }
 
 export const AnswerSchema = SchemaFactory.createForClass(Answer);

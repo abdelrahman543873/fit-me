@@ -4,6 +4,7 @@ import { questionFactory } from '../question/question.factory';
 import { faker } from '@faker-js/faker';
 import { userFactory } from '../user/user.factory';
 import { USER_ROLE } from '../../src/user/user.constants';
+import { followUpFactory } from '../follow-up/follow-up.factory';
 
 export const buildAnswerParams = async (
   obj: Partial<Answer> = {},
@@ -14,6 +15,7 @@ export const buildAnswerParams = async (
     choices: obj.choices || [faker.word.verb()],
     media: obj.media || faker.word.verb(),
     client: obj.client || (await userFactory({ role: USER_ROLE.CLIENT }))._id,
+    followUp: obj.followUp || (await followUpFactory())._id,
   };
 };
 

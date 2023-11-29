@@ -12,8 +12,18 @@ import { ObjectId } from 'mongoose';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 import { IsExistingQuestion } from '../../question/validators/existing-question.validator';
+import { IsExistingFollowUp } from '../../follow-up/validators/existing-follow-up.validator';
+import { FollowUpQuestionHasFollowUp } from '../../question/validators/follow-up-question-has-follow-up.validator';
+import { IsQuestionOfFollowUp } from '../../follow-up/validators/question-of-follow-up.validator';
 
 export class AddAnswerDto {
+  @ApiProperty({ type: 'string' })
+  @IsExistingQuestion()
+  @FollowUpQuestionHasFollowUp()
+  @IsMongoIdObject()
+  @Transform(objectIdTransformer)
+  question: ObjectId;
+
   @ValidateIfDefined()
   @IsString()
   @IsNotEmpty()
@@ -33,8 +43,10 @@ export class AddAnswerDto {
   choices?: string[];
 
   @ApiProperty({ type: 'string' })
-  @IsExistingQuestion()
+  @ValidateIfDefined()
+  @IsExistingFollowUp()
+  @IsQuestionOfFollowUp()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
-  question: ObjectId;
+  followUp?: ObjectId;
 }
