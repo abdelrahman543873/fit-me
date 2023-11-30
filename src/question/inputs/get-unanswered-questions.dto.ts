@@ -6,6 +6,7 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsExistingFollowUp } from '../../follow-up/validators/existing-follow-up.validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
+import { IsFollowUpOwner } from '../../follow-up/validators/follow-up-owner.validator';
 
 export class GetUnansweredQuestionsDto {
   @IsExistingForm()
@@ -16,6 +17,7 @@ export class GetUnansweredQuestionsDto {
 
   @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
+  @IsFollowUpOwner()
   @IsMongoIdObject()
   @IsExistingFollowUp()
   @Transform(objectIdTransformer)
