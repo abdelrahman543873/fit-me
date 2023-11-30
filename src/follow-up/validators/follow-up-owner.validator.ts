@@ -21,7 +21,14 @@ export class FollowUpOwnerValidator implements ValidatorConstraintInterface {
     const user: User = JSON.parse(validationArguments.object['user']);
     const followUp = await this.followUpRepository.findOne({
       _id: id,
-      trainer: new Types.ObjectId(user._id as any),
+      $or: [
+        {
+          trainer: new Types.ObjectId(user._id as any),
+        },
+        {
+          client: new Types.ObjectId(user._id as any),
+        },
+      ],
     });
     if (!followUp) return false;
     return true;
