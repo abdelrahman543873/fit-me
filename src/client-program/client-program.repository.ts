@@ -57,7 +57,7 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
                   input: '$followUpDates',
                   as: 'date',
                   in: {
-                    $gt: ['$$date', '$lastFollowUpDate'],
+                    $gt: ['$$date', todayDateZeroedHours],
                   },
                 },
               },
@@ -71,7 +71,12 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
                   input: '$followUpDates',
                   as: 'date',
                   in: {
-                    $lt: ['$$date', '$lastFollowUpDate'],
+                    $and: [
+                      { $lt: ['$$date', todayDateZeroedHours] },
+                      {
+                        $lt: ['$$date', '$lastFollowUpDate'],
+                      },
+                    ],
                   },
                 },
               },
