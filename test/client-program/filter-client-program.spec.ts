@@ -111,12 +111,13 @@ describe('get client program suite case', () => {
       followUpDates: [faker.date.future()],
       lastFollowUpDate: faker.date.recent(),
     });
-    const recentDate = faker.date.recent();
+    const recentDate = new Date();
+    recentDate.setHours(0, 0, 0, 0);
     const presentFollowUpClientProgram = await clientProgramFactory({
       client: client._id,
       program: program._id,
       followUpDates: [faker.date.past(), recentDate],
-      lastFollowUpDate: recentDate,
+      lastFollowUpDate: faker.date.past(),
     });
     const res = await testRequest<FilterClientProgramDto>({
       method: HTTP_METHODS_ENUM.GET,

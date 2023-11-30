@@ -37,6 +37,8 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
     trainer: ObjectId,
     filterClientProgramDto: FilterClientProgramDto,
   ) {
+    const todayDateZeroedHours = new Date();
+    todayDateZeroedHours.setHours(0, 0, 0, 0);
     const aggregation = this.clientProgramSchema.aggregate([
       {
         $match: {
@@ -83,7 +85,12 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
                   input: '$followUpDates',
                   as: 'date',
                   in: {
-                    $eq: ['$$date', '$lastFollowUpDate'],
+                    $and: [
+                      { $eq: ['$$date', todayDateZeroedHours] },
+                      {
+                        $ne: ['$$date', '$lastFollowUpDate'],
+                      },
+                    ],
                   },
                 },
               },

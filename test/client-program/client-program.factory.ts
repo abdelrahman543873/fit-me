@@ -14,7 +14,7 @@ export const buildClientProgramParams = async (
     endDate: obj.endDate || faker.date.future(),
     followUpDates: obj.followUpDates || [faker.date.future()],
     startDate: obj.startDate || faker.date.past(),
-    lastFollowUpDate: obj.lastFollowUpDate || faker.date.past(),
+    lastFollowUpDate: obj.lastFollowUpDate ?? faker.date.past(),
   };
 };
 
