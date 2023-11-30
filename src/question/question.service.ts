@@ -8,6 +8,7 @@ import { SubmittedAnswerEvent } from '../answer/events/answered-question.event';
 import { CompletedFormEvent } from '../form/events/form-completed.event';
 import { FormEvents } from '../form/form.constants';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { GetUnansweredQuestionsDto } from './inputs/get-unanswered-questions.dto';
 
 @Injectable()
 export class QuestionService {
@@ -20,13 +21,19 @@ export class QuestionService {
     return this.questionRepository.addQuestion(addQuestion);
   }
 
-  getUnansweredQuestions(form: ObjectId, client: ObjectId) {
-    return this.questionRepository.getUnansweredQuestions(form, client);
+  getUnansweredQuestions(
+    getUnansweredQuestionsDto: GetUnansweredQuestionsDto,
+    client: ObjectId,
+  ) {
+    return this.questionRepository.getUnansweredQuestions(
+      getUnansweredQuestionsDto,
+      client,
+    );
   }
 
   async checkCompletedForm(submittedAnswerEvent: SubmittedAnswerEvent) {
     const unansweredQuestions = await this.getUnansweredQuestions(
-      submittedAnswerEvent.form,
+      { form: submittedAnswerEvent.form },
       submittedAnswerEvent.client,
     );
     if (unansweredQuestions.length === 0) {

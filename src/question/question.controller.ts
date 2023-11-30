@@ -37,7 +37,7 @@ export class QuestionController {
     @Request() request: RequestContext,
   ): Promise<Question[]> {
     return await this.questionService.getUnansweredQuestions(
-      getUnansweredQuestionsDto.form,
+      getUnansweredQuestionsDto,
       request.user._id,
     );
   }

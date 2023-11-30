@@ -21,11 +21,14 @@ export class QuestionRepository extends BaseRepository<Question> {
     return this.questionSchema.create(addQuestion);
   }
 
-  getUnansweredQuestions(form: ObjectId, client: ObjectId) {
+  getUnansweredQuestions(
+    getUnansweredQuestionsDto: GetUnansweredQuestionsDto,
+    client: ObjectId,
+  ) {
     return this.questionSchema.aggregate([
       {
         $match: {
-          form,
+          form: getUnansweredQuestionsDto.form,
         },
       },
       {
@@ -36,6 +39,9 @@ export class QuestionRepository extends BaseRepository<Question> {
           pipeline: [
             {
               $match: {
+                ...(getUnansweredQuestionsDto.followUp && {
+                  followUp: getUnansweredQuestionsDto.followUp,
+                }),
                 $expr: {
                   $eq: ['$$questionId', '$question'],
                 },
