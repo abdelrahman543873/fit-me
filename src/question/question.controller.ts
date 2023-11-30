@@ -4,9 +4,9 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
   Put,
+  Query,
   Request,
   UseInterceptors,
 } from '@nestjs/common';
@@ -31,9 +31,10 @@ export class QuestionController {
     return await this.questionService.addQuestion(addQuestionDto);
   }
 
-  @Get('unanswered/:form')
+  @Get('unanswered')
+  @UseInterceptors(RequestInBodyInterceptor)
   async getUnansweredQuestions(
-    @Param() getUnansweredQuestionsDto: GetUnansweredQuestionsDto,
+    @Query() getUnansweredQuestionsDto: GetUnansweredQuestionsDto,
     @Request() request: RequestContext,
   ): Promise<Question[]> {
     return await this.questionService.getUnansweredQuestions(

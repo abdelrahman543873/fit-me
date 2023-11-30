@@ -14,6 +14,7 @@ import { AddAnswerDto } from './inputs/add-answer.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FilterAnswersDto } from './inputs/filter-answers.dto';
+import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 
 @ApiBearerAuth()
 @ApiTags('answer')
@@ -22,6 +23,7 @@ export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}
 
   @Get('filter')
+  @UseInterceptors(RequestInBodyInterceptor)
   async filterAnswers(
     @Request() request: RequestContext,
     @Query() filterAnswersDto: FilterAnswersDto,

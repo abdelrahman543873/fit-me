@@ -7,6 +7,7 @@ import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsExistingFollowUp } from '../../follow-up/validators/existing-follow-up.validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { IsFollowUpOwner } from '../../follow-up/validators/follow-up-owner.validator';
+import { Allow } from 'class-validator';
 
 export class GetUnansweredQuestionsDto {
   @IsExistingForm()
@@ -22,4 +23,7 @@ export class GetUnansweredQuestionsDto {
   @IsExistingFollowUp()
   @Transform(objectIdTransformer)
   followUp?: ObjectId;
+
+  @Allow()
+  user?;
 }
