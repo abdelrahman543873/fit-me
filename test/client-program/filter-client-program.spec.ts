@@ -132,7 +132,7 @@ describe('get client program suite case', () => {
     expect(res.body.docs[0]._id).toBe(
       presentFollowUpClientProgram._id.toString(),
     );
-    expect(res.body.docs[0].dueDate).toBe(res.body.docs[0].lastFollowUpDate);
+    expect(res.body.docs[0].dueDate).toBe(recentDate.toISOString());
     expect(res.body.totalDocs).toBe(1);
   });
 });

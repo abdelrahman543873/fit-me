@@ -137,7 +137,9 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
                 $filter: {
                   input: '$followUpDates',
                   as: 'date',
-                  cond: { $gte: ['$$date', '$lastFollowUpDate'] },
+                  cond: {
+                    $gt: ['$$date', todayDateZeroedHours],
+                  },
                 },
               },
             },
@@ -149,14 +151,21 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
                 $filter: {
                   input: '$followUpDates',
                   as: 'date',
-                  cond: { $lte: ['$$date', '$lastFollowUpDate'] },
+                  cond: {
+                    $and: [
+                      { $lt: ['$$date', todayDateZeroedHours] },
+                      {
+                        $lt: ['$$date', '$lastFollowUpDate'],
+                      },
+                    ],
+                  },
                 },
               },
             },
           }),
           ...(filterClientProgramDto.status ===
             CLIENT_PROGRAM_STATUS_FIlTER.PRESENT && {
-            dueDate: '$lastFollowUpDate',
+            dueDate: todayDateZeroedHours,
           }),
         },
       },
