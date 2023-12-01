@@ -27,7 +27,7 @@ describe('filter follow ups suite case', () => {
         form: followUp.form.toString() as any,
       },
     });
-    expect(res.body.docs[0].form).toBe(followUp.form.toString());
+    expect(res.body.docs[0].form._id).toBe(followUp.form.toString());
     expect(res.body.docs[0].measurementTypes[0]).toBe(
       followUp.measurementTypes[0],
     );
