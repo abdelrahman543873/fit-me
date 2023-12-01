@@ -6,6 +6,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { SubmittedAnswerEvent } from './events/answered-question.event';
 import { AnswerEvents } from './answer.constants';
 import { FilterAnswersDto } from './inputs/filter-answers.dto';
+import { FORM_TYPES } from '../form/form.constants';
 
 @Injectable()
 export class AnswerService {
@@ -30,11 +31,18 @@ export class AnswerService {
         addAnswerDto.question,
         client,
       );
-    const submittedAnswerEvent = new SubmittedAnswerEvent();
-    submittedAnswerEvent.client = client;
-    submittedAnswerEvent.form = answerPopulatedQuestion.question['form'];
-    submittedAnswerEvent.trainer = trainer;
-    this.eventEmitter.emit(AnswerEvents.ANSWER_SUBMITTED, submittedAnswerEvent);
+    if (
+      answerPopulatedQuestion.question['form'].type === FORM_TYPES.ONBOARDING
+    ) {
+      const submittedAnswerEvent = new SubmittedAnswerEvent();
+      submittedAnswerEvent.client = client;
+      submittedAnswerEvent.form = answerPopulatedQuestion.question['form']._id;
+      submittedAnswerEvent.trainer = trainer;
+      this.eventEmitter.emit(
+        AnswerEvents.ANSWER_SUBMITTED,
+        submittedAnswerEvent,
+      );
+    }
     return answer;
   }
 

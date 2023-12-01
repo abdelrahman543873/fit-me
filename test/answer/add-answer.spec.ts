@@ -53,6 +53,53 @@ describe('add answer suite case', () => {
     );
   });
 
+  it('should add answer successfully and not change subscription status to pending when all follow up form questions is answered', async () => {
+    const client = await userFactory({ role: USER_ROLE.CLIENT });
+    const trainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const form = await formFactory({
+      type: FORM_TYPES.FOLLOW_UP,
+      trainer: trainer._id,
+    });
+    const question = await questionFactory({ form: form._id });
+    const followUp = await followUpFactory({
+      client: client._id,
+      form: form._id,
+      trainer: trainer._id,
+    });
+    const params = await buildAnswerParams({
+      client: client._id,
+      question: question._id,
+      followUp: followUp._id,
+    });
+    delete params.media;
+    delete params.client;
+    const subscription = await subscriptionFactory({
+      client: client._id,
+      trainer: trainer._id,
+      status: SUBSCRIPTION_STATUS.INITIAL,
+    });
+    const res = await testRequest<AddAnswerDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: ANSWER,
+      token: client.token,
+      variables: {
+        ...params,
+        question: params.question.toString() as any,
+        followUp: params.followUp.toString() as any,
+      },
+      fileParam: 'media',
+    });
+    expect(res.body.text).toBe(params.text);
+    expect(res.body.text).toBe(params.text);
+    await waitForMilliSeconds(10);
+    const subscriptionAfterFormCompletion = await SubscriptionRepo().findOne({
+      _id: subscription._id,
+    });
+    await expect(subscriptionAfterFormCompletion.status).toBe(
+      SUBSCRIPTION_STATUS.INITIAL,
+    );
+  });
+
   it('should fail if the question is of another form than specified in the follow up', async () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });

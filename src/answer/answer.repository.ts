@@ -16,7 +16,12 @@ export class AnswerRepository extends BaseRepository<Answer> {
   }
 
   getAnswerQuestion(question: ObjectId, client: ObjectId) {
-    return this.answerSchema.findOne({ question, client }).populate('question');
+    return this.answerSchema.findOne({ question, client }).populate({
+      path: 'question',
+      populate: {
+        path: 'form',
+      },
+    });
   }
 
   filterAnswers(trainer: ObjectId, filterAnswersDto: FilterAnswersDto) {
