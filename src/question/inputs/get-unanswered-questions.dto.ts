@@ -8,10 +8,12 @@ import { IsExistingFollowUp } from '../../follow-up/validators/existing-follow-u
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { IsFollowUpOwner } from '../../follow-up/validators/follow-up-owner.validator';
 import { Allow } from 'class-validator';
+import { FollowUpFormHasFollowUp } from '../../form/validators/follow-up-form-has-follow-up.validator';
 
 export class GetUnansweredQuestionsDto {
-  @IsExistingForm()
   @ApiProperty({ type: 'string' })
+  @IsExistingForm()
+  @FollowUpFormHasFollowUp()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   form: ObjectId;

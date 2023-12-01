@@ -9,6 +9,7 @@ import { FormOwnerValidator } from './validators/form-owner.validator';
 import { Question, QuestionSchema } from '../question/question.schema';
 import { Model } from 'mongoose';
 import { FollowUpFormValidator } from './validators/follow-up-form.validator';
+import { FollowUpFormHasFollowUpValidator } from './validators/follow-up-form-has-follow-up.validator';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { FollowUpFormValidator } from './validators/follow-up-form.validator';
     ExistingFormValidator,
     FormOwnerValidator,
     FollowUpFormValidator,
+    FollowUpFormHasFollowUpValidator,
   ],
   controllers: [FormController],
 })
