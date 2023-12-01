@@ -12,6 +12,12 @@ export class Client {
     ref: 'User',
   })
   _id: ObjectId;
+
+  @Prop()
+  height?: number;
+
+  @Prop()
+  profession: string;
 }
 
 export const ClientSchema = SchemaFactory.createForClass(Client);

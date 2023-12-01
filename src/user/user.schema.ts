@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, ObjectId } from 'mongoose';
-import { USER_ROLE } from './user.constants';
+import { USER_GENDER, USER_ROLE } from './user.constants';
 import { ApiProperty } from '@nestjs/swagger';
 
 export type UserDocument = HydratedDocument<User>;
@@ -28,8 +28,11 @@ export class User {
   @Prop()
   profilePicture?: string;
 
-  @Prop({ required: true, enum: USER_ROLE })
+  @Prop({ required: true, enum: USER_ROLE, type: String })
   role: USER_ROLE;
+
+  @Prop({ enum: USER_GENDER, type: String })
+  gender: USER_GENDER;
 
   @Prop({ required: true })
   countryCode: string;

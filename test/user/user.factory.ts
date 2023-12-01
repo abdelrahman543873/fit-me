@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { UserRepo } from './user.test-repo';
 import type { User } from '../../src/user/user.schema';
 import { generateAuthToken } from '../../src/shared/utils/token-utils';
-import { USER_ROLE } from '../../src/user/user.constants';
+import { USER_GENDER, USER_ROLE } from '../../src/user/user.constants';
 import { hashPass } from '../../src/shared/utils/bcryptHelper';
 
 export const buildUserParams = (obj: Partial<User> = {}) => {
@@ -18,6 +18,9 @@ export const buildUserParams = (obj: Partial<User> = {}) => {
       obj.role ||
       faker.helpers.arrayElement<USER_ROLE>(Object.values(USER_ROLE)),
     countryCode: obj.countryCode || faker.location.countryCode(),
+    gender:
+      obj.gender ||
+      faker.helpers.arrayElement<USER_GENDER>(Object.values(USER_GENDER)),
   };
 };
 
