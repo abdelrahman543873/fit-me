@@ -16,10 +16,11 @@ import { IsExistingTrainer } from '../validators/existing-trainer.validator';
 import { IsExistingPhoneNumber } from '../validators/existing-phone-number.validator';
 import { IsExistingEmail } from '../validators/existing-email.validator';
 import { ObjectId } from 'mongoose';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
+import { IsDate } from 'class-validator';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -56,6 +57,11 @@ export class UserRegisterDto {
   @ValidateIfDefined()
   @IsEnum(USER_GENDER)
   gender?: USER_GENDER;
+
+  @ValidateIfDefined()
+  @IsDate()
+  @Type(() => Date)
+  birthday?: Date;
 
   @IsOptional()
   @IsExistingTrainer()

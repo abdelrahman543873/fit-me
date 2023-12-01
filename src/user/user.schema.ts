@@ -37,6 +37,9 @@ export class User {
   @Prop({ required: true })
   countryCode: string;
 
+  @Prop()
+  birthday?: Date;
+
   token?: string;
 }
 

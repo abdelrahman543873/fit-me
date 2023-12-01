@@ -12,6 +12,18 @@ export class Trainer {
     ref: 'User',
   })
   _id: ObjectId;
+
+  @Prop()
+  facebook?: string;
+
+  @Prop()
+  instagram?: string;
+
+  @Prop()
+  twitter?: string;
+
+  @Prop()
+  tiktok?: string;
 }
 
 export const TrainerSchema = SchemaFactory.createForClass(Trainer);

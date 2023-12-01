@@ -17,7 +17,7 @@ export class Client {
   height?: number;
 
   @Prop()
-  profession: string;
+  profession?: string;
 }
 
 export const ClientSchema = SchemaFactory.createForClass(Client);

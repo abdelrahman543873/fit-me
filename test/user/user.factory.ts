@@ -21,6 +21,7 @@ export const buildUserParams = (obj: Partial<User> = {}) => {
     gender:
       obj.gender ||
       faker.helpers.arrayElement<USER_GENDER>(Object.values(USER_GENDER)),
+    birthday: obj.birthday || faker.date.past(),
   };
 };
 
