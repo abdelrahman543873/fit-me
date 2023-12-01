@@ -21,6 +21,7 @@ import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { IsDate } from 'class-validator';
+import { utcStandardDateTransformer } from '../../shared/utils/utc-standard-date-transformer';
 
 export class UserRegisterDto {
   @IsOptional()
@@ -60,7 +61,7 @@ export class UserRegisterDto {
 
   @ValidateIfDefined()
   @IsDate()
-  @Type(() => Date)
+  @Transform(utcStandardDateTransformer)
   birthday?: Date;
 
   @IsOptional()

@@ -23,8 +23,8 @@ describe('add client program suite case', () => {
       token: trainer.token,
       variables: {
         client: params.client,
-        endDate: params.endDate.toISOString().slice(0, 10) as any,
-        followUpDates: [params.endDate.toISOString().slice(0, 10)] as any,
+        endDate: params.endDate,
+        followUpDates: [params.endDate],
         program: params.program,
         startDate: params.startDate,
       },

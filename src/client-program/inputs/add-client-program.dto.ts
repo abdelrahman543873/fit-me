@@ -7,6 +7,8 @@ import { ObjectId } from 'mongoose';
 import { IsExistingProgram } from '../../program/validators/existing-program.validator';
 import { Allow, IsDate } from 'class-validator';
 import { IsProgramOwner } from '../../program/validators/program-owner.validator';
+import { utcStandardDateTransformer } from '../../shared/utils/utc-standard-date-transformer';
+import { arrayUtcStandardDateTransformer } from '../../shared/utils/array-utc-standard-date-transformer';
 
 export class AddClientProgramDto {
   @ApiProperty({ type: 'string' })
@@ -23,7 +25,7 @@ export class AddClientProgramDto {
   program: ObjectId;
 
   @IsDate()
-  @Type(() => Date)
+  @Transform(utcStandardDateTransformer)
   endDate: Date;
 
   @IsDate()
@@ -31,7 +33,7 @@ export class AddClientProgramDto {
   startDate: Date;
 
   @IsDate({ each: true })
-  @Type(() => Date)
+  @Transform(arrayUtcStandardDateTransformer)
   followUpDates: Date[];
 
   @ApiProperty({ readOnly: true })
