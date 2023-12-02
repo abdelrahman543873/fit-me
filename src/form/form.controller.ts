@@ -15,6 +15,7 @@ import { DeleteFormDto } from './inputs/delete-form.dto';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 import { Get } from '@nestjs/common';
 import { FilterFormsDto } from './inputs/filter-forms.dto';
+import { GetAnsweredFormsDto } from './inputs/get-answered-forms.dto';
 
 @ApiTags('form')
 @ApiBearerAuth()
@@ -37,6 +38,17 @@ export class FormController {
     @Body() deleteFormDto: DeleteFormDto,
   ) {
     return await this.formService.deleteForm(request.user._id, deleteFormDto);
+  }
+
+  @Get('answered')
+  async getAnsweredForms(
+    @Request() request: RequestContext,
+    @Query() getAnsweredFormsDto: GetAnsweredFormsDto,
+  ) {
+    return await this.formService.getAnsweredForms(
+      request,
+      getAnsweredFormsDto,
+    );
   }
 
   @Get('filter')

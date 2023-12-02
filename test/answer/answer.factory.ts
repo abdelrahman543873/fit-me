@@ -8,7 +8,7 @@ import { followUpFactory } from '../follow-up/follow-up.factory';
 
 export const buildAnswerParams = async (
   obj: Partial<Answer> = {},
-): Promise<Partial<Answer>> => {
+): Promise<Answer> => {
   return {
     question: obj.question || (await questionFactory())._id,
     text: obj.text || faker.word.verb(),
@@ -24,4 +24,15 @@ export const answerFactory = async (
 ): Promise<Answer> => {
   const params: Partial<Answer> = await buildAnswerParams(obj);
   return await AnswerRepo().add(params);
+};
+
+export const answersFactory = async (
+  count = 10,
+  obj: Partial<Answer> = {},
+): Promise<Answer[]> => {
+  const answers: Answer[] = [];
+  for (let i = 0; i < count; i++) {
+    answers.push(await buildAnswerParams(obj));
+  }
+  return await AnswerRepo().addMany(answers);
 };
