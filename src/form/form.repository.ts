@@ -65,7 +65,7 @@ export class FormRepository extends BaseRepository<Form> {
           ],
         },
       },
-      { $unwind: '$followup' },
+      { $unwind: { path: '$followup', preserveNullAndEmptyArrays: true } },
       {
         $lookup: {
           from: 'questions',
@@ -92,10 +92,24 @@ export class FormRepository extends BaseRepository<Form> {
                           {
                             $eq: ['$$questionId', '$question'],
                           },
-                          {
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    $match: {
+                      $expr: {
+                        $cond: {
+                          if: {
+                            $eq: [{ $ifNull: ['$$followUpId', null] }, null],
+                          },
+                          then: {
+                            $eq: ['$$questionId', '$question'],
+                          },
+                          else: {
                             $eq: ['$$followUpId', '$followUp'],
                           },
-                        ],
+                        },
                       },
                     },
                   },

@@ -10,12 +10,27 @@ import { clientFactory } from '../client/client.factory';
 import { followUpFactory } from '../follow-up/follow-up.factory';
 import { answerFactory } from '../answer/answer.factory';
 import { subscriptionFactory } from '../subscription/subscription.factory';
+import { FORM_TYPES } from '../../src/form/form.constants';
 
 describe('get answered forms suite case', () => {
-  it('should get answered forms as trainer for my clients successfully', async () => {
+  it('should get answered forms as trainer for my clients and onboarding forms successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const client = await clientFactory();
-    const form = await formFactory({ trainer: trainer._id });
+    const form = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.FOLLOW_UP,
+    });
+    const onboardingForm = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.ONBOARDING,
+    });
+    const onboardingQuestion = await questionFactory({
+      form: onboardingForm._id,
+    });
+    const onboardingAnswer = await answerFactory({
+      client: client._id,
+      question: onboardingQuestion._id,
+    });
     const question = await questionFactory({ form: form._id });
     const followUp = await followUpFactory({
       client: client._id,
@@ -50,6 +65,10 @@ describe('get answered forms suite case', () => {
     expect(res.body[1].questions[0].answer.text).toBe(secondAnswer.text);
     expect(res.body[1].questions[0].answer.followUp).toBe(
       secondFollowUp._id.toString(),
+    );
+    expect(res.body[2].questions[0].answer.text).toBe(onboardingAnswer.text);
+    expect(res.body[2].questions[0].answer._id).toBe(
+      onboardingAnswer._id.toString(),
     );
   });
 
