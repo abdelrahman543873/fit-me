@@ -11,9 +11,10 @@ import { followUpFactory } from '../follow-up/follow-up.factory';
 import { answerFactory } from '../answer/answer.factory';
 import { subscriptionFactory } from '../subscription/subscription.factory';
 import { FORM_TYPES } from '../../src/form/form.constants';
+import { FOLLOW_UP_STATUS } from '../../src/follow-up/follow-up.constants';
 
 describe('get answered forms suite case', () => {
-  it('should get answered forms as trainer for my clients and onboarding forms successfully', async () => {
+  it('should get answered forms as trainer for my clients and onboarding forms and filter based on follow up status successfully successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const client = await clientFactory();
     const form = await formFactory({
@@ -36,11 +37,13 @@ describe('get answered forms suite case', () => {
       client: client._id,
       trainer: trainer._id,
       form: form._id,
+      status: FOLLOW_UP_STATUS.COMPLETED,
     });
     const secondFollowUp = await followUpFactory({
       client: client._id,
       trainer: trainer._id,
       form: form._id,
+      status: FOLLOW_UP_STATUS.COMPLETED,
     });
     const firstAnswer = await answerFactory({
       question: question._id,
@@ -56,7 +59,9 @@ describe('get answered forms suite case', () => {
       method: HTTP_METHODS_ENUM.GET,
       url: ANSWERED_FORMS,
       token: trainer.token,
-      params: { client: client._id.toString() as any },
+      params: {
+        client: client._id.toString() as any,
+      },
     });
     expect(res.body[0].questions[0].answer.text).toBe(firstAnswer.text);
     expect(res.body[0].questions[0].answer.followUp).toBe(

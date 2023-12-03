@@ -5,6 +5,8 @@ import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validat
 import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { ObjectId } from 'mongoose';
+import { IsEnum } from 'class-validator';
+import { FOLLOW_UP_STATUS } from '../../follow-up/follow-up.constants';
 export class GetAnsweredFormsDto {
   @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
@@ -12,4 +14,8 @@ export class GetAnsweredFormsDto {
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   client?: ObjectId;
+
+  @ValidateIfDefined()
+  @IsEnum(FOLLOW_UP_STATUS)
+  status?: FOLLOW_UP_STATUS;
 }

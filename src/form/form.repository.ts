@@ -120,6 +120,15 @@ export class FormRepository extends BaseRepository<Form> {
           ],
         },
       },
+      {
+        $match: {
+          ...(getAnsweredFormsDto.status && {
+            $expr: {
+              $eq: ['$followup.status', getAnsweredFormsDto.status],
+            },
+          }),
+        },
+      },
     ]);
   }
 
