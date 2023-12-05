@@ -8,7 +8,7 @@ import { HistoryRepo } from './history.test-repo';
 
 export const buildHistoryParams = async (
   obj: Partial<History> = {},
-): Promise<History> => {
+): Promise<Partial<History>> => {
   return {
     type:
       obj.type ||

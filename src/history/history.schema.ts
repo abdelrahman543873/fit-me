@@ -43,6 +43,10 @@ export class History {
 
   @Prop()
   measuredAt: Date;
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const HistorySchema = SchemaFactory.createForClass(History);
