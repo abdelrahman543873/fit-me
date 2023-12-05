@@ -16,6 +16,7 @@ import { AnswerRepository } from '../../src/answer/answer.repository';
 import { ClientProgramRepository } from '../../src/client-program/client-program.repository';
 import { MeasurementRepository } from '../../src/measurement/measurement.repository';
 import { FollowUpRepository } from '../../src/follow-up/follow-up.repository';
+import { HistoryRepository } from '../../src/history/history.repository';
 
 class MongoEnvironment extends NodeEnvironment {
   constructor(config, context) {
@@ -60,6 +61,8 @@ class MongoEnvironment extends NodeEnvironment {
     );
     this.global.followUpRepository =
       app.get<FollowUpRepository>(FollowUpRepository);
+    this.global.historyRepository =
+      app.get<HistoryRepository>(HistoryRepository);
   }
 
   async teardown() {

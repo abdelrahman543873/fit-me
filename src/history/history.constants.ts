@@ -1,0 +1,5 @@
+export enum HISTORY_TYPE {
+  MINS_DURATION = 'MINS_DURATION',
+  KG_WEIGHT = 'KG_WEIGHT',
+  COUNT = 'COUNT',
+}

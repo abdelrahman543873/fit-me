@@ -18,6 +18,7 @@ import { AnswerModule } from './answer/answer.module';
 import { ClientProgramModule } from './client-program/client-program.module';
 import { MeasurementModule } from './measurement/measurement.module';
 import { FollowUpModule } from './follow-up/follow-up.module';
+import { HistoryModule } from './history/history.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { FollowUpModule } from './follow-up/follow-up.module';
     ClientProgramModule,
     MeasurementModule,
     FollowUpModule,
+    HistoryModule,
   ],
   controllers: [AppController],
 })
