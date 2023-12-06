@@ -31,6 +31,10 @@ export class HistoryService {
     );
   }
 
+  deleteHistory(client: ObjectId, id: ObjectId) {
+    return this.historyRepository.deleteHistory(client, id);
+  }
+
   getHistoryDates(client: ObjectId) {
     return this.historyRepository.getHistoryDates(client);
   }

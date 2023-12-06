@@ -2,6 +2,7 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -60,6 +61,19 @@ export class HistoryController {
       addHistoryDto,
       mongoIdDto.id,
       media,
+    );
+  }
+
+  @Delete(':id')
+  @Role(USER_ROLE.CLIENT)
+  @UseGuards(RoleGuard)
+  async deleteHistory(
+    @Request() request: RequestContext,
+    @Param() mongoIdDto: MongoIdDto,
+  ) {
+    return await this.historyService.deleteHistory(
+      request.user._id,
+      mongoIdDto.id,
     );
   }
 

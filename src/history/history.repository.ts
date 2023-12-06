@@ -52,6 +52,13 @@ export class HistoryRepository extends BaseRepository<History> {
     );
   }
 
+  deleteHistory(client: ObjectId, id: ObjectId) {
+    return this.historySchema.findOneAndDelete({
+      _id: id,
+      client,
+    });
+  }
+
   getHistoryDates(client: ObjectId) {
     return this.historySchema.aggregate([
       { $match: { client } },
