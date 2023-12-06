@@ -5,6 +5,7 @@ import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddHistoryDto } from './inputs/add-history.dto';
 import { FilterHistoryDto } from './inputs/filter-history.dto';
+import { UpdateHistoryDto } from './inputs/update-history.dto';
 
 @Injectable()
 export class HistoryRepository extends BaseRepository<History> {
@@ -27,6 +28,28 @@ export class HistoryRepository extends BaseRepository<History> {
         media: `${process.env.HOST}${media.filename}`,
       }),
     });
+  }
+
+  updateHistory(
+    client: ObjectId,
+    addHistoryDto: UpdateHistoryDto,
+    id: ObjectId,
+    media?: Express.Multer.File,
+  ) {
+    return this.historySchema.findOneAndUpdate(
+      {
+        _id: id,
+        client,
+      },
+      {
+        _id: id,
+        ...addHistoryDto,
+        ...(media && {
+          media: `${process.env.HOST}${media.filename}`,
+        }),
+      },
+      { new: true },
+    );
   }
 
   getHistoryDates(client: ObjectId) {

@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   Request,
@@ -18,6 +19,9 @@ import { RoleGuard } from '../shared/guards/role.guard';
 import { FilterHistoryDto } from './inputs/filter-history.dto';
 import { ApiConsumes } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Put } from '@nestjs/common';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
+import { UpdateHistoryDto } from './inputs/update-history.dto';
 
 @Controller('history')
 export class HistoryController {
@@ -36,6 +40,25 @@ export class HistoryController {
     return await this.historyService.addHistory(
       request.user._id,
       addHistoryDto,
+      media,
+    );
+  }
+
+  @Put(':id')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('media'))
+  @Role(USER_ROLE.CLIENT)
+  @UseGuards(RoleGuard)
+  async updateHistory(
+    @Request() request: RequestContext,
+    @Body() addHistoryDto: UpdateHistoryDto,
+    @Param() mongoIdDto: MongoIdDto,
+    @UploadedFile() media?: Express.Multer.File,
+  ) {
+    return await this.historyService.updateHistory(
+      request.user._id,
+      addHistoryDto,
+      mongoIdDto.id,
       media,
     );
   }
