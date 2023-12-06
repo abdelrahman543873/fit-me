@@ -18,12 +18,14 @@ import { Role } from '../shared/decorators/client.decorator';
 import { USER_ROLE } from '../user/user.constants';
 import { RoleGuard } from '../shared/guards/role.guard';
 import { FilterHistoryDto } from './inputs/filter-history.dto';
-import { ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Put } from '@nestjs/common';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 import { UpdateHistoryDto } from './inputs/update-history.dto';
 
+@ApiBearerAuth()
+@ApiTags('history')
 @Controller('history')
 export class HistoryController {
   constructor(private readonly historyService: HistoryService) {}
