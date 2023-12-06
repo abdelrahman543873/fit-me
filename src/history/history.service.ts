@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { HistoryRepository } from './history.repository';
-import { AddHistoryDto } from './inputs/add-history.schema';
+import { AddHistoryDto } from './inputs/add-history.dto';
 import { ObjectId } from 'mongoose';
-import { FilterHistoryDto } from './inputs/filter-history.schema';
+import { FilterHistoryDto } from './inputs/filter-history.dto';
 
 @Injectable()
 export class HistoryService {
@@ -10,6 +10,10 @@ export class HistoryService {
 
   addHistory(client: ObjectId, addHistoryDto: AddHistoryDto) {
     return this.historyRepository.addHistory(client, addHistoryDto);
+  }
+
+  getHistoryDates(client: ObjectId) {
+    return this.historyRepository.getHistoryDates(client);
   }
 
   filterHistory(client: ObjectId, filterHistoryDto: FilterHistoryDto) {

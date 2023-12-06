@@ -9,11 +9,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { HistoryService } from './history.service';
-import { AddHistoryDto } from './inputs/add-history.schema';
+import { AddHistoryDto } from './inputs/add-history.dto';
 import { Role } from '../shared/decorators/client.decorator';
 import { USER_ROLE } from '../user/user.constants';
 import { RoleGuard } from '../shared/guards/role.guard';
-import { FilterHistoryDto } from './inputs/filter-history.schema';
+import { FilterHistoryDto } from './inputs/filter-history.dto';
 
 @Controller('history')
 export class HistoryController {
@@ -30,6 +30,11 @@ export class HistoryController {
       request.user._id,
       addHistoryDto,
     );
+  }
+
+  @Get('dates')
+  async getHistoryDates(@Request() request: RequestContext) {
+    return await this.historyService.getHistoryDates(request.user._id);
   }
 
   @Get('filter')

@@ -4,7 +4,7 @@ import { historyFactory } from './history.factory';
 import { testRequest } from '../config/request';
 import { HTTP_METHODS_ENUM } from '../config/request.methods.enum';
 import { FILTER_HISTORY } from '../endpoints/history.endpoints';
-import { FilterHistoryDto } from '../../src/history/inputs/filter-history.schema';
+import { FilterHistoryDto } from '../../src/history/inputs/filter-history.dto';
 describe('filter history suite case', () => {
   it('should filter history successfully', async () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });

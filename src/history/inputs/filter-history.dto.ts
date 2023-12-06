@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/swagger';
-import { AddHistoryDto } from './add-history.schema';
+import { AddHistoryDto } from './add-history.dto';
 import { Transform } from 'class-transformer';
 import { utcStandardDateTransformer } from '../../shared/utils/utc-standard-date-transformer';
 import { IsDate } from 'class-validator';
