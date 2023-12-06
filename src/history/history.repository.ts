@@ -86,7 +86,7 @@ export class HistoryRepository extends BaseRepository<History> {
         },
       },
       {
-        $sort: { date: 1 },
+        $sort: { date: -1 },
       },
     ]);
   }
@@ -106,6 +106,17 @@ export class HistoryRepository extends BaseRepository<History> {
             },
           }),
         },
+      },
+      {
+        $project: {
+          dateOfHistoryRecorded: {
+            $ifNull: ['$measuredAt', '$createdAt'],
+          },
+          _id: 0,
+        },
+      },
+      {
+        $sort: { dateOfHistoryRecorded: -1 },
       },
     ]);
   }
