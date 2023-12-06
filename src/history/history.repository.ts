@@ -86,7 +86,7 @@ export class HistoryRepository extends BaseRepository<History> {
         },
       },
       {
-        $sort: { date: -1 },
+        $sort: { date: 1 },
       },
     ]);
   }
