@@ -6,6 +6,7 @@ import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddHistoryDto } from './inputs/add-history.dto';
 import { FilterHistoryDto } from './inputs/filter-history.dto';
 import { UpdateHistoryDto } from './inputs/update-history.dto';
+import { GetHistoryDatesDto } from './inputs/get-history-dates.dto';
 
 @Injectable()
 export class HistoryRepository extends BaseRepository<History> {
@@ -59,7 +60,7 @@ export class HistoryRepository extends BaseRepository<History> {
     });
   }
 
-  getHistoryDates(client: ObjectId) {
+  getHistoryDates(client: ObjectId, getHistoryDatesDto: GetHistoryDatesDto) {
     return this.historySchema.aggregate([
       { $match: { client } },
       {
@@ -68,6 +69,20 @@ export class HistoryRepository extends BaseRepository<History> {
             $ifNull: ['$measuredAt', '$createdAt'],
           },
           _id: 0,
+        },
+      },
+      {
+        $match: {
+          ...(getHistoryDatesDto.date && {
+            $expr: {
+              $eq: [
+                `${
+                  getHistoryDatesDto.date.getMonth() + 1
+                }/${getHistoryDatesDto.date.getFullYear()}`,
+                { $dateToString: { date: '$date', format: '%m/%Y' } },
+              ],
+            },
+          }),
         },
       },
       {

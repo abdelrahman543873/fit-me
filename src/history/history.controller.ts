@@ -23,6 +23,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Put } from '@nestjs/common';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 import { UpdateHistoryDto } from './inputs/update-history.dto';
+import { GetHistoryDatesDto } from './inputs/get-history-dates.dto';
 
 @ApiBearerAuth()
 @ApiTags('history')
@@ -80,8 +81,14 @@ export class HistoryController {
   }
 
   @Get('dates')
-  async getHistoryDates(@Request() request: RequestContext) {
-    return await this.historyService.getHistoryDates(request.user._id);
+  async getHistoryDates(
+    @Request() request: RequestContext,
+    @Query() getHistoryDatesDto: GetHistoryDatesDto,
+  ) {
+    return await this.historyService.getHistoryDates(
+      request.user._id,
+      getHistoryDatesDto,
+    );
   }
 
   @Get('filter')

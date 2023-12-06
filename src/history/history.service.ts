@@ -4,6 +4,7 @@ import { AddHistoryDto } from './inputs/add-history.dto';
 import { ObjectId } from 'mongoose';
 import { FilterHistoryDto } from './inputs/filter-history.dto';
 import { UpdateHistoryDto } from './inputs/update-history.dto';
+import { GetHistoryDatesDto } from './inputs/get-history-dates.dto';
 
 @Injectable()
 export class HistoryService {
@@ -35,8 +36,8 @@ export class HistoryService {
     return this.historyRepository.deleteHistory(client, id);
   }
 
-  getHistoryDates(client: ObjectId) {
-    return this.historyRepository.getHistoryDates(client);
+  getHistoryDates(client: ObjectId, getHistoryDatesDto: GetHistoryDatesDto) {
+    return this.historyRepository.getHistoryDates(client, getHistoryDatesDto);
   }
 
   filterHistory(client: ObjectId, filterHistoryDto: FilterHistoryDto) {

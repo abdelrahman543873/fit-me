@@ -5,6 +5,7 @@ import { testRequest } from '../config/request';
 import { HTTP_METHODS_ENUM } from '../config/request.methods.enum';
 import { HISTORY_DATES } from '../endpoints/history.endpoints';
 import { HistoryRepo } from './history.test-repo';
+import { faker } from '@faker-js/faker';
 describe('get history dates suite case', () => {
   it('should history dates and date should be equal to measured at if not null successfully', async () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });
@@ -16,6 +17,25 @@ describe('get history dates suite case', () => {
       token: client.token,
     });
     expect(res.body[0].date).toBe(history.measuredAt.toISOString());
+  });
+
+  it('should history dates in a range successfully', async () => {
+    const client = await userFactory({ role: USER_ROLE.CLIENT });
+    const measuredAt = faker.date.past();
+    await historyFactory({ client: client._id, measuredAt });
+    await historyFactory({ client: client._id, measuredAt });
+    //a history outside the date range
+    await historyFactory({
+      client: client._id,
+      measuredAt: faker.date.future(),
+    });
+    const res = await testRequest({
+      method: HTTP_METHODS_ENUM.GET,
+      url: `${HISTORY_DATES}?date=${measuredAt}`,
+      token: client.token,
+    });
+    expect(res.body[0].date).toBe(measuredAt.toISOString());
+    expect(res.body.length).toBe(2);
   });
 
   it('should history dates and date should be equal to createdAt if measured at is null successfully', async () => {
