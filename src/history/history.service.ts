@@ -8,8 +8,12 @@ import { FilterHistoryDto } from './inputs/filter-history.dto';
 export class HistoryService {
   constructor(private readonly historyRepository: HistoryRepository) {}
 
-  addHistory(client: ObjectId, addHistoryDto: AddHistoryDto) {
-    return this.historyRepository.addHistory(client, addHistoryDto);
+  addHistory(
+    client: ObjectId,
+    addHistoryDto: AddHistoryDto,
+    media?: Express.Multer.File,
+  ) {
+    return this.historyRepository.addHistory(client, addHistoryDto, media);
   }
 
   getHistoryDates(client: ObjectId) {

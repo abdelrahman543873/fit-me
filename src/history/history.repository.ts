@@ -15,8 +15,18 @@ export class HistoryRepository extends BaseRepository<History> {
     super(historySchema);
   }
 
-  addHistory(client: ObjectId, addHistoryDto: AddHistoryDto) {
-    return this.historySchema.create({ ...addHistoryDto, client });
+  addHistory(
+    client: ObjectId,
+    addHistoryDto: AddHistoryDto,
+    media?: Express.Multer.File,
+  ) {
+    return this.historySchema.create({
+      ...addHistoryDto,
+      client,
+      ...(media && {
+        media: `${process.env.HOST}${media.filename}`,
+      }),
+    });
   }
 
   getHistoryDates(client: ObjectId) {
