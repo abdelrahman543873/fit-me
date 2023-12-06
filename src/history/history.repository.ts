@@ -112,7 +112,6 @@ export class HistoryRepository extends BaseRepository<History> {
           dateOfHistoryRecorded: {
             $ifNull: ['$measuredAt', '$createdAt'],
           },
-          _id: 0,
         },
       },
       {
