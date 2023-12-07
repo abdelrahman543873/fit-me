@@ -92,18 +92,45 @@ export class HistoryRepository extends BaseRepository<History> {
   }
 
   filterHistory(client: ObjectId, filterHistoryDto: FilterHistoryDto) {
+    const { createdAt, measuredAt, ...historyDto } = filterHistoryDto;
     return this.historySchema.aggregate([
       {
         $match: {
-          ...filterHistoryDto,
           client,
+        },
+      },
+      {
+        $addFields: {
+          dateOfHistoryRecorded: {
+            $ifNull: [
+              {
+                $dateToString: {
+                  format: '%Y-%m-%d',
+                  date: '$measuredAt',
+                },
+              },
+              {
+                $dateToString: {
+                  format: '%Y-%m-%d',
+                  date: '$createdAt',
+                },
+              },
+            ],
+          },
+        },
+      },
+      {
+        $match: {
+          ...historyDto,
           ...(filterHistoryDto.createdAt && {
-            $expr: {
-              $eq: [
-                filterHistoryDto.createdAt.toLocaleDateString(),
-                { $dateToString: { date: '$createdAt', format: '%d/%m/%Y' } },
-              ],
-            },
+            dateOfHistoryRecorded: filterHistoryDto.createdAt
+              .toISOString()
+              .slice(0, 10),
+          }),
+          ...(filterHistoryDto.measuredAt && {
+            dateOfHistoryRecorded: filterHistoryDto.measuredAt
+              .toISOString()
+              .slice(0, 10),
           }),
         },
       },
@@ -116,13 +143,6 @@ export class HistoryRepository extends BaseRepository<History> {
         },
       },
       { $unwind: '$exercise' },
-      {
-        $addFields: {
-          dateOfHistoryRecorded: {
-            $ifNull: ['$measuredAt', '$createdAt'],
-          },
-        },
-      },
       {
         $sort: { dateOfHistoryRecorded: -1 },
       },
