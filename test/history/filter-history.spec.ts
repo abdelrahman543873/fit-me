@@ -20,6 +20,7 @@ describe('filter history suite case', () => {
       },
       token: client.token,
     });
+    expect(res.body[0].exercise._id).toBe(history.exercise.toString());
     expect(res.body[0].type).toBe(history.type);
     expect(res.body[0].value).toBe(history.value);
     expect(res.body[0].reps).toBe(history.reps);

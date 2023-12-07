@@ -108,6 +108,15 @@ export class HistoryRepository extends BaseRepository<History> {
         },
       },
       {
+        $lookup: {
+          from: 'exercises',
+          localField: 'exercise',
+          foreignField: '_id',
+          as: 'exercise',
+        },
+      },
+      { $unwind: '$exercise' },
+      {
         $addFields: {
           dateOfHistoryRecorded: {
             $ifNull: ['$measuredAt', '$createdAt'],
