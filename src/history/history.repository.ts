@@ -64,25 +64,52 @@ export class HistoryRepository extends BaseRepository<History> {
     return this.historySchema.aggregate([
       { $match: { client } },
       {
-        $project: {
+        $addFields: {
           date: {
-            $ifNull: ['$measuredAt', '$createdAt'],
+            $ifNull: [
+              {
+                $dateToString: {
+                  format: '%Y-%m-%d',
+                  date: '$measuredAt',
+                },
+              },
+              {
+                $dateToString: {
+                  format: '%Y-%m-%d',
+                  date: '$createdAt',
+                },
+              },
+            ],
           },
+        },
+      },
+      {
+        $project: {
+          date: 1,
           _id: 0,
         },
       },
       {
         $match: {
           ...(getHistoryDatesDto.date && {
-            $expr: {
-              $eq: [
-                `${
-                  getHistoryDatesDto.date.getMonth() + 1
-                }/${getHistoryDatesDto.date.getFullYear()}`,
-                { $dateToString: { date: '$date', format: '%m/%Y' } },
-              ],
-            },
+            date: getHistoryDatesDto.date.toISOString().slice(0, 10),
           }),
+        },
+      },
+      {
+        $group: {
+          _id: '$date',
+        },
+      },
+      {
+        $project: {
+          date: '$_id',
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          date: 1,
         },
       },
       {

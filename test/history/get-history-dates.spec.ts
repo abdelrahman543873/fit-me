@@ -16,10 +16,12 @@ describe('get history dates suite case', () => {
       url: HISTORY_DATES,
       token: client.token,
     });
-    expect(res.body[0].date).toBe(history.measuredAt.toISOString());
+    expect(res.body[0].date).toBe(
+      history.measuredAt.toISOString().substring(0, 10),
+    );
   });
 
-  it('should history dates in a range successfully', async () => {
+  it('should history dates in a range without duplication successfully', async () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });
     const measuredAt = faker.date.past();
     await historyFactory({ client: client._id, measuredAt });
@@ -34,8 +36,8 @@ describe('get history dates suite case', () => {
       url: `${HISTORY_DATES}?date=${measuredAt}`,
       token: client.token,
     });
-    expect(res.body[0].date).toBe(measuredAt.toISOString());
-    expect(res.body.length).toBe(2);
+    expect(res.body[0].date).toBe(measuredAt.toISOString().substring(0, 10));
+    expect(res.body.length).toBe(1);
   });
 
   it('should history dates and date should be equal to createdAt if measured at is null successfully', async () => {
@@ -50,6 +52,8 @@ describe('get history dates suite case', () => {
       url: HISTORY_DATES,
       token: client.token,
     });
-    expect(res.body[0].date).toBe(seededHistory.createdAt.toISOString());
+    expect(res.body[0].date).toBe(
+      seededHistory.createdAt.toISOString().substring(0, 10),
+    );
   });
 });
