@@ -4,6 +4,7 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsString,
 } from 'class-validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
@@ -26,7 +27,7 @@ export class AddHistoryDto {
   @IsEnum(HISTORY_TYPE)
   type: HISTORY_TYPE;
 
-  @IsInt()
+  @IsNumber()
   @Type(() => Number)
   value: number;
 
