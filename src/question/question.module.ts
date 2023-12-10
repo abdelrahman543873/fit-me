@@ -8,6 +8,7 @@ import { ExistingQuestionValidator } from './validators/existing-question.valida
 import { QuestionOwnerValidator } from './validators/question-owner.validator';
 import { QuestionListener } from './question.listener';
 import { FollowUpQuestionHasFollowUpValidator } from './validators/follow-up-question-has-follow-up.validator';
+import { FormHasQuestionsValidator } from './validators/form-has-questions.validator';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FollowUpQuestionHasFollowUpValidator } from './validators/follow-up-que
     QuestionOwnerValidator,
     QuestionListener,
     FollowUpQuestionHasFollowUpValidator,
+    FormHasQuestionsValidator,
   ],
   controllers: [QuestionController],
 })

@@ -11,6 +11,7 @@ import { formFactory } from '../form/form.factory';
 import { clientProgramFactory } from '../client-program/client-program.factory';
 import { ClientProgramRepo } from '../client-program/client-program.test-repo';
 import { FORM_TYPES } from '../../src/form/form.constants';
+import { questionFactory } from '../question/question.factory';
 
 describe('follow up suite case', () => {
   it('should add follow up successfully', async () => {
@@ -19,6 +20,7 @@ describe('follow up suite case', () => {
       trainer: trainer._id,
       type: FORM_TYPES.FOLLOW_UP,
     });
+    await questionFactory({ form: form._id });
     const params = await buildFollowUpParams({
       trainer: trainer._id,
       form: form._id,
@@ -36,6 +38,27 @@ describe('follow up suite case', () => {
     expect(res.body.status).toBe(FOLLOW_UP_STATUS.REQUESTED);
   });
 
+  it("should fail if form doesn't have questions", async () => {
+    const trainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const form = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.FOLLOW_UP,
+    });
+    const params = await buildFollowUpParams({
+      trainer: trainer._id,
+      form: form._id,
+    });
+    delete params.trainer;
+    delete params.status;
+    const res = await testRequest<AddFollowUpDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: FOLLOW_UP,
+      token: trainer.token,
+      variables: params,
+    });
+    expect(res.body.message).toContain("form doesn't have questions");
+  });
+
   it('should update only last client program with last follow up date', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const client = await clientFactory();
@@ -43,6 +66,7 @@ describe('follow up suite case', () => {
       trainer: trainer._id,
       type: FORM_TYPES.FOLLOW_UP,
     });
+    await questionFactory({ form: form._id });
     const clientProgram = await clientProgramFactory({ client: client._id });
     const moreRecentClientProgram = await clientProgramFactory({
       client: client._id,

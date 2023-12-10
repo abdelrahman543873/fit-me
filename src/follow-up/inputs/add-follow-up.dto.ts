@@ -11,11 +11,13 @@ import { IsExistingClient } from '../../client/validators/existing-client.valida
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
 import { FOLLOW_UP_STATUS } from '../follow-up.constants';
 import { IsFollowUpForm } from '../../form/validators/follow-up-form.validator';
+import { HasQuestions } from '../../question/validators/form-has-questions.validator';
 
 export class AddFollowUpDto {
   @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
   @IsFormOwner()
+  @HasQuestions()
   @IsFollowUpForm()
   @IsExistingForm()
   @IsMongoIdObject()
