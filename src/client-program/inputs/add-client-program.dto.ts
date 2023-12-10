@@ -9,6 +9,7 @@ import { Allow, IsDate } from 'class-validator';
 import { IsProgramOwner } from '../../program/validators/program-owner.validator';
 import { utcStandardDateTransformer } from '../../shared/utils/utc-standard-date-transformer';
 import { arrayUtcStandardDateTransformer } from '../../shared/utils/array-utc-standard-date-transformer';
+import { IsInRangeFollowupDate } from '../validators/in-range-follow-up-dates.validator';
 
 export class AddClientProgramDto {
   @ApiProperty({ type: 'string' })
@@ -33,6 +34,7 @@ export class AddClientProgramDto {
   startDate: Date;
 
   @IsDate({ each: true })
+  @IsInRangeFollowupDate({ each: true })
   @Transform(arrayUtcStandardDateTransformer)
   followUpDates: Date[];
 
