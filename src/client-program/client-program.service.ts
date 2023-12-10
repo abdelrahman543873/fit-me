@@ -21,6 +21,10 @@ export class ClientProgramService {
     );
   }
 
+  getWorkouts(client: ObjectId) {
+    return this.clientProgramRepository.getWorkouts(client);
+  }
+
   filterClientPrograms(
     trainer: ObjectId,
     filterClientProgramDto: FilterClientProgramDto,

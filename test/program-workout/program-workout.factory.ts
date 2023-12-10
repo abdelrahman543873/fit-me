@@ -18,3 +18,14 @@ export const programWorkoutFactory = async (
   const params: Partial<ProgramWorkout> = await buildProgramWorkoutParams(obj);
   return await ProgramWorkoutRepo().add(params);
 };
+
+export const programWorkoutsFactory = async (
+  count = 10,
+  obj: Partial<ProgramWorkout> = {},
+): Promise<ProgramWorkout[]> => {
+  const programWorkouts: ProgramWorkout[] = [];
+  for (let i = 0; i < count; i++) {
+    programWorkouts.push(await buildProgramWorkoutParams(obj));
+  }
+  return await ProgramWorkoutRepo().addMany(programWorkouts);
+};

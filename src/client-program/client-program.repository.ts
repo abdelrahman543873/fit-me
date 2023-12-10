@@ -21,6 +21,47 @@ export class ClientProgramRepository extends BaseRepository<ClientProgram> {
     return this.clientProgramSchema.create(addClientProgramDto);
   }
 
+  getWorkouts(client: ObjectId) {
+    return this.clientProgramSchema.aggregate([
+      {
+        $match: {
+          client,
+        },
+      },
+      {
+        $limit: 1,
+      },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+      {
+        $lookup: {
+          from: 'programworkouts',
+          localField: 'program',
+          foreignField: 'program',
+          as: 'workouts',
+        },
+      },
+      { $project: { workouts: 1 } },
+      { $unwind: '$workouts' },
+      { $replaceRoot: { newRoot: '$workouts' } },
+      { $project: { workout: 1, _id: 0 } },
+      { $project: { _id: '$workout' } },
+      {
+        $lookup: {
+          from: 'workouts',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'workout',
+        },
+      },
+      { $unwind: '$workout' },
+      { $replaceRoot: { newRoot: '$workout' } },
+    ]);
+  }
+
   updateLastFollowUpDate(addedFollowUpEvent: AddedFollowUpEvent) {
     const lastFollowUpDate = new Date();
     lastFollowUpDate.setHours(0, 0, 0, 0);
