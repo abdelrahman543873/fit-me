@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Subscription, SubscriptionSchema } from './subscription.schema';
 import { SubscriptionListener } from './subscription.listener';
 import { SubscriptionRepository } from './subscription.repository';
+import { SubscribedClientValidator } from './validators/subscribed-client.validator';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SubscriptionRepository } from './subscription.repository';
     SubscriptionService,
     SubscriptionListener,
     SubscriptionRepository,
+    SubscribedClientValidator,
   ],
   controllers: [SubscriptionController],
 })

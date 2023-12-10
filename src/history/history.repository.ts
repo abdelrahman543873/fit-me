@@ -119,11 +119,12 @@ export class HistoryRepository extends BaseRepository<History> {
   }
 
   filterHistory(client: ObjectId, filterHistoryDto: FilterHistoryDto) {
-    const { createdAt, measuredAt, ...historyDto } = filterHistoryDto;
+    const { createdAt, measuredAt, user, ...historyDto } = filterHistoryDto;
     return this.historySchema.aggregate([
       {
         $match: {
           client,
+          ...(filterHistoryDto.client && { client: filterHistoryDto.client }),
         },
       },
       {

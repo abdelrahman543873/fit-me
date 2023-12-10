@@ -24,6 +24,7 @@ import { Put } from '@nestjs/common';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 import { UpdateHistoryDto } from './inputs/update-history.dto';
 import { GetHistoryDatesDto } from './inputs/get-history-dates.dto';
+import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
 
 @ApiBearerAuth()
 @ApiTags('history')
@@ -92,6 +93,7 @@ export class HistoryController {
   }
 
   @Get('filter')
+  @UseInterceptors(RequestInBodyInterceptor)
   async filterHistory(
     @Request() request: RequestContext,
     @Query() filterHistoryDto: FilterHistoryDto,
