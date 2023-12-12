@@ -120,6 +120,22 @@ export class SubscriptionRepository extends BaseRepository<Subscription> {
         },
       },
       { $unwind: '$client' },
+      {
+        $addFields: {
+          endDate: {
+            $ifNull: [
+              {
+                $dateAdd: {
+                  startDate: '$approvedAt',
+                  unit: 'month',
+                  amount: '$plan.monthsDuration',
+                },
+              },
+              null,
+            ],
+          },
+        },
+      },
     ]);
   }
 }
