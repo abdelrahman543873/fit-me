@@ -19,7 +19,7 @@ import { ClientProgramModule } from './client-program/client-program.module';
 import { MeasurementModule } from './measurement/measurement.module';
 import { FollowUpModule } from './follow-up/follow-up.module';
 import { HistoryModule } from './history/history.module';
-import { ItemModule } from './item/item.module';
+import { MealModule } from './meal/meal.module';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { ItemModule } from './item/item.module';
     MeasurementModule,
     FollowUpModule,
     HistoryModule,
-    ItemModule,
+    MealModule,
   ],
   controllers: [AppController],
 })

@@ -4,3 +4,7 @@ export enum ITEM_UNITS_ENUM {
   LB = 'LB',
   GM = 'GM',
 }
+export enum MACRO_TYPES {
+  PROTEIN = 'PROTEIN',
+  CARBS = 'CARBS',
+}
