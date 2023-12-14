@@ -20,6 +20,7 @@ import { MeasurementModule } from './measurement/measurement.module';
 import { FollowUpModule } from './follow-up/follow-up.module';
 import { HistoryModule } from './history/history.module';
 import { MealModule } from './meal/meal.module';
+import { DietModule } from './diet/diet.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { MealModule } from './meal/meal.module';
     FollowUpModule,
     HistoryModule,
     MealModule,
+    DietModule,
   ],
   controllers: [AppController],
 })

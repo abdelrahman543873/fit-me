@@ -11,7 +11,7 @@ import { ITEM_UNITS_ENUM, MACRO_TYPES } from '../meal.constants';
 import { Type } from 'class-transformer';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
-class Macro {
+export class Macro {
   @IsEnum(MACRO_TYPES)
   type: MACRO_TYPES;
 

@@ -4,7 +4,7 @@ import { HydratedDocument, ObjectId, Types } from 'mongoose';
 import { ITEM_UNITS_ENUM, MACRO_TYPES } from './meal.constants';
 
 @Schema({ versionKey: false, timestamps: false, _id: false })
-class Macro {
+export class Macro {
   @Prop({ required: true, enum: MACRO_TYPES })
   type: MACRO_TYPES;
 
@@ -12,7 +12,7 @@ class Macro {
   value: number;
 }
 
-const MarcoSchema = SchemaFactory.createForClass(Macro);
+export const MarcoSchema = SchemaFactory.createForClass(Macro);
 
 @Schema({ versionKey: false, timestamps: false, _id: false })
 class Item {
