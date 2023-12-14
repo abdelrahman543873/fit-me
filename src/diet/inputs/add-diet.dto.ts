@@ -22,7 +22,7 @@ export class AddDietDto {
   @IsString()
   notes?: string;
 
-  @ApiProperty({ type: 'array', format: 'string' })
+  @ApiProperty({ isArray: true, type: String })
   @IsExistingMeal({ each: true })
   meals: ObjectId[];
 

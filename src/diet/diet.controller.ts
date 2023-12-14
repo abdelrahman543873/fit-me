@@ -1,10 +1,10 @@
+import { RequestContext } from './../shared/interfaces/request-context.interface';
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { DietService } from './diet.service';
 import { AddDietDto } from './inputs/add-diet.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { USER_ROLE } from '../user/user.constants';
 import { RoleGuard } from '../shared/guards/role.guard';
-import { RequestContext } from '../../dist/shared/interfaces/request-context.interface';
 import { Role } from '../shared/decorators/client.decorator';
 
 @ApiBearerAuth()
