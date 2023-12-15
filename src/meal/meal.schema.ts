@@ -27,6 +27,9 @@ class Item {
 
   @Prop({ required: true, type: String, enum: ITEM_UNITS_ENUM })
   unit: ITEM_UNITS_ENUM;
+
+  @Prop()
+  group?: string;
 }
 
 const ItemSchema = SchemaFactory.createForClass(Item);

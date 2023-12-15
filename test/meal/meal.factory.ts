@@ -28,6 +28,7 @@ export const buildMealParams = async (
         unit: faker.helpers.arrayElement<ITEM_UNITS_ENUM>(
           Object.values(ITEM_UNITS_ENUM),
         ),
+        group: faker.word.noun(),
       },
     ],
   };

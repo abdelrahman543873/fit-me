@@ -29,6 +29,11 @@ class Item {
 
   @IsEnum(ITEM_UNITS_ENUM)
   unit: ITEM_UNITS_ENUM;
+
+  @ValidateIfDefined()
+  @IsString()
+  @IsNotEmpty()
+  group?: string;
 }
 
 export class AddMealDto {
