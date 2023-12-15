@@ -4,7 +4,6 @@ export enum ITEM_UNITS_ENUM {
   LB = 'LB',
   GM = 'GM',
   ML = 'ML',
-  GRAM = 'GRAM',
   PIECE = 'PIECE',
 }
 export enum MACRO_TYPES {
