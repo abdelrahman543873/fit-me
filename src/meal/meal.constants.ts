@@ -3,8 +3,15 @@ export enum ITEM_UNITS_ENUM {
   KG = 'KG',
   LB = 'LB',
   GM = 'GM',
+  ML = 'ML',
+  GRAM = 'GRAM',
+  PIECE = 'PIECE',
 }
 export enum MACRO_TYPES {
   PROTEIN = 'PROTEIN',
   CARBS = 'CARBS',
+  SUGAR = 'SUGAR',
+  FAT = 'FAT',
+  FIBER = 'FIBER',
+  CALORIES = 'CALORIES',
 }
