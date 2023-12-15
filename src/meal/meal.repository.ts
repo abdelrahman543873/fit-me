@@ -3,6 +3,7 @@ import { Meal, MealDocument } from './meal.schema';
 import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddMealDto } from './inputs/add-meal.dto';
+import { UpdateMealDto } from './inputs/update-meal.dto';
 
 export class MealRepository extends BaseRepository<Meal> {
   constructor(
@@ -14,5 +15,13 @@ export class MealRepository extends BaseRepository<Meal> {
 
   addMeal(trainer: ObjectId, addMealDto: AddMealDto) {
     return this.mealSchema.create({ ...addMealDto, trainer });
+  }
+
+  updateMeal(trainer: ObjectId, id: ObjectId, updateMealDto: UpdateMealDto) {
+    return this.mealSchema.findOneAndUpdate(
+      { _id: id, trainer },
+      { ...updateMealDto },
+      { new: true },
+    );
   }
 }
