@@ -13,9 +13,10 @@ import { IsExistingMeal } from '../../meal/validators/existing-meal';
 import { Type } from 'class-transformer';
 
 export class AddDietDto {
+  @ValidateIfDefined()
   @IsNotEmpty()
   @IsString()
-  title: string;
+  title?: string;
 
   @ValidateIfDefined()
   @IsNotEmpty()

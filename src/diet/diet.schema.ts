@@ -19,7 +19,7 @@ export class Diet {
   trainer: ObjectId;
 
   @Prop()
-  title: string;
+  title?: string;
 
   @Prop()
   notes?: string;
