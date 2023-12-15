@@ -8,6 +8,9 @@ export type DietDocument = HydratedDocument<Diet>;
 @Schema({ versionKey: false, timestamps: true, strict: true })
 export class Diet {
   @ApiProperty({ type: 'string' })
+  _id?: ObjectId;
+
+  @ApiProperty({ type: 'string' })
   @Prop({
     type: Types.ObjectId,
     ref: 'User',
