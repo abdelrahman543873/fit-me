@@ -16,6 +16,8 @@ import { ClientProgramRepo } from '../client-program/client-program.test-repo';
 import { FORM_TYPES } from '../../src/form/form.constants';
 import { questionFactory } from '../question/question.factory';
 import { waitForMilliSeconds } from '../utils/wait-for.util';
+import { clientDietFactory } from '../client-diet/client-diet.factory';
+import { ClientDietRepo } from '../client-diet/client-diet.test-repo';
 
 describe('follow up suite case', () => {
   it('should add workout follow up successfully', async () => {
@@ -104,6 +106,47 @@ describe('follow up suite case', () => {
     expect(
       moreRecentClientProgramAfterUpdate.lastFollowUpDate.toISOString(),
     ).not.toBe(moreRecentClientProgram.lastFollowUpDate.toISOString());
+  });
+
+  it('should update only last client diet program with last follow up date', async () => {
+    const trainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const client = await clientFactory();
+    const form = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.FOLLOW_UP,
+    });
+    await questionFactory({ form: form._id });
+    const clientDiet = await clientDietFactory({ client: client._id });
+    const moreRecentClientDiet = await clientDietFactory({
+      client: client._id,
+    });
+    const params = await buildFollowUpParams({
+      trainer: trainer._id,
+      form: form._id,
+      client: client._id,
+      type: FOLLOW_UP_TYPE.DIET_PROGRAM,
+    });
+    delete params.trainer;
+    delete params.status;
+    await testRequest<AddFollowUpDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: FOLLOW_UP,
+      token: trainer.token,
+      variables: params,
+    });
+    await waitForMilliSeconds(100);
+    const clientDietAfterUpdate = await ClientDietRepo().findOne({
+      _id: clientDiet._id,
+    });
+    expect(clientDietAfterUpdate.lastFollowUpDate.toISOString()).toBe(
+      clientDiet.lastFollowUpDate.toISOString(),
+    );
+    const moreRecentClientProgramAfterUpdate = await ClientDietRepo().findOne({
+      _id: moreRecentClientDiet._id,
+    });
+    expect(
+      moreRecentClientProgramAfterUpdate.lastFollowUpDate.toISOString(),
+    ).not.toBe(moreRecentClientDiet.lastFollowUpDate.toISOString());
   });
 
   it('should fail if request maker is a client', async () => {
