@@ -22,6 +22,7 @@ import { HistoryModule } from './history/history.module';
 import { MealModule } from './meal/meal.module';
 import { DietModule } from './diet/diet.module';
 import { ClientDietModule } from './client-diet/client-diet.module';
+import { ObservationModule } from './observation/observation.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { ClientDietModule } from './client-diet/client-diet.module';
     MealModule,
     DietModule,
     ClientDietModule,
+    ObservationModule,
   ],
   controllers: [AppController],
 })
