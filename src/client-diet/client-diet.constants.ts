@@ -1,0 +1,5 @@
+export enum CLIENT_DIET_PROGRAM_STATUS_FIlTER {
+  FUTURE = 'FUTURE',
+  PAST = 'PAST',
+  PRESENT = 'PRESENT',
+}

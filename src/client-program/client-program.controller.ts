@@ -17,6 +17,7 @@ import { FilterClientProgramDto } from './inputs/filter-client-program.dto';
 import { USER_ROLE } from '../user/user.constants';
 import { Role } from '../shared/decorators/client.decorator';
 import { RoleGuard } from '../shared/guards/role.guard';
+import { ClientProgram } from './client-program.schema';
 
 @ApiBearerAuth()
 @ApiTags('client-program')
@@ -26,7 +27,9 @@ export class ClientProgramController {
 
   @Post()
   @UseInterceptors(RequestInBodyInterceptor)
-  async addClientProgram(@Body() addClientProgramDto: AddClientProgramDto) {
+  async addClientProgram(
+    @Body() addClientProgramDto: AddClientProgramDto,
+  ): Promise<ClientProgram> {
     return this.clientProgramService.addClientProgram(addClientProgramDto);
   }
 
