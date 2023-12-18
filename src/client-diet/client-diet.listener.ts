@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { ClientProgramService } from './client-program.service';
 import { FollowUpEvents } from '../follow-up/follow-up.constants';
 import { AddedFollowUpEvent } from '../follow-up/events/added-follow-up';
+import { ClientDietService } from './client-diet.service';
 
 @Injectable()
-export class ClientProgramListener {
-  constructor(private readonly clientProgramService: ClientProgramService) {}
+export class ClientDietListener {
+  constructor(private readonly clientDietService: ClientDietService) {}
 
-  @OnEvent(FollowUpEvents.ADDED_WORKOUT_PROGRAM_FOLLOW_UP)
+  @OnEvent(FollowUpEvents.ADDED_DIET_PROGRAM_FOLLOW_UP)
   async handleAddedFollowUp(addedFollowUpEvent: AddedFollowUpEvent) {
-    await this.clientProgramService.updateLastFollowUpDate(addedFollowUpEvent);
+    await this.clientDietService.updateLastFollowUpDate(addedFollowUpEvent);
   }
 }

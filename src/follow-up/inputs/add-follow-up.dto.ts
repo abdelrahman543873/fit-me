@@ -9,7 +9,7 @@ import { MEASUREMENT_TYPE } from '../../measurement/measurement.constants';
 import { Allow, IsArray, IsEnum, IsIn } from 'class-validator';
 import { IsExistingClient } from '../../client/validators/existing-client.validator';
 import { IsFormOwner } from '../../form/validators/form-owner.validator';
-import { FOLLOW_UP_STATUS } from '../follow-up.constants';
+import { FOLLOW_UP_STATUS, FOLLOW_UP_TYPE } from '../follow-up.constants';
 import { IsFollowUpForm } from '../../form/validators/follow-up-form.validator';
 import { HasQuestions } from '../../question/validators/form-has-questions.validator';
 
@@ -28,6 +28,9 @@ export class AddFollowUpDto {
   @IsArray()
   @IsEnum(MEASUREMENT_TYPE, { each: true })
   measurementTypes?: MEASUREMENT_TYPE[];
+
+  @IsEnum(FOLLOW_UP_TYPE)
+  type: FOLLOW_UP_TYPE;
 
   @ApiProperty({ type: 'string' })
   @IsExistingClient()

@@ -21,6 +21,7 @@ import { FollowUpModule } from './follow-up/follow-up.module';
 import { HistoryModule } from './history/history.module';
 import { MealModule } from './meal/meal.module';
 import { DietModule } from './diet/diet.module';
+import { ClientDietModule } from './client-diet/client-diet.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { DietModule } from './diet/diet.module';
     HistoryModule,
     MealModule,
     DietModule,
+    ClientDietModule,
   ],
   controllers: [AppController],
 })

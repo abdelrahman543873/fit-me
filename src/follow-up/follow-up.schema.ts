@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { HydratedDocument, ObjectId, Types } from 'mongoose';
 import { MEASUREMENT_TYPE } from '../measurement/measurement.constants';
-import { FOLLOW_UP_STATUS } from './follow-up.constants';
+import { FOLLOW_UP_STATUS, FOLLOW_UP_TYPE } from './follow-up.constants';
 
 export type FollowUpDocument = HydratedDocument<FollowUp>;
 
@@ -20,6 +20,9 @@ export class FollowUp {
 
   @Prop({ type: [String], enum: MEASUREMENT_TYPE })
   measurementTypes?: MEASUREMENT_TYPE[];
+
+  @Prop({ type: String, enum: FOLLOW_UP_TYPE })
+  type: FOLLOW_UP_TYPE;
 
   @ApiProperty({ type: 'string' })
   @Prop({

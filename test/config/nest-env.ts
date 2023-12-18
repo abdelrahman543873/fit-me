@@ -19,6 +19,7 @@ import { FollowUpRepository } from '../../src/follow-up/follow-up.repository';
 import { HistoryRepository } from '../../src/history/history.repository';
 import { MealRepository } from '../../src/meal/meal.repository';
 import { DietRepository } from '../../src/diet/diet.repository';
+import { ClientDietRepository } from '../../src/client-diet/client-diet.repository';
 
 class MongoEnvironment extends NodeEnvironment {
   constructor(config, context) {
@@ -67,6 +68,8 @@ class MongoEnvironment extends NodeEnvironment {
       app.get<HistoryRepository>(HistoryRepository);
     this.global.mealRepository = app.get<MealRepository>(MealRepository);
     this.global.dietRepository = app.get<DietRepository>(DietRepository);
+    this.global.clientDietRepository =
+      app.get<ClientDietRepository>(ClientDietRepository);
   }
 
   async teardown() {
