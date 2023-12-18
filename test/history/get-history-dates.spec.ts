@@ -24,6 +24,7 @@ describe('get history dates suite case', () => {
   it('should history dates in a range without duplication successfully', async () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });
     const measuredAt = faker.date.past();
+    // making sure that the dates will be returned without duplication
     await historyFactory({ client: client._id, measuredAt });
     await historyFactory({ client: client._id, measuredAt });
     //a history outside the date range

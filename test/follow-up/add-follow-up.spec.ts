@@ -1,5 +1,8 @@
 import { clientFactory } from './../client/client.factory';
-import { FOLLOW_UP_STATUS } from './../../src/follow-up/follow-up.constants';
+import {
+  FOLLOW_UP_STATUS,
+  FOLLOW_UP_TYPE,
+} from './../../src/follow-up/follow-up.constants';
 import { testRequest } from '../config/request';
 import { HTTP_METHODS_ENUM } from '../config/request.methods.enum';
 import { USER_ROLE } from '../../src/user/user.constants';
@@ -12,9 +15,10 @@ import { clientProgramFactory } from '../client-program/client-program.factory';
 import { ClientProgramRepo } from '../client-program/client-program.test-repo';
 import { FORM_TYPES } from '../../src/form/form.constants';
 import { questionFactory } from '../question/question.factory';
+import { waitForMilliSeconds } from '../utils/wait-for.util';
 
 describe('follow up suite case', () => {
-  it('should add follow up successfully', async () => {
+  it('should add workout follow up successfully', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const form = await formFactory({
       trainer: trainer._id,
@@ -24,6 +28,7 @@ describe('follow up suite case', () => {
     const params = await buildFollowUpParams({
       trainer: trainer._id,
       form: form._id,
+      type: FOLLOW_UP_TYPE.WORKOUT_PROGRAM,
     });
     delete params.trainer;
     delete params.status;
@@ -59,7 +64,7 @@ describe('follow up suite case', () => {
     expect(res.body.message).toContain("form doesn't have questions");
   });
 
-  it('should update only last client program with last follow up date', async () => {
+  it('should update only last client workout program with last follow up date', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const client = await clientFactory();
     const form = await formFactory({
@@ -75,6 +80,7 @@ describe('follow up suite case', () => {
       trainer: trainer._id,
       form: form._id,
       client: client._id,
+      type: FOLLOW_UP_TYPE.WORKOUT_PROGRAM,
     });
     delete params.trainer;
     delete params.status;
@@ -84,6 +90,7 @@ describe('follow up suite case', () => {
       token: trainer.token,
       variables: params,
     });
+    await waitForMilliSeconds(100);
     const clientProgramAfterUpdate = await ClientProgramRepo().findOne({
       _id: clientProgram._id,
     });

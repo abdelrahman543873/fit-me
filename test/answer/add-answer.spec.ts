@@ -44,7 +44,7 @@ describe('add answer suite case', () => {
     });
     expect(res.body.text).toBe(params.text);
     expect(res.body.text).toBe(params.text);
-    await waitForMilliSeconds(10);
+    await waitForMilliSeconds(100);
     const subscriptionAfterFormCompletion = await SubscriptionRepo().findOne({
       _id: subscription._id,
     });
@@ -91,7 +91,7 @@ describe('add answer suite case', () => {
     });
     expect(res.body.text).toBe(params.text);
     expect(res.body.text).toBe(params.text);
-    await waitForMilliSeconds(10);
+    await waitForMilliSeconds(100);
     const subscriptionAfterFormCompletion = await SubscriptionRepo().findOne({
       _id: subscription._id,
     });

@@ -6,7 +6,10 @@ import { FollowUpRepo } from './follow-up.test-repo';
 import { faker } from '@faker-js/faker';
 import { MEASUREMENT_TYPE } from '../../src/measurement/measurement.constants';
 import { formFactory } from '../form/form.factory';
-import { FOLLOW_UP_STATUS } from '../../src/follow-up/follow-up.constants';
+import {
+  FOLLOW_UP_STATUS,
+  FOLLOW_UP_TYPE,
+} from '../../src/follow-up/follow-up.constants';
 
 export const buildFollowUpParams = async (
   obj: Partial<FollowUp> = {},
@@ -21,6 +24,9 @@ export const buildFollowUpParams = async (
       ),
     ],
     form: obj.form || (await formFactory())._id,
+    type:
+      obj.type ||
+      faker.helpers.arrayElement<FOLLOW_UP_TYPE>(Object.values(FOLLOW_UP_TYPE)),
     status:
       obj.status ||
       faker.helpers.arrayElement<FOLLOW_UP_STATUS>(
