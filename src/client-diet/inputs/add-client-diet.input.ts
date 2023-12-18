@@ -25,14 +25,17 @@ export class AddClientDietDto {
   @Transform(objectIdTransformer)
   diet: ObjectId;
 
+  @ApiProperty({ type: 'string', format: 'date' })
   @IsDate()
   @Transform(utcStandardDateTransformer)
   endDate: Date;
 
+  @ApiProperty({ type: 'string', format: 'date' })
   @IsDate()
   @Type(() => Date)
   startDate: Date;
 
+  @ApiProperty({ isArray: true, type: 'string', format: 'date' })
   @IsDate({ each: true })
   @IsInRangeFollowupDate({ each: true })
   @Transform(arrayUtcStandardDateTransformer)
