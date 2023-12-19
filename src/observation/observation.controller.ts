@@ -3,7 +3,9 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
+  Put,
   Query,
   Request,
   UseGuards,
@@ -17,6 +19,8 @@ import { RoleGuard } from '../shared/guards/role.guard';
 import { USER_ROLE } from '../user/user.constants';
 import { Role } from '../shared/decorators/client.decorator';
 import { FilterObservationsDto } from './inputs/filter-observations.input';
+import { UpdateObservationDto } from './inputs/update-observation.input';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @ApiBearerAuth()
 @ApiTags('observation')
@@ -49,6 +53,22 @@ export class ObservationController {
     return await this.observationService.filterObservations(
       request.user._id,
       filterObservationsDto,
+    );
+  }
+
+  @Put(':id')
+  @UseGuards(RoleGuard)
+  @Role(USER_ROLE.TRAINER)
+  @UseInterceptors(RequestInBodyInterceptor)
+  async updateObservation(
+    @Request() request: RequestContext,
+    @Body() updateObservationDto: UpdateObservationDto,
+    @Param() observation: MongoIdDto,
+  ) {
+    return await this.observationService.updateObservation(
+      observation.id,
+      request.user._id,
+      updateObservationDto,
     );
   }
 }

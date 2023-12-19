@@ -3,6 +3,7 @@ import { ObservationRepository } from './observation.repository';
 import { AddObservationDto } from './inputs/add-observation.input';
 import { ObjectId } from 'mongoose';
 import { FilterObservationsDto } from './inputs/filter-observations.input';
+import { UpdateObservationDto } from './inputs/update-observation.input';
 
 @Injectable()
 export class ObservationService {
@@ -21,6 +22,18 @@ export class ObservationService {
     return this.observationRepository.filterObservations(
       trainer,
       filterObservationsDto,
+    );
+  }
+
+  updateObservation(
+    id: ObjectId,
+    trainer: ObjectId,
+    updateObservationDto: UpdateObservationDto,
+  ) {
+    return this.observationRepository.updateObservation(
+      id,
+      trainer,
+      updateObservationDto,
     );
   }
 }
