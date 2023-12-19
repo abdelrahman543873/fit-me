@@ -2,7 +2,9 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Request,
   UseGuards,
   UseInterceptors,
@@ -14,6 +16,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RoleGuard } from '../shared/guards/role.guard';
 import { USER_ROLE } from '../user/user.constants';
 import { Role } from '../shared/decorators/client.decorator';
+import { FilterObservationsDto } from './inputs/filter-observations.input';
 
 @ApiBearerAuth()
 @ApiTags('observation')
@@ -32,6 +35,20 @@ export class ObservationController {
     return this.observationService.addObservation(
       request.user._id,
       addObservationDto,
+    );
+  }
+
+  @Get('filter')
+  @UseGuards(RoleGuard)
+  @Role(USER_ROLE.TRAINER)
+  @UseInterceptors(RequestInBodyInterceptor)
+  async filterObservations(
+    @Request() request: RequestContext,
+    @Query() filterObservationsDto: FilterObservationsDto,
+  ) {
+    return await this.observationService.filterObservations(
+      request.user._id,
+      filterObservationsDto,
     );
   }
 }

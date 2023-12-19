@@ -4,6 +4,7 @@ import { Observation, ObservationDocument } from './observation.schema';
 import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { AddObservationDto } from './inputs/add-observation.input';
+import { FilterObservationsDto } from './inputs/filter-observations.input';
 
 @Injectable()
 export class ObservationRepository extends BaseRepository<Observation> {
@@ -16,5 +17,13 @@ export class ObservationRepository extends BaseRepository<Observation> {
 
   addObservation(trainer: ObjectId, addObservationDto: AddObservationDto) {
     return this.observationSchema.create({ ...addObservationDto, trainer });
+  }
+
+  filterObservations(
+    trainer: ObjectId,
+    filterObservationsDto: FilterObservationsDto,
+  ) {
+    delete filterObservationsDto.user;
+    return this.observationSchema.find({ ...filterObservationsDto, trainer });
   }
 }
