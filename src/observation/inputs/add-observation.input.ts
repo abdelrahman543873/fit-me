@@ -17,9 +17,11 @@ export class AddObservationDto {
   @Transform(objectIdTransformer)
   client: ObjectId;
 
+  @ApiProperty({ type: 'string', enum: OBSERVATION_TYPE })
   @IsEnum(OBSERVATION_TYPE)
   type: OBSERVATION_TYPE;
 
+  @ApiProperty({ type: 'string' })
   @ValidateIfDefined()
   @IsNotEmpty()
   @IsString()
