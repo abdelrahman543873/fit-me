@@ -36,4 +36,8 @@ export class ObservationService {
       updateObservationDto,
     );
   }
+
+  deleteObservation(id: ObjectId, trainer: ObjectId) {
+    return this.observationRepository.deleteObservation(id, trainer);
+  }
 }

@@ -2,6 +2,7 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -69,6 +70,20 @@ export class ObservationController {
       observation.id,
       request.user._id,
       updateObservationDto,
+    );
+  }
+
+  @Delete(':id')
+  @UseGuards(RoleGuard)
+  @Role(USER_ROLE.TRAINER)
+  @UseInterceptors(RequestInBodyInterceptor)
+  async deleteObservation(
+    @Request() request: RequestContext,
+    @Param() observation: MongoIdDto,
+  ) {
+    return await this.observationService.deleteObservation(
+      observation.id,
+      request.user._id,
     );
   }
 }

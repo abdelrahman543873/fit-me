@@ -40,4 +40,8 @@ export class ObservationRepository extends BaseRepository<Observation> {
       { new: true },
     );
   }
+
+  deleteObservation(id: ObjectId, trainer: ObjectId) {
+    return this.observationSchema.findOneAndDelete({ _id: id, trainer });
+  }
 }
