@@ -15,4 +15,8 @@ export class DietService {
   updateDiet(id: ObjectId, trainer: ObjectId, updateDietDto: UpdateDietDto) {
     return this.dietRepository.updateDiet(id, trainer, updateDietDto);
   }
+
+  getDiet(id: ObjectId, trainer: ObjectId) {
+    return this.dietRepository.getDiet(id, trainer);
+  }
 }

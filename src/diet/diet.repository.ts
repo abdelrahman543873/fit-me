@@ -24,4 +24,8 @@ export class DietRepository extends BaseRepository<Diet> {
       { new: true },
     );
   }
+
+  getDiet(id: ObjectId, trainer: ObjectId) {
+    return this.dietSchema.findOne({ _id: id, trainer });
+  }
 }

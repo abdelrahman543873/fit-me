@@ -16,6 +16,7 @@ import { RoleGuard } from '../shared/guards/role.guard';
 import { Role } from '../shared/decorators/client.decorator';
 import { UpdateDietDto } from './inputs/update-diet.dto';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
+import { Get } from '@nestjs/common';
 
 @ApiBearerAuth()
 @ApiTags('diet')
@@ -45,6 +46,14 @@ export class DietController {
       id.id,
       request.user._id,
       updateDietDto,
+    );
+  }
+
+  @Get(':id')
+  async getDiet(@Request() request: RequestContext, @Param() diet: MongoIdDto) {
+    return await this.dietService.getDiet(
+      diet.id,
+      request.trainerId || request.user._id,
     );
   }
 }
