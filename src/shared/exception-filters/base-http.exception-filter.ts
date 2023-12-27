@@ -17,12 +17,20 @@ export class BaseHttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<RequestContext>();
     const response = ctx.getResponse<Response>();
     const statusCode = exception.getStatus();
+    console.log(
+      getLocalizedMessage(
+        statusCode,
+        request.headers['accept-language'] as LANGUAGE,
+      ),
+    );
     response.status(statusCode).json({
       isSuccess: false,
       statusCode,
       message: getLocalizedMessage(
         statusCode,
-        (request.headers['accept-language'] as LANGUAGE) || LANGUAGE.EN,
+        request.headers['accept-language']
+          .substring(0, 2)
+          .toLocaleUpperCase() as LANGUAGE,
       ),
     });
   }
