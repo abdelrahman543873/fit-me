@@ -28,9 +28,11 @@ export class BaseHttpExceptionFilter implements ExceptionFilter {
       statusCode,
       message: getLocalizedMessage(
         statusCode,
-        request.headers['accept-language']
-          .substring(0, 2)
-          .toLocaleUpperCase() as LANGUAGE,
+        (request.headers['accept-language']
+          ? request.headers['accept-language']
+              .substring(0, 2)
+              .toLocaleUpperCase()
+          : LANGUAGE.EN) as LANGUAGE,
       ),
     });
   }
