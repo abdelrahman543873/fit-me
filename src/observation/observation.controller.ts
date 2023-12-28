@@ -16,7 +16,7 @@ import {
 import { ObservationService } from './observation.service';
 import { AddObservationDto } from './inputs/add-observation.input';
 import { RequestInBodyInterceptor } from '../shared/interceptors/request-in-body.interceptor';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { RoleGuard } from '../shared/guards/role.guard';
 import { USER_ROLE } from '../user/user.constants';
 import { Role } from '../shared/decorators/client.decorator';
@@ -32,6 +32,7 @@ export class ObservationController {
   constructor(private readonly observationService: ObservationService) {}
 
   @Post()
+  @ApiConsumes('multipart/form-data')
   @UseGuards(RoleGuard)
   @Role(USER_ROLE.TRAINER)
   @UseInterceptors(RequestInBodyInterceptor)
