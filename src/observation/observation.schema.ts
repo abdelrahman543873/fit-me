@@ -26,6 +26,9 @@ export class Observation {
 
   @Prop({ type: String })
   title: string;
+
+  @Prop({ type: [String] })
+  media?: string[];
 }
 
 export const ObservationSchema = SchemaFactory.createForClass(Observation);
