@@ -18,6 +18,7 @@ export const buildObservationParams = async (
       ),
     trainer:
       obj.trainer || (await userFactory({ role: USER_ROLE.TRAINER }))._id,
+    title: obj.title || faker.commerce.productName(),
   };
 };
 

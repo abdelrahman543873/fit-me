@@ -8,10 +8,15 @@ import { UpdateObservationDto } from './inputs/update-observation.input';
 @Injectable()
 export class ObservationService {
   constructor(private readonly observationRepository: ObservationRepository) {}
-  addObservation(trainer: ObjectId, addObservationDto: AddObservationDto) {
+  addObservation(
+    trainer: ObjectId,
+    addObservationDto: AddObservationDto,
+    media?: Array<Express.Multer.File>,
+  ) {
     return this.observationRepository.addObservation(
       trainer,
       addObservationDto,
+      media,
     );
   }
 

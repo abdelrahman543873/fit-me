@@ -16,8 +16,20 @@ export class ObservationRepository extends BaseRepository<Observation> {
     super(observationSchema);
   }
 
-  addObservation(trainer: ObjectId, addObservationDto: AddObservationDto) {
-    return this.observationSchema.create({ ...addObservationDto, trainer });
+  addObservation(
+    trainer: ObjectId,
+    addObservationDto: AddObservationDto,
+    media?: Array<Express.Multer.File>,
+  ) {
+    return this.observationSchema.create({
+      ...addObservationDto,
+      trainer,
+      ...(media && {
+        media: media.map((mediaItem) => {
+          return `${process.env.HOST}${mediaItem.filename}`;
+        }),
+      }),
+    });
   }
 
   filterObservations(

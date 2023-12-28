@@ -23,6 +23,9 @@ export class Observation {
 
   @Prop({ type: String })
   note?: string;
+
+  @Prop({ type: String })
+  title: string;
 }
 
 export const ObservationSchema = SchemaFactory.createForClass(Observation);

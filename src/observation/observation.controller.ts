@@ -9,6 +9,7 @@ import {
   Put,
   Query,
   Request,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,6 +23,7 @@ import { Role } from '../shared/decorators/client.decorator';
 import { FilterObservationsDto } from './inputs/filter-observations.input';
 import { UpdateObservationDto } from './inputs/update-observation.input';
 import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiBearerAuth()
 @ApiTags('observation')
@@ -33,13 +35,16 @@ export class ObservationController {
   @UseGuards(RoleGuard)
   @Role(USER_ROLE.TRAINER)
   @UseInterceptors(RequestInBodyInterceptor)
+  @UseInterceptors(FilesInterceptor('media'))
   async addObservation(
     @Request() request: RequestContext,
     @Body() addObservationDto: AddObservationDto,
+    @UploadedFiles() media?: Array<Express.Multer.File>,
   ) {
     return this.observationService.addObservation(
       request.user._id,
       addObservationDto,
+      media,
     );
   }
 

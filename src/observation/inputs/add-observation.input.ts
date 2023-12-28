@@ -5,7 +5,7 @@ import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { ObjectId } from 'mongoose';
 import { OBSERVATION_TYPE } from '../observation.constants';
-import { Allow, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { Allow, ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { IsClientSubscribed } from '../../subscription/validators/subscribed-client.validator';
 
@@ -27,6 +27,20 @@ export class AddObservationDto {
   @IsString()
   note?: string;
 
+  @ApiProperty({ type: 'string' })
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
   @Allow()
   user?;
+
+  @ApiProperty({ isArray: true, type: String, format: 'binary' })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  @ArrayNotEmpty()
+  @Transform(({ value }) => (Array.isArray(value) ? value : Array(value)))
+  @Allow()
+  media?: string[];
 }
