@@ -34,11 +34,13 @@ export class ObservationService {
     id: ObjectId,
     trainer: ObjectId,
     updateObservationDto: UpdateObservationDto,
+    media?: Array<Express.Multer.File>,
   ) {
     return this.observationRepository.updateObservation(
       id,
       trainer,
       updateObservationDto,
+      media,
     );
   }
 

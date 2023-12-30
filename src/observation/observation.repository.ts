@@ -44,11 +44,19 @@ export class ObservationRepository extends BaseRepository<Observation> {
     id: ObjectId,
     trainer: ObjectId,
     updateObservationDto: UpdateObservationDto,
+    media?: Array<Express.Multer.File>,
   ) {
     delete updateObservationDto.user;
     return this.observationSchema.findOneAndUpdate(
       { trainer, _id: id },
-      { ...updateObservationDto },
+      {
+        ...updateObservationDto,
+        ...(media && {
+          media: media.map((mediaItem) => {
+            return `${process.env.HOST}${mediaItem.filename}`;
+          }),
+        }),
+      },
       { new: true },
     );
   }

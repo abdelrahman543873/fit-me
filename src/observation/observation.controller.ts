@@ -64,18 +64,22 @@ export class ObservationController {
   }
 
   @Put(':id')
+  @ApiConsumes('multipart/form-data')
   @UseGuards(RoleGuard)
   @Role(USER_ROLE.TRAINER)
   @UseInterceptors(RequestInBodyInterceptor)
+  @UseInterceptors(FilesInterceptor('media'))
   async updateObservation(
     @Request() request: RequestContext,
     @Body() updateObservationDto: UpdateObservationDto,
     @Param() observation: MongoIdDto,
+    @UploadedFiles() media?: Array<Express.Multer.File>,
   ) {
     return await this.observationService.updateObservation(
       observation.id,
       request.user._id,
       updateObservationDto,
+      media,
     );
   }
 
