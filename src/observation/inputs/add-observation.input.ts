@@ -5,7 +5,15 @@ import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { ObjectId } from 'mongoose';
 import { OBSERVATION_TYPE } from '../observation.constants';
-import { Allow, ArrayNotEmpty, IsArray, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  Allow,
+  ArrayNotEmpty,
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 import { IsClientSubscribed } from '../../subscription/validators/subscribed-client.validator';
 

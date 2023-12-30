@@ -22,9 +22,11 @@ describe('update observation suite case', () => {
     const res = await testRequest<UpdateObservationDto>({
       method: HTTP_METHODS_ENUM.PUT,
       url: `${OBSERVATION}/${observation._id.toString()}`,
-      variables: params,
+      variables: { ...params, client: params.client.toString() as any },
       token: trainer.token,
+      fileParam: 'media',
     });
-    expect(res.body.note).toBe(params.note);
+    expect(res.body.client).toBe(params.client.toString());
+    expect(res.body.media[0]).toContain('jpeg');
   });
 });

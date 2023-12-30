@@ -18,9 +18,11 @@ describe('add observation suite case', () => {
     const res = await testRequest<AddObservationDto>({
       method: HTTP_METHODS_ENUM.POST,
       url: OBSERVATION,
-      variables: params,
+      variables: { ...params, client: params.client.toString() as any },
       token: trainer.token,
+      fileParam: 'media',
     });
     expect(res.body.note).toBe(params.note);
+    expect(res.body.media[0]).toContain('jpeg');
   });
 });
