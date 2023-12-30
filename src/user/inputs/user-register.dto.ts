@@ -16,7 +16,7 @@ import { IsExistingTrainer } from '../validators/existing-trainer.validator';
 import { IsExistingPhoneNumber } from '../validators/existing-phone-number.validator';
 import { IsExistingEmail } from '../validators/existing-email.validator';
 import { ObjectId } from 'mongoose';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
 import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
@@ -46,6 +46,11 @@ export class UserRegisterDto {
   @IsNotEmpty()
   @IsPhoneNumber()
   phoneNumber: string;
+
+  @ValidateIfDefined()
+  @IsString()
+  @IsNotEmpty()
+  fcmToken?: string;
 
   @IsOptional()
   @ApiProperty({ type: 'string', format: 'binary' })

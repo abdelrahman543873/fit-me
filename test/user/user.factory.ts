@@ -22,6 +22,7 @@ export const buildUserParams = (obj: Partial<User> = {}) => {
       obj.gender ||
       faker.helpers.arrayElement<USER_GENDER>(Object.values(USER_GENDER)),
     birthday: obj.birthday || faker.date.past(),
+    fcmToken: obj.fcmToken || faker.string.alphanumeric(),
   };
 };
 

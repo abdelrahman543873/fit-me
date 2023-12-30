@@ -40,6 +40,9 @@ export class User {
   @Prop()
   birthday?: Date;
 
+  @Prop()
+  fcmToken?: string;
+
   token?: string;
 }
 
