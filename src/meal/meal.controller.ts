@@ -3,6 +3,7 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Get,
   Param,
   Post,
   Put,
@@ -16,6 +17,8 @@ import { RoleGuard } from '../shared/guards/role.guard';
 import { AddMealDto } from './inputs/add-meal.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateMealDto } from './inputs/update-meal.dto';
+import { GetMealsListDto } from './inputs/get-meals.list.dto';
+import { Query } from '@nestjs/common';
 
 @ApiTags('meal')
 @ApiBearerAuth()
@@ -46,5 +49,10 @@ export class MealController {
       id.id,
       updateMealDto,
     );
+  }
+
+  @Get('list')
+  async getMealsList(@Query() getMealsListDto: GetMealsListDto) {
+    return await this.mealService.getMealsList(getMealsListDto);
   }
 }

@@ -3,6 +3,7 @@ import { MealRepository } from './meal.repository';
 import { AddMealDto } from './inputs/add-meal.dto';
 import { ObjectId } from 'mongoose';
 import { UpdateMealDto } from './inputs/update-meal.dto';
+import { GetMealsListDto } from './inputs/get-meals.list.dto';
 
 @Injectable()
 export class MealService {
@@ -14,5 +15,9 @@ export class MealService {
 
   updateMeal(trainer: ObjectId, id: ObjectId, updateMealDto: UpdateMealDto) {
     return this.mealRepository.updateMeal(trainer, id, updateMealDto);
+  }
+
+  getMealsList(getMealsListDto: GetMealsListDto) {
+    return this.mealRepository.getMealsList(getMealsListDto);
   }
 }
