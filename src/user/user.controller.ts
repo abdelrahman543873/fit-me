@@ -1,7 +1,10 @@
+import { RequestContext } from './../shared/interfaces/request-context.interface';
 import {
   Body,
   Controller,
   Post,
+  Put,
+  Request,
   UploadedFile,
   UseInterceptors,
   UsePipes,
@@ -25,6 +28,11 @@ export class UserController {
   @Post('login')
   async login(@Body() userLoginDto: UserLoginDto): Promise<User> {
     return await this.userService.login(userLoginDto);
+  }
+
+  @Put('logout')
+  async logout(@Request() request: RequestContext) {
+    return await this.userService.logout(request.user.phoneNumber);
   }
 
   @ApiConsumes('multipart/form-data')

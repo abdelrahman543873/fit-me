@@ -1,4 +1,11 @@
-import { IsPhoneNumber, MaxLength, MinLength } from 'class-validator';
+import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
+import {
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class UserLoginDto {
   @IsPhoneNumber()
@@ -7,4 +14,9 @@ export class UserLoginDto {
   @MinLength(8)
   @MaxLength(256)
   password: string;
+
+  @ValidateIfDefined()
+  @IsNotEmpty()
+  @IsString()
+  fcmToken?: string;
 }

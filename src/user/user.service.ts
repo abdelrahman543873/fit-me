@@ -27,11 +27,22 @@ export class UserService {
     );
     if (!passwordValidation) throw new BaseHttpException(601);
     const authenticatedUser = user.toJSON();
+    await this.userRepository.updateUserFcmTokenByPhoneNumber(
+      userLoginDto.phoneNumber,
+      userLoginDto.fcmToken,
+    );
     authenticatedUser.token = this.jwtService.sign({
       _id: user._id,
     });
     delete authenticatedUser.password;
     return authenticatedUser;
+  }
+
+  async logout(phoneNumber: string) {
+    return await this.userRepository.updateUserFcmTokenByPhoneNumber(
+      phoneNumber,
+      null,
+    );
   }
 
   async register(

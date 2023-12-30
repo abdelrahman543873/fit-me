@@ -22,6 +22,14 @@ export class UserRepository extends BaseRepository<User> {
       .select('+password');
   }
 
+  updateUserFcmTokenByPhoneNumber(phoneNumber: string, fcmToken: string) {
+    return this.userSchema.findOneAndUpdate(
+      { phoneNumber },
+      { fcmToken },
+      { new: true },
+    );
+  }
+
   register(
     userRegisterDto: UserRegisterDto,
     profilePicture?: Express.Multer.File,
