@@ -1,5 +1,7 @@
 FROM node:18
 
+COPY . .
+
 RUN yarn
 
 EXPOSE 3000
