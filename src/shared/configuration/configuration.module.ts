@@ -7,6 +7,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { JwtModule } from '@nestjs/jwt';
+import { MulterModule } from '@nestjs/platform-express';
+import { multerStorageDetector } from '../utils/multer-storage-detector';
 @Global()
 @Module({
   imports: [
@@ -32,6 +34,12 @@ import { JwtModule } from '@nestjs/jwt';
       }),
       inject: [ConfigService],
     }),
+    MulterModule.registerAsync({
+      useFactory: async (configService: ConfigService) => ({
+        storage: multerStorageDetector(configService),
+      }),
+      inject: [ConfigService],
+    }),
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>(ENV_VARIABLE_NAMES.JWT_SECRET),
@@ -45,6 +53,6 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     EventEmitterModule.forRoot(),
   ],
-  exports: [JwtModule],
+  exports: [JwtModule, MulterModule],
 })
 export class ConfigurationModule {}

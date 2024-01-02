@@ -26,7 +26,7 @@ export class HistoryRepository extends BaseRepository<History> {
       ...addHistoryDto,
       client,
       ...(media && {
-        media: `${process.env.HOST}${media.filename}`,
+        media: media['location'] || `${process.env.HOST}${media.filename}`,
       }),
     });
   }
@@ -46,7 +46,7 @@ export class HistoryRepository extends BaseRepository<History> {
         _id: id,
         ...addHistoryDto,
         ...(media && {
-          media: `${process.env.HOST}${media.filename}`,
+          media: media['location'] || `${process.env.HOST}${media.filename}`,
         }),
       },
       { new: true },

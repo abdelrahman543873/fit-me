@@ -38,7 +38,9 @@ export class UserRepository extends BaseRepository<User> {
       ...userRegisterDto,
       password: hashPassSync(userRegisterDto.password),
       ...(profilePicture && {
-        profilePicture: `${process.env.HOST}${profilePicture.filename}`,
+        profilePicture:
+          profilePicture['location'] ||
+          `${process.env.HOST}${profilePicture.filename}`,
       }),
     });
   }

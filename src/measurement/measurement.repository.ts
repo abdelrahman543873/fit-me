@@ -25,7 +25,7 @@ export class MeasurementRepository extends BaseRepository<Measurement> {
       ...addMeasurementDto,
       client,
       ...(media && {
-        media: `${process.env.HOST}${media.filename}`,
+        media: media['location'] || `${process.env.HOST}${media.filename}`,
       }),
     });
   }

@@ -85,7 +85,7 @@ export class AnswerRepository extends BaseRepository<Answer> {
       client,
       ...addAnswerDto,
       ...(media && {
-        media: `${process.env.HOST}${media.filename}`,
+        media: media['location'] || `${process.env.HOST}${media.filename}`,
       }),
     });
   }

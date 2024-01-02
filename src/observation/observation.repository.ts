@@ -53,7 +53,10 @@ export class ObservationRepository extends BaseRepository<Observation> {
         ...updateObservationDto,
         ...(media && {
           media: media.map((mediaItem) => {
-            return `${process.env.HOST}${mediaItem.filename}`;
+            return (
+              mediaItem['location'] ||
+              `${process.env.HOST}${mediaItem.filename}`
+            );
           }),
         }),
       },
