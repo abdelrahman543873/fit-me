@@ -27,6 +27,6 @@ export class MealRepository extends BaseRepository<Meal> {
   }
 
   getMealsList(getMealsListDto: GetMealsListDto) {
-    return this.mealSchema.find({ _id: { $in: getMealsListDto.mealsIds } });
+    return this.mealSchema.find({ ...getMealsListDto });
   }
 }

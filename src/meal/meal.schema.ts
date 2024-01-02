@@ -60,6 +60,14 @@ export class Meal {
 
   @Prop({ type: [ItemSchema], required: true })
   items: Item[];
+
+  @ApiProperty({ type: 'string' })
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'Diet',
+    required: true,
+  })
+  diet: ObjectId;
 }
 
 export const MealSchema = SchemaFactory.createForClass(Meal);

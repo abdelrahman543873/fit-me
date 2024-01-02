@@ -8,8 +8,13 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ITEM_UNITS_ENUM, MACRO_TYPES } from '../meal.constants';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsExistingDiet } from '../../diet/validators/existing-diet.validator';
+import { IsMongoIdObject } from '../../shared/validators/mongo-id-object.validator';
+import { objectIdTransformer } from '../../shared/utils/objectid-transformer';
+import { ObjectId } from 'mongoose';
 
 export class Macro {
   @IsEnum(MACRO_TYPES)
@@ -58,4 +63,10 @@ export class AddMealDto {
   @ValidateNested({ each: true })
   @Type(() => Item)
   items: Item[];
+
+  @ApiProperty({ type: 'string' })
+  @IsExistingDiet()
+  @IsMongoIdObject()
+  @Transform(objectIdTransformer)
+  diet: ObjectId;
 }

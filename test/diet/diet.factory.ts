@@ -13,7 +13,7 @@ export const buildDietParams = async (
     trainer:
       obj.trainer || (await userFactory({ role: USER_ROLE.TRAINER }))._id,
     title: obj.title || faker.word.noun(),
-    meals: obj.meals || [(await mealFactory())._id],
+    meals: obj.meals || [],
     notes: obj.notes || faker.commerce.productDescription(),
     macros: obj.macros || [
       {

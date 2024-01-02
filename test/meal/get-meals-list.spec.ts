@@ -14,7 +14,7 @@ describe('meals list suite case', () => {
       method: HTTP_METHODS_ENUM.GET,
       url: MEALS_LIST,
       token: trainer.token,
-      params: { mealsIds: [meal._id.toString()] as any },
+      params: { diet: meal.diet.toString() as any },
     });
     expect(res.body[0]._id).toBe(meal._id.toString());
   });
