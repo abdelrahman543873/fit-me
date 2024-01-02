@@ -1,4 +1,6 @@
-FROM --platform=linux/amd64 node:18
+ARG node_image
+
+FROM $node_image
 
 COPY . .
 

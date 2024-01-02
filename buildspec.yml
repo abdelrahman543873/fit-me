@@ -6,11 +6,12 @@ phases:
       - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
       - IMAGE_URI="${REPOSITORY_URI}:latest"
       - LOGIN="193733620535.dkr.ecr.${AWS_REGION}.amazonaws.com"
+      - NODE_IMAGE="node_image=${NODE_IMAGE}"
       - NODE_ENV="NODE_ENV=${NODE_ENV}"
   build:
     commands:
       - docker login --username AWS --password "$PASSWORD" "$LOGIN"
-      - docker build --tag "$IMAGE_URI" . --build-arg "$NODE_ENV"
+      - docker build --tag "$IMAGE_URI" . --build-arg "$NODE_ENV" --build-arg "$NODE_IMAGE"
   post_build:
     commands:
       - docker push "$IMAGE_URI"
