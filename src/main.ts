@@ -12,8 +12,8 @@ import { SubscriptionRepository } from './subscription/subscription.repository';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const options = new DocumentBuilder()
-    .setTitle('🚀personal trainer🚀')
-    .setDescription('personal trainer API description')
+    .setTitle('🚀fit me')
+    .setDescription('fit me API description')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
