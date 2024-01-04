@@ -24,7 +24,14 @@ export class Diet {
   @Prop()
   notes?: string;
 
-  @Prop({ type: [Types.ObjectId], required: true })
+  @Prop({
+    type: [
+      {
+        type: Types.ObjectId,
+        ref: 'Meal',
+      },
+    ],
+  })
   meals: ObjectId[];
 
   @Prop({ type: [MarcoSchema] })

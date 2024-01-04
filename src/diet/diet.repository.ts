@@ -26,6 +26,6 @@ export class DietRepository extends BaseRepository<Diet> {
   }
 
   getDiet(id: ObjectId, trainer: ObjectId) {
-    return this.dietSchema.findOne({ _id: id, trainer });
+    return this.dietSchema.findOne({ _id: id, trainer }).populate('meals');
   }
 }

@@ -15,6 +15,7 @@ describe('get diet suite case', () => {
       url: `${DIET}/${diet._id}`,
       token: trainer.token,
     });
+    expect(res.body.meals[0]._id).toBe(diet.meals[0].toString());
     expect(res.body.notes).toBe(diet.notes);
   });
 });
