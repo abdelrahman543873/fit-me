@@ -29,7 +29,7 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
       ...(media && {
         media: media.map((mediaItem) => {
           return (
-            media['location'] || `${process.env.HOST}${mediaItem.filename}`
+            mediaItem['location'] || `${process.env.HOST}${mediaItem.filename}`
           );
         }),
       }),
@@ -67,7 +67,8 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
         ...(media && {
           media: media.map((mediaItem) => {
             return (
-              media['location'] || `${process.env.HOST}${mediaItem.filename}`
+              mediaItem['location'] ||
+              `${process.env.HOST}${mediaItem.filename}`
             );
           }),
         }),
