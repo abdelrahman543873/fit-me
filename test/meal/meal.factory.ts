@@ -4,7 +4,6 @@ import { MealRepo } from './meal.test-repo';
 import { Meal } from '../../src/meal/meal.schema';
 import { faker } from '@faker-js/faker';
 import { ITEM_UNITS_ENUM, MACRO_TYPES } from '../../src/meal/meal.constants';
-import { dietFactory } from '../diet/diet.factory';
 
 export const buildMealParams = async (
   obj: Partial<Meal> = {},
@@ -12,7 +11,6 @@ export const buildMealParams = async (
   return {
     trainer:
       obj.trainer || (await userFactory({ role: USER_ROLE.TRAINER }))._id,
-    diet: obj.diet || (await dietFactory())._id,
     title: obj.title || faker.company.name(),
     notes: obj.notes || faker.internet.displayName(),
     macros: obj.macros || [

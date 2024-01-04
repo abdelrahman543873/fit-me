@@ -63,10 +63,4 @@ export class AddMealDto {
   @ValidateNested({ each: true })
   @Type(() => Item)
   items: Item[];
-
-  @ApiProperty({ type: 'string' })
-  @IsExistingDiet()
-  @IsMongoIdObject()
-  @Transform(objectIdTransformer)
-  diet: ObjectId;
 }
