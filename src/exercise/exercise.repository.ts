@@ -28,7 +28,9 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
       ...addExerciseDto,
       ...(media && {
         media: media.map((mediaItem) => {
-          return `${process.env.HOST}${mediaItem.filename}`;
+          return (
+            media['location'] || `${process.env.HOST}${mediaItem.filename}`
+          );
         }),
       }),
     });
@@ -64,7 +66,9 @@ export class ExerciseRepository extends BaseRepository<Exercise> {
         ...updateExerciseDto,
         ...(media && {
           media: media.map((mediaItem) => {
-            return `${process.env.HOST}${mediaItem.filename}`;
+            return (
+              media['location'] || `${process.env.HOST}${mediaItem.filename}`
+            );
           }),
         }),
       },
