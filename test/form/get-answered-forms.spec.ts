@@ -82,6 +82,9 @@ describe('get answered forms suite case', () => {
     const client = await userFactory({ role: USER_ROLE.CLIENT });
     await subscriptionFactory({ client: client._id, trainer: trainer._id });
     const form = await formFactory({ trainer: trainer._id });
+    const formNotBelongingToTheUser = await formFactory({
+      trainer: trainer._id,
+    });
     const question = await questionFactory({ form: form._id });
     const followUp = await followUpFactory({
       client: client._id,
@@ -116,5 +119,10 @@ describe('get answered forms suite case', () => {
     expect(res.body[1].questions[0].answer.followUp).toBe(
       secondFollowUp._id.toString(),
     );
+    expect(
+      res.body.map((form) => {
+        return form._id;
+      }),
+    ).not.toContain(formNotBelongingToTheUser._id.toString());
   });
 });

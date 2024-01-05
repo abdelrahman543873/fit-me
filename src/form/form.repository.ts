@@ -67,6 +67,15 @@ export class FormRepository extends BaseRepository<Form> {
       },
       { $unwind: { path: '$followup', preserveNullAndEmptyArrays: true } },
       {
+        $match: {
+          ...(requestContext.user.role === USER_ROLE.CLIENT && {
+            $expr: {
+              $eq: ['$followup.client', requestContext.user._id],
+            },
+          }),
+        },
+      },
+      {
         $lookup: {
           from: 'questions',
           as: 'questions',

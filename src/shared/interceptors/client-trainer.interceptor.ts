@@ -19,9 +19,11 @@ export class ClientTrainerInterceptor implements NestInterceptor {
   ): Promise<Observable<any>> {
     const request = context.switchToHttp().getRequest<RequestContext>();
     if (!request.user) return next.handle();
-    const subscription = await this.subscriptionRepository.findOne({
-      client: request.user._id,
-    });
+    const subscription = await this.subscriptionRepository
+      .findOne({
+        client: request.user._id,
+      })
+      .sort({ createdAt: -1 });
     request.trainerId = subscription?.trainer;
     return next.handle();
   }
