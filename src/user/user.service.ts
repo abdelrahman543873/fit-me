@@ -9,6 +9,8 @@ import { UserLoginDto } from './inputs/user-login.dto';
 import { BaseHttpException } from '../shared/exceptions/base-http-exception';
 import { bcryptCheckPass } from '../shared/utils/bcryptHelper';
 import { TrainerRegisteredEvent } from './events/trainer-registered.event';
+import { ObjectId } from 'mongoose';
+import { User } from './user.schema';
 
 @Injectable()
 export class UserService {
@@ -43,6 +45,10 @@ export class UserService {
       phoneNumber,
       null,
     );
+  }
+
+  async deactivateUser(user: User) {
+    return await this.userRepository.deactivateUser(user);
   }
 
   async register(

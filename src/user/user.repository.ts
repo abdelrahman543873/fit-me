@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './user.schema';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { BaseRepository } from '../shared/generics/repository.abstract';
 import { UserRegisterDto } from './inputs/user-register.dto';
 import { hashPassSync } from '../shared/utils/bcryptHelper';
 import { UserLoginDto } from './inputs/user-login.dto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -43,5 +44,15 @@ export class UserRepository extends BaseRepository<User> {
           `${process.env.HOST}${profilePicture.filename}`,
       }),
     });
+  }
+
+  deactivateUser(user: User) {
+    return this.userSchema.findOneAndUpdate(
+      { _id: user._id },
+      {
+        email: `${randomUUID()}-${user.email}`,
+        phoneNumber: `${randomUUID()}-${user.phoneNumber}`,
+      },
+    );
   }
 }

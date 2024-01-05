@@ -2,6 +2,7 @@ import { RequestContext } from './../shared/interfaces/request-context.interface
 import {
   Body,
   Controller,
+  Delete,
   Post,
   Put,
   Request,
@@ -33,6 +34,11 @@ export class UserController {
   @Put('logout')
   async logout(@Request() request: RequestContext) {
     return await this.userService.logout(request.user.phoneNumber);
+  }
+
+  @Delete('delete')
+  async deactivateUser(@Request() request: RequestContext) {
+    return await this.userService.deactivateUser(request.user);
   }
 
   @ApiConsumes('multipart/form-data')
