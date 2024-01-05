@@ -6,4 +6,5 @@ export interface RequestContext extends Request {
   lang: LANGUAGE | string;
   user: User;
   trainerId: ObjectId | null;
+  id: string;
 }
