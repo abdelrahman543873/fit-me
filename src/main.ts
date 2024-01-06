@@ -82,6 +82,7 @@ async function bootstrap() {
   });
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   SwaggerModule.setup('api', app, document);
+  await app.enableShutdownHooks();
   await app.listen(3000);
 }
 bootstrap();
