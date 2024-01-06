@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TrainerModule } from './trainer/trainer.module';
 import { ClientModule } from './client/client.module';
@@ -23,6 +23,7 @@ import { MealModule } from './meal/meal.module';
 import { DietModule } from './diet/diet.module';
 import { ClientDietModule } from './client-diet/client-diet.module';
 import { ObservationModule } from './observation/observation.module';
+import { CorrelationIdMiddleware } from './shared/middlewares/correlation-id.middleware';
 
 @Module({
   imports: [
@@ -52,4 +53,8 @@ import { ObservationModule } from './observation/observation.module';
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorrelationIdMiddleware).forRoutes('*');
+  }
+}

@@ -8,6 +8,7 @@ import { Types } from 'mongoose';
 import { SubscriptionRepo } from '../subscription/subscription.test-repo';
 import { TrainerRepo } from '../trainer/trainer.test-repo';
 import { UserRegisterDto } from '../../src/user/inputs/user-register.dto';
+import { waitForMilliSeconds } from '../utils/wait-for.util';
 
 describe('user register suite case', () => {
   it('should register client successfully', async () => {
@@ -46,6 +47,7 @@ describe('user register suite case', () => {
       fileParam: 'profilePicture',
     });
     expect(res.body.firstName).toBe(trainer.firstName);
+    await waitForMilliSeconds(10);
     const createdTrainer = await TrainerRepo().findOne({
       _id: new Types.ObjectId(res.body._id),
     });
