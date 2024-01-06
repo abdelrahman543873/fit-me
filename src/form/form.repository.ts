@@ -9,6 +9,7 @@ import { DeleteFormDto } from './inputs/delete-form.dto';
 import { FilterFormsDto } from './inputs/filter-forms.dto';
 import { GetAnsweredFormsDto } from './inputs/get-answered-forms.dto';
 import { USER_ROLE } from '../user/user.constants';
+import { FORM_TYPES } from './form.constants';
 
 @Injectable()
 export class FormRepository extends BaseRepository<Form> {
@@ -67,15 +68,6 @@ export class FormRepository extends BaseRepository<Form> {
       },
       { $unwind: { path: '$followup', preserveNullAndEmptyArrays: true } },
       {
-        $match: {
-          ...(requestContext.user.role === USER_ROLE.CLIENT && {
-            $expr: {
-              $eq: ['$followup.client', requestContext.user._id],
-            },
-          }),
-        },
-      },
-      {
         $lookup: {
           from: 'questions',
           as: 'questions',
@@ -100,6 +92,15 @@ export class FormRepository extends BaseRepository<Form> {
                         $and: [
                           {
                             $eq: ['$$questionId', '$question'],
+                          },
+                          {
+                            ...(requestContext.user.role === USER_ROLE.CLIENT
+                              ? {
+                                  $eq: ['$client', requestContext.user._id],
+                                }
+                              : {
+                                  $eq: ['$client', getAnsweredFormsDto.client],
+                                }),
                           },
                         ],
                       },
@@ -136,6 +137,13 @@ export class FormRepository extends BaseRepository<Form> {
               $eq: ['$followup.status', getAnsweredFormsDto.status],
             },
           }),
+        },
+      },
+      {
+        $match: {
+          $expr: {
+            $gte: [{ $size: '$questions' }, 1],
+          },
         },
       },
     ]);

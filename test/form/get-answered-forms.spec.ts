@@ -81,7 +81,17 @@ describe('get answered forms suite case', () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const client = await userFactory({ role: USER_ROLE.CLIENT });
     await subscriptionFactory({ client: client._id, trainer: trainer._id });
-    const form = await formFactory({ trainer: trainer._id });
+    const form = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.FOLLOW_UP,
+    });
+    const onboardingForm = await formFactory({
+      trainer: trainer._id,
+      type: FORM_TYPES.ONBOARDING,
+    });
+    const onBoardingQuestion = await questionFactory({
+      form: onboardingForm._id,
+    });
     const formNotBelongingToTheUser = await formFactory({
       trainer: trainer._id,
     });
@@ -106,6 +116,11 @@ describe('get answered forms suite case', () => {
       client: client._id,
       followUp: secondFollowUp._id,
     });
+    //onboarding form question answer
+    await answerFactory({
+      question: onBoardingQuestion._id,
+      client: client._id,
+    });
     const res = await testRequest<GetAnsweredFormsDto>({
       method: HTTP_METHODS_ENUM.GET,
       url: ANSWERED_FORMS,
@@ -119,10 +134,12 @@ describe('get answered forms suite case', () => {
     expect(res.body[1].questions[0].answer.followUp).toBe(
       secondFollowUp._id.toString(),
     );
-    expect(
-      res.body.map((form) => {
-        return form._id;
-      }),
-    ).not.toContain(formNotBelongingToTheUser._id.toString());
+    const responseFormIds = res.body.map((form) => {
+      return form._id;
+    });
+    expect(responseFormIds).not.toContain(
+      formNotBelongingToTheUser._id.toString(),
+    );
+    expect(responseFormIds).toContain(onboardingForm._id.toString());
   });
 });
