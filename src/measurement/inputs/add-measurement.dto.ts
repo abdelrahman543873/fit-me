@@ -31,7 +31,7 @@ export class AddMeasurementDto {
   value?: number;
 
   @ValidateIfDefined()
-  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiProperty({ type: String, format: 'binary' })
   @Allow()
   media?: string;
 

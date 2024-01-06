@@ -6,8 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { ENV_VARIABLE_NAMES } from '../constants/env-variable-names';
 
 export const multerStorageDetector: any = (configService: ConfigService) => {
-  const environment = configService.get<string>(ENV_VARIABLE_NAMES.NODE_ENV);
-  if (environment === 'staging' || environment === 'production')
+  if (configService.get<string>(ENV_VARIABLE_NAMES.NODE_ENV))
     return multerS3({
       s3: new S3Client({
         region: configService.get<string>(

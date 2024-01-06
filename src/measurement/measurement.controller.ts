@@ -28,8 +28,8 @@ import { USER_ROLE } from '../user/user.constants';
 export class MeasurementController {
   constructor(private readonly measurementService: MeasurementService) {}
 
-  @ApiConsumes('multipart/form-data')
   @Post()
+  @ApiConsumes('multipart/form-data')
   @Role(USER_ROLE.CLIENT)
   @UseGuards(RoleGuard)
   @UseInterceptors(MediaInBodyInterceptor)

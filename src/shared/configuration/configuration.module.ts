@@ -24,8 +24,9 @@ import { multerStorageDetector } from '../utils/multer-storage-detector';
         uri:
           (configService.get<string>(ENV_VARIABLE_NAMES.NODE_ENV) === 'test' &&
             JSON.parse(readFileSync('globalConfig.json', 'utf-8')).mongoUri) ||
-          configService.get<string>(ENV_VARIABLE_NAMES.MONGODB_URI) ||
-          configService.get<string>(ENV_VARIABLE_NAMES.LOCAL_MONGO_DB),
+          configService.get<string>(ENV_VARIABLE_NAMES.NODE_ENV)
+            ? configService.get<string>(ENV_VARIABLE_NAMES.MONGODB_URI)
+            : configService.get<string>(ENV_VARIABLE_NAMES.LOCAL_MONGO_DB),
         connectionFactory: (connection) => {
           // eslint-disable-next-line @typescript-eslint/no-var-requires
           connection.plugin(require('mongoose-aggregate-paginate-v2'));
