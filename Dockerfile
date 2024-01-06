@@ -8,4 +8,6 @@ RUN yarn
 
 EXPOSE 3000
 
-CMD [ "yarn", "start" ]
+RUN yarn build
+
+CMD [ "node", "dist/main.js" ]
