@@ -10,13 +10,14 @@ import { IsEnum } from 'class-validator';
 import { CLIENT_DIET_PROGRAM_STATUS_FIlTER } from '../client-diet.constants';
 
 export class FilterClientDietsDto extends Pagination {
-  @ApiProperty({ type: 'string' })
+  @ApiProperty({ type: String })
   @ValidateIfDefined()
   @IsExistingClient()
   @IsMongoIdObject()
   @Transform(objectIdTransformer)
   client?: ObjectId;
 
+  @ApiProperty({ type: String, enum: CLIENT_DIET_PROGRAM_STATUS_FIlTER })
   @ValidateIfDefined()
   @IsEnum(CLIENT_DIET_PROGRAM_STATUS_FIlTER)
   status?: CLIENT_DIET_PROGRAM_STATUS_FIlTER;
