@@ -67,7 +67,8 @@ async function bootstrap() {
       req.method === 'OPTIONS' ||
       req.originalUrl.startsWith('/api') ||
       req.originalUrl.startsWith('/health'),
-    logIP: true,
+    logIP: false,
+    logReqHeaderList: ['X-Forwarded-For'],
     logRequestId: true,
     logReqDateTime: true,
     logReqUserAgent: false,
