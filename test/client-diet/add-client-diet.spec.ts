@@ -34,6 +34,31 @@ describe('add client diet suite case', () => {
     expect(res.body.diet).toBe(diet._id.toString());
   });
 
+  it('should fail if start date bigger than end date', async () => {
+    const trainer = await userFactory({ role: USER_ROLE.TRAINER });
+    const diet = await dietFactory({ trainer: trainer._id });
+    const client = await clientFactory();
+    const params = await buildClientDietParams({
+      diet: diet._id,
+      client: client._id,
+    });
+    const res = await testRequest<AddClientDietDto>({
+      method: HTTP_METHODS_ENUM.POST,
+      url: CLIENT_DIET,
+      token: trainer.token,
+      variables: {
+        client: params.client,
+        endDate: faker.date.past(),
+        followUpDates: [params.endDate],
+        diet: params.diet,
+        startDate: faker.date.past(),
+      },
+    });
+    expect(res.body.message[0]).toContain(
+      'end date must be bigger than start date',
+    );
+  });
+
   it('should fail if a follow up date is out of range', async () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const diet = await dietFactory({ trainer: trainer._id });
