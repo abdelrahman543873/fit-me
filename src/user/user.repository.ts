@@ -52,18 +52,20 @@ export class UserRepository extends BaseRepository<User> {
     id: ObjectId,
     profilePicture?: Express.Multer.File,
   ) {
-    return this.userSchema.findOneAndUpdate(
-      { _id: id },
-      {
-        ...updateUserDto,
-        ...(profilePicture && {
-          profilePicture:
-            profilePicture['location'] ||
-            `${process.env.HOST}${profilePicture.filename}`,
-        }),
-      },
-      { new: true },
-    );
+    return this.userSchema
+      .findOneAndUpdate(
+        { _id: id },
+        {
+          ...updateUserDto,
+          ...(profilePicture && {
+            profilePicture:
+              profilePicture['location'] ||
+              `${process.env.HOST}${profilePicture.filename}`,
+          }),
+        },
+        { new: true },
+      )
+      .select(`-password`);
   }
 
   deactivateUser(user: User) {

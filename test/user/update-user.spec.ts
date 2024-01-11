@@ -21,5 +21,6 @@ describe('user update suite case', () => {
       fileParam: 'profilePicture',
     });
     expect(res.body.firstName).toBe(updatedUser.firstName);
+    expect(res.body).not.toHaveProperty('password');
   });
 });

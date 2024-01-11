@@ -16,9 +16,9 @@ describe('update diet suite case', () => {
       method: HTTP_METHODS_ENUM.PUT,
       url: `${DIET}/${diet._id.toString()}`,
       token: trainer.token,
-      variables: params,
+      fileParam: 'media',
     });
     expect(res.body.trainer).toBe(trainer._id.toString());
-    expect(res.body.title).toBe(params.title);
+    expect(res.body.media).toContain('jpeg');
   });
 });

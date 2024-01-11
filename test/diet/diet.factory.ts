@@ -23,6 +23,7 @@ export const buildDietParams = async (
         value: faker.number.int(),
       },
     ],
+    media: obj.media || faker.internet.url(),
   };
 };
 

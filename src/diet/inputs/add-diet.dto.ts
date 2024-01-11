@@ -1,9 +1,11 @@
 import { Macro } from '../../meal/inputs/add-meal.dto';
 import {
+  Allow,
   ArrayNotEmpty,
   IsArray,
   IsNotEmpty,
   IsString,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
@@ -23,9 +25,10 @@ export class AddDietDto {
   @IsString()
   notes?: string;
 
+  @ValidateIf((input) => !input.media)
   @ApiProperty({ isArray: true, type: String })
   @IsExistingMeal({ each: true })
-  meals: ObjectId[];
+  meals?: ObjectId[];
 
   @ValidateIfDefined()
   @ArrayNotEmpty()
@@ -33,4 +36,9 @@ export class AddDietDto {
   @ValidateNested({ each: true })
   @Type(() => Macro)
   macros?: Macro[];
+
+  @ValidateIfDefined()
+  @ApiProperty({ type: String, format: 'binary' })
+  @Allow()
+  media?: string;
 }

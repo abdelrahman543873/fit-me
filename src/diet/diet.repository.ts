@@ -13,14 +13,34 @@ export class DietRepository extends BaseRepository<Diet> {
     super(dietSchema);
   }
 
-  addDiet(trainer: ObjectId, addDietDto: AddDietDto) {
-    return this.dietSchema.create({ ...addDietDto, trainer });
+  addDiet(
+    trainer: ObjectId,
+    addDietDto: AddDietDto,
+    media?: Express.Multer.File,
+  ) {
+    return this.dietSchema.create({
+      ...addDietDto,
+      trainer,
+      ...(media && {
+        media: media['location'] || `${process.env.HOST}${media.filename}`,
+      }),
+    });
   }
 
-  updateDiet(id: ObjectId, trainer: ObjectId, updateDietDto: UpdateDietDto) {
+  updateDiet(
+    id: ObjectId,
+    trainer: ObjectId,
+    updateDietDto: UpdateDietDto,
+    media?: Express.Multer.File,
+  ) {
     return this.dietSchema.findOneAndUpdate(
       { _id: id, trainer },
-      { ...updateDietDto },
+      {
+        ...updateDietDto,
+        ...(media && {
+          media: media['location'] || `${process.env.HOST}${media.filename}`,
+        }),
+      },
       { new: true },
     );
   }

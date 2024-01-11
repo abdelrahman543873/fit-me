@@ -36,6 +36,9 @@ export class Diet {
 
   @Prop({ type: [MarcoSchema] })
   macros?: Macro[];
+
+  @Prop()
+  media: string;
 }
 
 export const DietSchema = SchemaFactory.createForClass(Diet);
