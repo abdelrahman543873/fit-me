@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Delete,
+  Param,
   Post,
   Put,
   Request,
@@ -19,6 +20,8 @@ import { JoiValidationPipe } from '../shared/pipes/joi.pipe';
 import { UserLoginDto } from './inputs/user-login.dto';
 import { User } from './user.schema';
 import { Public } from '../shared/decorators/public.decorator';
+import { UpdateUserDto } from './inputs/user-update.dto';
+import { MongoIdDto } from '../shared/inputs/mongo-id.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -51,5 +54,20 @@ export class UserController {
     @UploadedFile() profilePicture?: Express.Multer.File,
   ): Promise<User> {
     return await this.userService.register(userRegisterDto, profilePicture);
+  }
+
+  @Put(':id')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('profilePicture'))
+  async updateUser(
+    @Body() updateUserDto: UpdateUserDto,
+    @Param() userId: MongoIdDto,
+    @UploadedFile() profilePicture?: Express.Multer.File,
+  ): Promise<User> {
+    return await this.userService.updateUser(
+      updateUserDto,
+      userId.id,
+      profilePicture,
+    );
   }
 }

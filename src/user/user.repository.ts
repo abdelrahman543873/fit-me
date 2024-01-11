@@ -7,6 +7,7 @@ import { UserRegisterDto } from './inputs/user-register.dto';
 import { hashPassSync } from '../shared/utils/bcryptHelper';
 import { UserLoginDto } from './inputs/user-login.dto';
 import { randomUUID } from 'crypto';
+import { UpdateUserDto } from './inputs/user-update.dto';
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -44,6 +45,25 @@ export class UserRepository extends BaseRepository<User> {
           `${process.env.HOST}${profilePicture.filename}`,
       }),
     });
+  }
+
+  updateUser(
+    updateUserDto: UpdateUserDto,
+    id: ObjectId,
+    profilePicture?: Express.Multer.File,
+  ) {
+    return this.userSchema.findOneAndUpdate(
+      { _id: id },
+      {
+        ...updateUserDto,
+        ...(profilePicture && {
+          profilePicture:
+            profilePicture['location'] ||
+            `${process.env.HOST}${profilePicture.filename}`,
+        }),
+      },
+      { new: true },
+    );
   }
 
   deactivateUser(user: User) {

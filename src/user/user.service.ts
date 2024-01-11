@@ -11,6 +11,7 @@ import { bcryptCheckPass } from '../shared/utils/bcryptHelper';
 import { TrainerRegisteredEvent } from './events/trainer-registered.event';
 import { ObjectId } from 'mongoose';
 import { User } from './user.schema';
+import { UpdateUserDto } from './inputs/user-update.dto';
 
 @Injectable()
 export class UserService {
@@ -81,5 +82,17 @@ export class UserService {
     });
     delete authenticatedUser.password;
     return authenticatedUser;
+  }
+
+  async updateUser(
+    updateUserDto: UpdateUserDto,
+    id: ObjectId,
+    profilePicture?: Express.Multer.File,
+  ) {
+    return await this.userRepository.updateUser(
+      updateUserDto,
+      id,
+      profilePicture,
+    );
   }
 }
