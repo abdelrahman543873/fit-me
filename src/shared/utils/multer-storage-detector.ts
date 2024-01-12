@@ -33,7 +33,7 @@ export const multerStorageDetector: any = (configService: ConfigService) => {
       key: function (req, file, cb) {
         cb(
           null,
-          `${Date.now().toString()}.${file.originalname.split('.').pop()})}`,
+          `${Date.now().toString()}.${file.originalname.split('.').pop()}`,
         );
       },
     });
