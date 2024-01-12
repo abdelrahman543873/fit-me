@@ -31,7 +31,10 @@ export const multerStorageDetector: any = (configService: ConfigService) => {
         cb(null, { fieldName: file.fieldname });
       },
       key: function (req, file, cb) {
-        cb(null, Date.now().toString());
+        cb(
+          null,
+          `${Date.now().toString()}.${file.originalname.split('.').pop()})}`,
+        );
       },
     });
   return diskStorage({
