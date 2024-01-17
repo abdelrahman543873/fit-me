@@ -11,14 +11,13 @@ describe('update exercise suite case', () => {
     const trainer = await userFactory({ role: USER_ROLE.TRAINER });
     const exercise = await exerciseFactory({ trainer: trainer._id });
     const exerciseParams = await buildExerciseParams();
+    delete exerciseParams.trainer;
     const res = await testRequest<UpdateExerciseDto>({
       method: HTTP_METHODS_ENUM.PUT,
       url: `${EXERCISE}/${exercise._id.toString()}`,
       token: trainer.token,
       fileParam: 'media',
-      params: {
-        ...exerciseParams,
-      },
+      variables: exerciseParams,
     });
     expect(res.body.title).toBe(exerciseParams.title);
     expect(res.body.muscleGroup).toBe(exerciseParams.muscleGroup);

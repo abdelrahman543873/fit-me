@@ -71,7 +71,7 @@ export class ExerciseController {
   async updateExercise(
     @Request() request: RequestContext,
     @Param() idInput: MongoIdDto,
-    @Query() updateExerciseDto: UpdateExerciseDto,
+    @Body() updateExerciseDto: UpdateExerciseDto,
     @UploadedFiles() media: Array<Express.Multer.File>,
   ) {
     return await this.exerciseService.updateExercise(
