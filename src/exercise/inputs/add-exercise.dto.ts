@@ -10,6 +10,7 @@ import {
 import { MUSCLE_GROUP } from '../exercise.constants';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
+import { ValidateIfDefined } from '../../shared/validators/validate-if-defined.validator';
 
 export class AddExerciseDto {
   @IsString()
@@ -36,6 +37,7 @@ export class AddExerciseDto {
   @Transform(({ value }) => (Array.isArray(value) ? value : Array(value)))
   links?: string[];
 
+  @ValidateIfDefined()
   @IsString()
   instructions?: string;
 }
